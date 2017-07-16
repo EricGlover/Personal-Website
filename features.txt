@@ -1,0 +1,36 @@
+Product Backlog
+-------------------------
+
+
+
+
+As a user I want to read your blog
+
+
+
+Sprint
+---------------
+As a user I want to navigate to your site
+//Implementation
+-link on my github
+--deploy to heroku
+--web server
+
+
+As a user I want to read a little bit about you
+--About Me section
+--Make a landing page
+
+//Task list
+-make the front end of the landing page
+  -make the about me section
+  -make the nav bar
+-make the back-end of the landing page
+  -make the server
+  -deploy to heroku
+  -link from github to here
+
+
+
+Icebox
+-------------------------

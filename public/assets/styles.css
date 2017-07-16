@@ -1,0 +1,59 @@
+
+/* CLEARFIX */
+
+.clearfix::before,
+.clearfix::after {
+  display: table;
+  content: " ";
+}
+.clearfix::after {
+	clear: both;
+}
+.clear {
+  clear: both;
+}
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
+
+div {
+	display: block;
+	height: 50px;
+	width: 50px;
+}
+
+.wrapper {
+	width: 100%;
+	height: 100%;
+}
+
+/* boxes */
+
+.blue-box {
+	background-color: skyblue;
+}
+
+.orange-box {
+	background-color: orange;
+	/*order not set so defaults to all 0*/
+	/*flex : flex-grow, flex-shrink, flex-basis
+	defaults : 0 , 				1,				,	auto
+						: required	optional		optional
+						*/
+}
+
+#tall {
+	height: 100px;
+}
+
+
+/* flexin */
+.flex-container {
+	display: flex;
+	flex-direction: row wrap;
+	width: 50%;
+	height: 100%;
+}
