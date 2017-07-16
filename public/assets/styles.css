@@ -1,59 +1,92 @@
+/*FONTS*/
+@font-face {
+  font-family: "AndaleMono";
+  src: url("fonts/AndaleMono.ttf"); }
+* {
+  box-sizing: border-box;
+  font-family: 'AndaleMono', sans-serif;
+  font-size: 16px; }
+  * h1, * h2, * h3, * h4, * h5 {
+    padding: 10px;
+    margin: 0; }
 
-/* CLEARFIX */
+.flex-row {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-end;
+  justify-content: space-between; }
 
-.clearfix::before,
-.clearfix::after {
-  display: table;
-  content: " ";
-}
-.clearfix::after {
-	clear: both;
-}
-.clear {
-  clear: both;
-}
-.left {
-	float: left;
-}
-.right {
-	float: right;
-}
+.flex-column {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: space-between; }
 
-div {
-	display: block;
-	height: 50px;
-	width: 50px;
-}
+.content-wrapper {
+  background-color: black;
+  color: white;
+  text-align: center; }
 
-.wrapper {
-	width: 100%;
-	height: 100%;
-}
+#main-content {
+  position: relative;
+  top: 30%; }
+  #main-content article {
+    text-align: left;
+    line-height: 1.4em;
+    font-weight: lighter;
+    font-size: 18px;
+    max-width: 70%;
+    min-width: 200px; }
+    #main-content article #links * {
+      padding: 10px; }
+    #main-content article a {
+      text-decoration: underline;
+      color: white;
+      text-decoration-color: white; }
+    #main-content article header {
+      padding: 10px;
+      text-align: center; }
+    #main-content article main {
+      padding: 20px; }
 
-/* boxes */
+#nav-links .flex-row {
+  justify-content: flex-start; }
+#nav-links a {
+  color: white;
+  text-decoration: none; }
 
-.blue-box {
-	background-color: skyblue;
-}
+#nav {
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  background-color: black;
+  color: white;
+  font-family: 'sans-serif'; }
+  #nav h4, #nav a {
+    padding: 0;
+    margin: 0;
+    color: #ddd;
+    font-family: 'Arial', 'serif';
+    font-weight: 100; }
 
-.orange-box {
-	background-color: orange;
-	/*order not set so defaults to all 0*/
-	/*flex : flex-grow, flex-shrink, flex-basis
-	defaults : 0 , 				1,				,	auto
-						: required	optional		optional
-						*/
-}
+#main-wrapper {
+  height: 760px;
+  width: 100%; }
+  #main-wrapper #main-container {
+    width: 100%;
+    height: 760px; }
 
-#tall {
-	height: 100px;
-}
+#main-container:before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 40px;
+  width: 100%;
+  height: 760px;
+  z-index: -1;
+  opacity: 0.41;
+  background-image: url("images/checkers1.png");
+  background-size: cover; }
 
-
-/* flexin */
-.flex-container {
-	display: flex;
-	flex-direction: row wrap;
-	width: 50%;
-	height: 100%;
-}
+/*# sourceMappingURL=styles.css.map */
