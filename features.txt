@@ -3,11 +3,34 @@ Product Backlog
 
 
 
-
+Sprint 2 - Blog Page
+----------------------
 As a user I want to read your blog
+//Task list
+-------Create front end
+--blog.html, layout etc..
 
 
+-------Link using current 'back-end'
+-deploy blog page to surge
+-Add link to blog page in the landing site
 
+-------Make first blog entry
+
+
+-------------------------
+Icebox-------------------
+-------------------------
+-Deploy to heroku
+--the web server works on my local machine though...
+
+
+-------------------------
+Completed----------------
+-------------------------
+
+Sprint 1 Initial Deployment of landing site
+----------------------------------
 Sprint
 ---------------
 As a user I want to navigate to your site
@@ -30,7 +53,5 @@ As a user I want to read a little bit about you
   -deploy to heroku
   -link from github to here
 
-
-
-Icebox
--------------------------
+NOTE:
+didn't deploy to heroku, it's posted up at tight-wine.surge.sh

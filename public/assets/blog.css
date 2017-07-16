@@ -1,0 +1,85 @@
+/*FONTS*/
+@font-face {
+  font-family: "AndaleMono";
+  src: url("fonts/AndaleMono.ttf"); }
+* {
+  box-sizing: border-box;
+  font-family: 'AndaleMono', sans-serif;
+  font-size: 16px; }
+  * h1 {
+    font-size: 24px; }
+  * h2 {
+    font-size: 18px; }
+  * h3, * h4, * h5 {
+    padding: 8px;
+    margin: 0px; }
+
+#main-wrapper {
+  padding: 20px;
+  background-color: #ddd;
+  color: #111; }
+
+.post {
+  background-color: white;
+  border: 1px solid black;
+  margin: 20px; }
+  .post header {
+    border-bottom: 1px solid grey; }
+    .post header * {
+      padding: 0px;
+      margin: 8px; }
+  .post #detail {
+    padding: 0px;
+    margin: 12px;
+    font-size: 12px; }
+  .post section p {
+    font-size: 16px;
+    font-family: serif;
+    line-height: 1.6em;
+    font-weight: lighter;
+    padding-left: 14px;
+    padding-right: 14px; }
+  .post section ul {
+    list-style-type: none; }
+    .post section ul li {
+      list-style-type: none;
+      font-size: 14px; }
+
+.flex-row {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-end;
+  justify-content: space-between; }
+
+.flex-column {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: space-between; }
+
+.content-wrapper {
+  background-color: black;
+  color: white;
+  text-align: center; }
+
+#nav-links .flex-row {
+  justify-content: flex-start; }
+#nav-links a {
+  color: white;
+  text-decoration: none; }
+
+#nav {
+  width: 100%;
+  height: 40px;
+  padding: 10px;
+  background-color: black;
+  color: white;
+  font-family: 'sans-serif'; }
+  #nav h4, #nav a {
+    padding: 0;
+    margin: 0;
+    color: #ddd;
+    font-family: 'Arial', 'serif';
+    font-weight: 100; }
+
+/*# sourceMappingURL=blog.css.map */
