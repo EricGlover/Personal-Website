@@ -1,17 +1,26 @@
 {
-  "name": "personal-site",
-  "version": "0.0.0",
-  "private": true,
+  "name": "personal_site",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
   "scripts": {
-    "start": "node ./bin/www"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EricGlover/Personal-Website.git"
+  },
+  "author": "Eric Glover",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EricGlover/Personal-Website/issues"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "homepage": "https://github.com/EricGlover/Personal-Website#readme",
   "dependencies": {
-    "body-parser": "~1.17.1",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.3",
-    "express": "~4.15.2",
-    "hbs": "~4.0.1",
-    "morgan": "~1.8.1",
-    "serve-favicon": "~2.4.2"
+    "express": "^4.15.3"
   }
 }

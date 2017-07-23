@@ -1,28 +1,23 @@
 Product Backlog
 -------------------------
+-Deploy to heroku
+--the web server works on my local machine though...
+--redo the entire backend on a new git branch
+--try out some simple express. no generator
+--easy peasy
 
+------------Implementation notes
+shit out some basic express code
 
-
-Sprint 2 - Blog Page
-----------------------
-As a user I want to read your blog
-//Task list
--------Create front end
---blog.html, layout etc..
-
-
--------Link using current 'back-end'
--deploy blog page to surge
--Add link to blog page in the landing site
-
--------Make first blog entry
 
 
 -------------------------
 Icebox-------------------
 -------------------------
--Deploy to heroku
---the web server works on my local machine though...
+
+Refactor Front-End to Use some sick templates
+
+--Custom HTTP server/router
 
 
 -------------------------
@@ -52,6 +47,22 @@ As a user I want to read a little bit about you
   -make the server
   -deploy to heroku
   -link from github to here
+
+
+  Sprint 2 - Blog Page
+  ----------------------
+  As a user I want to read your blog
+  //Task list
+  -------Create front end
+  --blog.html, layout etc..
+
+
+  -------Link using current 'back-end'
+  -deploy blog page to surge
+  -Add link to blog page in the landing site
+
+  -------Make first blog entry
+
 
 NOTE:
 didn't deploy to heroku, it's posted up at tight-wine.surge.sh
