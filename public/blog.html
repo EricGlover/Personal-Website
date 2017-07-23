@@ -43,31 +43,30 @@
       <main>
         <article class='post'>
           <header>
-            <h2>Promises</h2>
-            <h4>To make the HTML nightmares go away</h4>
-            <h5 id='detail'>Date : 7/16/17 </h5>
+            <h2>Git and I</h2>
+            <h4>I solemnly swear to version control like I'm up to no good.</h4>
+            <h5 id='detail'>Date : 7/23/17 </h5>
           </header>
           <section>
-            <p>When I first began learning HTML / CSS it was an absolute nightmare. My navbars looked like jumbled cubes, my images hovered over each other, and the thought of someone viewing the site from a screen with different dimensions....oh gahd.</p>
-            <p>If you're beginning to hallucinate div repositioning themselves in your sleep, perhaps this will help ease your mind.</p>
+            <p>I’ll be honest, I don’t use git. At least not in the way it seems you should. For longer than I care to remember I didn’t use it at all. Let’s take a trip back to those dark times, when it seemed like every hour or so was playing Russian Roulette with your program, it’ll be fun.</p>
           </section>
           <section>
-            <h3>Close Your Eyes to EVERYTHING but divs</h3>
-            <p>Yep. You probably just read a lot of tutorials about all the fabulous CSS styling properties but these will only distract you. They will confuse you to know end. So for the moment, let's just breakdown the problem a bit.</p>
-            <p>Whatever it is that your making, take a good look at it and sketch out the general layout. Nav bar here. Buttons on the left, links on the right. Main content of the page there. Etc.. Now recreate this layout with divs. Make some basic classes like .red .blue .green .box and so on. If you can get your boxes to recreate this page's layout you can do anything.</p>
-            <p>Make sure to start broad here, and then focus on the details - don't make divs for every button in the nav bar, just get a general navbar first then the rest of the page then add in all the details you want.</p>
+            <h3></h3>
+            <p>I was writing a program to tackle the <a href='https://en.wikipedia.org/wiki/Knight%27s_tour'>Knight’s Tour</a> problem and I wanted to start by just getting something together that would let a user attempt it themselves. I get it running, and try it out. The first time I did this I didn’t do to great and I thought, ‘I wonder if someone making completely arbitrary moves would’ve done better ( on average )?’ So I quickly comment something out here and there and add a sort of Rando-Calrissian functionality where the program runs itself making random choices for where to move. After watching Rando-Calrissian beat my score a few times I decide to extend it into a fully separate mode that the user can run. My design was terrible so I end up breaking the old mode that allowed users play it themselves. This was before I used any sort of version control so there was no going back and I spent quite some time attempting to untangle my code.
+</p>
+            <p>I’d like to think that things would be different now. That I would’ve committed my changes after getting it running but…</p>
           </section>
           <section>
-            <h3>Break down making the site into components.</h3>
-            <ul>The general flow
-              <li>--page layout (only use colored divs) </li>
-              <li>--component layout (again colored divs)    [keep track of these, put them in a scrap file or something]</li>
-              <li>--make components (flesh them out)    [keep track of these, put them in a scrap file or something]</li>
-              <li>--insert components into your pages</li>
-              <li>--make everything else</li>
-              <li>--add some style touch ups</li>
-              <li>--refactor</li>
-            </ul>
+            <h3>Dealing with commitment issues</h3>
+            <p>I find myself committing changes in the same fashion that I remember to save a video game- if I’m about to go do something else I reflexively save my code. This has lead to more debugging than I care to admit. So if I was making this program now I might’ve made a commit about half-way through implementing the first mode and another probably around the time when I had modified the already working code to make moves randomly. Now I’d at least have the option of reseting back to a previous commit instead of untangling my mess. The problem is I don’t commit every time I have a new feature running.</p>
+            <p>After promising myself for some time now that I’d be better about committing I’ve decided that something must be done to force myself into the habit. I don’t want to spend the money to tattoo ‘What would OctoCat do?’ on my hand so instead I’m turning to branches.</p>
+          </section>
+          <section>
+            <h3>Branches???</h3>
+            <p>Aren’t branches really only useful for working a team of developers? Branching just resonants better in my brain. For me it’s easier to remember to start a Rando-Calrissian mode branch than it is to remember to commit when I’ve finished a feature.
+  An additional benefit is that small improvements that are related to working code can be done on master so if I have to scrap a branch for some reason I only lose the code for that feature.
+  so if I decide that kill Rando-Calrissian then I wouldn’t lose any improvements I had made to something like the way the program prints the output.
+  Further, it’ll mean that I can always have a functioning version of the program laying around for demonstration. Now when someone asks what I’m working on instead of asking them to bear with me as I get my program functioning again I can just hop back onto master and run it.</p>
           </section>
         </article>
         <article class='post'>
