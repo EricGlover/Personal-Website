@@ -1,15 +1,14 @@
 Product Backlog
 -------------------------
--Deploy to heroku
---the web server works on my local machine though...
---redo the entire backend on a new git branch
---try out some simple express. no generator
---easy peasy
-
-------------Implementation notes
-shit out some basic express code
+Remaking the Front-End
+-use templates
+-use partials
+-use cookies
+-
 
 
+
+//Notes: change text to 'Source Code Pro'
 
 -------------------------
 Icebox-------------------
@@ -56,12 +55,22 @@ As a user I want to read a little bit about you
   -------Create front end
   --blog.html, layout etc..
 
-
+  Sprint 3 - Heroku Deployment
   -------Link using current 'back-end'
   -deploy blog page to surge
   -Add link to blog page in the landing site
 
   -------Make first blog entry
+
+  -Deploy to heroku
+  --the web server works on my local machine though...
+  --redo the entire backend on a new git branch
+  --try out some simple express. no generator
+  --easy peasy
+
+  ------------Implementation notes
+  shit out some basic express code
+
 
 
 NOTE:
