@@ -1,0 +1,13 @@
+{
+  "development": {
+    "database": "site_development",
+    "host": "localhost"
+  },
+  "test": {
+    "database": "site_test",
+    "host": "localhost"
+  },
+  "production": {
+    "use_env_variable": "MONGO_URL"
+  }
+}

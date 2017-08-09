@@ -1,0 +1,20 @@
+{
+  "development": {
+    "username": "ericglover",
+    "password": null,
+    "database": "site_development",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "site_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "use_env_variable": "POSTGRES_URL",
+    "dialect": "postgres"
+  }
+}

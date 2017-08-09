@@ -4,7 +4,17 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "sql:migrate:undo": "npm run sql db:migrate:undo:all",
+    "sql:migrate": "npm run sql db:migrate",
+    "sql:seed:undo": "npm run sql db:seed:undo:all",
+    "sql:seed": "npm run sql db:seed:all",
+    "sql:s": "npm run sql:migrate:undo && npm run sql:migrate && npm run sql:seed",
+    "mg:seed": "node seeds/mongoose",
+    "console": "node repl.js",
+    "c": "node repl.js",
+    "sql": "./node_modules/sequelize-cli/bin/sequelize"
   },
   "repository": {
     "type": "git",
@@ -15,12 +25,14 @@
   "bugs": {
     "url": "https://github.com/EricGlover/Personal-Website/issues"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
-  },
   "homepage": "https://github.com/EricGlover/Personal-Website#readme",
   "dependencies": {
-    "express": "^4.15.3"
+    "bluebird": "^3.5.0",
+    "express": "^4.15.3",
+    "mongoose": "^4.11.6",
+    "pg": "^7.1.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.4.2",
+    "sequelize-cli": "^2.8.0"
   }
 }
