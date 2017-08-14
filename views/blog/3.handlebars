@@ -1,0 +1,140 @@
+<!-- Main content -->
+<main id='main-wrapper'>
+  <!-- Blog header -->
+  <header id='title' class='flex-column'>
+    <!--<h3>Blog</h3>-->
+  </header>
+
+  <!-- Posts -->
+  <main>
+    <article class='post'>
+      <header>
+        <h2>Switches be damned, Rest, and Spread</h2>
+        <h5 id='detail'>Date : 7/31/17 </h5>
+      </header>
+      <section>
+        <h3>CLI: a code-walkthrough</h3>
+        <p>Let’s look at a few language features provided by JS to make our lives a little bit easier. To do this we’ll walkthrough some of the decisions you’d face when making a command line interface.
+Imagine you’re making a node command line interface that accepts a bunch of different commands. We want it to run in the terminal with something like this </p>
+        <pre>
+          ‘$ node myCli someAwesomeCommand argument1 argument2’
+        </pre>
+        <p>So we can grab the command and arguments like so:</p>
+        <pre>
+          //grab the command line arguments
+          let command = process.argv[2];
+          let args = process.argv.slice(3);</pre>
+        <p>We can imagine doing the control flow for the code that handles this input pretty easily, you could use some if’s.</p>
+        <pre>
+          if(command === 'entry'){
+            //do some stuff
+          }else if (command === 'entries'){
+            //do different stuff
+          }else if (command === 'tags'){
+            //you get the point
+          }
+        </pre>
+        <p>Alternatively you could use a switch</p>
+        <pre>
+          switch (command) {
+            case "entry":
+              response = diary.entry(arguments[1], arguments[2]);
+              break;
+            case "getEntry":
+              response = diary.getEntry(arguments[1]);
+              break;
+            case "entries":
+              response = diary.entries();
+              break;
+        </pre>
+        <p>We’ve all done this sort of a thing before. It makes a lot of sense conceptually, given a certain input we want to run a certain block of code. The downside of this is it can often lead to you writing giant blocks of code within your control flow area. To remind me of this painful situation I looked at some of my old code and found one fantastic example of this had a switch statement with 5 or so cases that went on for 300+ lines. It’s unreadable. It’s unreadable because I was apparently very afraid of using functions. The file that handled the input also did a lot of other things as well. What I should’ve done is had a file to handle the input and then call some other file or module to do the work. Maybe this isn’t always necessary for small programs but at the very least I should’ve just wrapped all that code in my switch statements into separate functions. If all we’re going to do in our switch statement is call a function then there’s a cleaner way of writing this control flow. We make an object which will map our commands to their respective functions</p>
+        <pre>
+          let commands = {
+            entry: diary.entry,
+            getEntry: diary.getEntry,
+            entries: diary.entries,
+            entriesWithTag: diary.entriesWithTag
+          };
+        </pre>
+        <p>Then we grab our commands and their arguments like before.</p>
+        <pre>
+          //grab the command line arguments
+          let command = process.argv[2];
+          let args = process.argv.slice(3);
+        </pre>
+        <p>Now we can use ‘ourMappingObject[ the key ]’ to access the appropriate function and call it all in one line.</p>
+        <pre>
+          //using the spread operator, fancy stuff right
+          let response = commands[command](…args);
+        </pre>
+      </section>
+      <section>
+        <h3>...args?</h3>
+        <p>You may of noticed the …args in that call there. This is where things get a little fun. Now that we’re doing all of our function calls in one line we may run into a problem. The problem is I’m super lazy. I already wrote the Diary class code with all the functions that we’re calling here and they aren’t expecting arrays. Here’s two of their signatures.</p>
+        <pre>
+          this.entry = function(message, date = Date.now()) {//stuff}
+          this.entries = function() {//stuff}
+        </pre>
+        <p>After being faced with the prospect of going in and changing their code to deal with arrays as inputs I slipped into a well of great despair. To cheer me up I started watching some Star Trek:Next Generation and Picard said something that got me thinking; he said, ‘There can be no justice as long as laws are absolute; which is why when I want want to pass an array of values to a function that expects comma separated parameters I use the spread syntax.’ So I googled it and saw that it was good. Indeed it’s just what I needed. Thanks Picard.</p>
+      </section>
+      <section>
+        <h3>Spread syntax</h3>
+        <p>It’s not revolutionary stuff but it’s darn handy. Using the spread syntax you can just tell JS to unpack an array (really any iterable) in a function call. It’s useful in places other than function calls <a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator'>too</a>. Here’s another way to look at it, it’s equivalent to using apply but looks better.</p>
+        <pre>
+          //this is the same as the below
+          let response = commands[command].apply( null, args );
+          //this looks so nice though
+          let response = commands[command](…args);
+        </pre>
+      </section>
+      <section>
+        <h3>One last thing</h3>
+        <h5>Using the rest parameter syntax for options and variable amounts of arguments.</h5>
+        <p>Looking at this </p>
+        <pre>
+          this.entriesWithTag = function(...tags) {
+        </pre>
+        <p>you might wonder, ‘why on earth is that function using spread syntax?’ Well in our function declarations we can actually use the ‘…’ to undo all that hard work we just did with the spread syntax. Using this <a href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters'> rest parameter syntax</a> we can take any amount of parameters we pass and bundle them up into an array. This is a great way to deal with variable amounts of arguments and optional arguments. Here’s an example of using it for varying amount of arguments.</p>
+        <pre>
+          //here’s some
+          //allow the user to search for entries by tags included in the entry
+            this.entriesWithTag = function(...tags) {
+              let entriesWithTag = [];
+              //here we loop through each entry (a data structure with an array of tags included in it)
+              _entries.forEach(entry => {
+                //because …tags has packaged all our parameters into a handy array we can loop through it
+                for (var i = 0; i < tags.length; i++) {
+                  if (entry.tags.includes(`${tags[i]}`)) {
+                    entriesWithTag.push(entry);
+                    break; //only include an entry once
+                  }
+                }
+              });
+              return entriesWithTag;
+            };
+        </pre>
+      </section>
+    </article>
+    <!--<article class='post'>
+      <header>
+        <h2>Title</h2>
+        <h5 id='detail'>Date : 7/16/17 </h5>
+      </header>
+      <section>
+        <h3>Section Header</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </section>
+      <section>
+        <h3>Section Header</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </section>
+      <section>
+        <h3>Section Header</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </section>
+    </article>-->
+  </main>
+  <footer>
+    {{>blogLinks}}
+  </footer>
+</main>
