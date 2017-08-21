@@ -1,10 +1,14 @@
 Product Backlog
 -------------------------
-Remaking the Front-End
--use templates
--use partials
--use cookies
--
+Change blog urls to their permanent homes
+  -keep the links to old blog posts backwards compatible
+  -use a hash of their title and creation date
+  -use a database for the blog posts
+  -consider changing the blog posts themselves from plain html to .md files
+
+-Consider Implementing better code sections with CodeMirror
+
+Bootstrap the front-end: IN PROGRESS
 
 
 
@@ -71,7 +75,10 @@ As a user I want to read a little bit about you
   ------------Implementation notes
   shit out some basic express code
 
-
-
-NOTE:
-didn't deploy to heroku, it's posted up at tight-wine.surge.sh
+  Sprint-3
+  ----------------
+  Remaking the Front-End
+  -use templates
+  -use partials
+  -use cookies
+  -
