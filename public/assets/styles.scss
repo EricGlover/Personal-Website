@@ -7,10 +7,8 @@ $primary-color: black;
 /*FONTS*/
 @font-face {
   font-family: "AndaleMono";
-  src: url( "fonts/AndaleMono.ttf" );
+  src: url("fonts/AndaleMono.ttf");
 }
-
-
 
 * {
   box-sizing: border-box;
@@ -18,97 +16,100 @@ $primary-color: black;
   //font-family: 'Norse', 'Nunito','Times New Roman', monospace, 'Courier New';
   //color: #ccc;
   font-size: 16px;
-  h1,h2,h3,h4,h5{
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
     padding: 10px;
     margin: 0;
     //font-size: 22px;
   }
 }
 
-.flex-row{
+.flex-row {
   display: flex;
   flex-flow: row nowrap;
   align-items: flex-end;
   justify-content: space-between;
 }
-.flex-column{
+.flex-column {
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   justify-content: space-between;
 }
-.content-wrapper{
+.content-wrapper {
   background-color: $primary-color;
   color: $secondary-color;
   text-align: center;
 }
-.center{
-
+.center {
 }
-#main-content{
+#main-content {
   position: relative;
   top: 30%;
-  article{
+  article {
     text-align: left;
     line-height: 1.4em;
     font-weight: lighter;
     font-size: 18px;
     max-width: 70%;
     min-width: 200px;
-    #links *{
+    #links * {
       padding: 10px;
     }
-    a{
+    a {
       text-decoration: underline;
       color: $secondary-color;
       text-decoration-color: $secondary-color;
     }
-    header{
+    header {
       padding: 10px;
       text-align: center;
     }
-    main{
+    main {
       padding: 20px;
     }
-    footer{
-
+    footer {
     }
   }
 }
-#nav-links{
-  .flex-row{
-    justify-content: flex-start;
-  }
-  a{
-    color: white;
-    text-decoration: none;
-  }
-}
-#nav{
-  width: 100%;
-  height: $nav-height;
-  padding: 10px;
-  background-color: black;
-  color: white;
-  font-family: 'sans-serif';
-
-  h4, a{
-    padding: 0;
-    margin: 0;
-    color: #ddd;
-    font-family: 'Arial', 'serif';
-    font-weight: 100;
-  }
-}
-#main-wrapper{
+// #nav-links {
+//   .flex-row {
+//     justify-content: flex-start;
+//   }
+//   a {
+//     color: white;
+//     text-decoration: none;
+//   }
+// }
+// #nav {
+//   width: 100%;
+//   height: $nav-height;
+//   padding: 10px;
+//   background-color: black;
+//   color: white;
+//   font-family: 'sans-serif';
+//
+//   h4,
+//   a {
+//     padding: 0;
+//     margin: 0;
+//     color: #ddd;
+//     font-family: 'Arial', 'serif';
+//     font-weight: 100;
+//   }
+// }
+#main-wrapper {
   height: $screen-height - $nav-height;
   width: 100%;
-  #main-container{
+  #main-container {
     width: 100%;
     height: $screen-height - $nav-height;
   }
 }
-#main-container:before{
+#main-container:before {
   content: ' ';
   display: block;
   position: absolute;
