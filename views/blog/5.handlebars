@@ -23,7 +23,7 @@
       </section>
       <section>
         <h3>Recursion..why???</h3>
-        <pre> //recursion
+{{>code code="//recursion
   ///factoiral via recursion
   function factorial(n) {
     if (n === 1) {
@@ -34,7 +34,7 @@
   //we establish our base case and run back into it
   console.log(factorial(1)); //=> 1
   console.log(factorial(2)); //=> 2
-  console.log(factorial(3)); //=> 6</pre>
+  console.log(factorial(3)); //=> 6"}}
         <p>Let’s run through console.log(factorial(3)) real quick :</p>
         <ul>
           <li>Step 1. Throw console.log on the call stack with factorial(3) as an argument</li>
@@ -51,21 +51,22 @@
       <section>
         <h3>Single and Multiple Recursion</h3>
         <p>The problems with this are pretty obvious, it unnecessary strains the call stack, and because (as far as I’m aware) invoking a new function for every operation you wish to do is rather costly our factorial function runs slowly. Whether or not the code is aesthetically pleasing is in the eye of the beholder but perhaps that is an advantage. This kind of recursion is called single recursion and can easily be rewritten as an iterative function that runs much better. For example:</p>
-        <pre> //factorial via iteration
-  function factorialIter(n) {
-    let result = 1;
-    for (let i = 2; i <= n; i++) {
-      result *= i;
-    }
-    return result;
-  }
-  //we establish our base case and run forwards starting from it
-  console.log(factorialIter(1)); //=> 1
-  console.log(factorialIter(2)); //=> 2
-  console.log(factorialIter(3)); //=> 3</pre>
+{{>code code="//factorial via iteration
+function factorialIter(n) {
+let result = 1;
+for (let i = 2; i <= n; i++) {
+result *= i;
+}
+return result;
+}
+//we establish our base case and run forwards starting from it
+console.log(factorialIter(1)); //=> 1
+console.log(factorialIter(2)); //=> 2
+console.log(factorialIter(3)); //=> 3"}}
+
         <p>But what of multiple recursion? Let’s look at a function to find the nth term in the fibonacci sequence. The recursive solution for this is essentially the mathematical definition of the fibonacci sequence itself.</p>
         <p>Here's another classic example of recursion, this one's a bit squirreler</p>
-        <pre> //multiple recursion
+{{>code code="//multiple recursion
   function fib(n) {
     if (n === 1 || n === 0) return 1;
     return fib(n - 1) + fib(n - 2);
@@ -73,23 +74,23 @@
   //try running this code, it’s hilarious
   for (let i = 0; i < 50; i++) {
     console.log(`fib(${i}) = ${fib(i)}`);
-  }</pre>
+  }"}}
         <p>Here's an iterative approach to that same problem:</p>
-        <pre> function fibb(n) {
-    if (n < 2) return 1;
-    let aN_minus2 = 1;
-    let aN_minus1 = 1;
-    let a_n = 0;
-    for (let i = 2; i <= n; i++) {
-      a_n = aN_minus1 + aN_minus2;
-      aN_minus2 = aN_minus1;
-      aN_minus1 = a_n;
-    }
-    return a_n;
-  }
-  for (let i = 0; i < 1477; i++) {
-    console.log(`fib(${i}) = ${fibb(i)}`);
-  } //after that I just get infinity</pre>
+{{>code code="function fibb(n) {
+if (n < 2) return 1;
+let aN_minus2 = 1;
+let aN_minus1 = 1;
+let a_n = 0;
+for (let i = 2; i <= n; i++) {
+a_n = aN_minus1 + aN_minus2;
+aN_minus2 = aN_minus1;
+aN_minus1 = a_n;
+}
+return a_n;
+}
+for (let i = 0; i < 1477; i++) {
+console.log(`fib(${i}) = ${fibb(i)}`);
+} //after that I just get infinity"}}
         <p>In case you didn’t run this, when I run it on my admittedly humble machine, the iterative solution runs in under a second to get all the terms from 0 to 1477 (I didn’t actually time it) and the recursive solution..well I don’t know how long it takes to get the 50th term because I got tired of waiting around the 43rd term. I’m actually quite amazed it didn’t overflow. </p>
       </section>
       <section>

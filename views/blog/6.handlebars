@@ -1,0 +1,198 @@
+<div class="row">
+  <!-- Main content -->
+  <main id='main-wrapper' class='col-12 col-sm-10 col-lg-10'>
+    <!-- Blog header -->
+    <header id='title' class='col-12'>
+      <!-- <h3>Blog</h3> -->
+      <!-- hero image here? -->
+    </header>
+
+    <!-- Post -->
+    <main>
+      <!-- general format -->
+      <article class='post'>
+        <header>
+          <h2>OOP and private variables in JS</h2>
+          <h5 id='detail'>Date : 9/4/17 </h5>
+        </header>
+        <section>
+          <h3>Intro</h3>
+          <p>Ok, this isn’t quite intended as an actual defense of OOP - I just liked the title too much - but I am going to do a brief drive-by of what OOP is useful for.
+Functional Programming, Procedural Programming, Object Oriented Programming, Imperative Programming, etc… Personally when I first started programming I wasn’t even aware that there were ‘programming paradigms’ let alone which I was doing. Then there comes a moment - which may be a wiki search, a course, or a brief mention - where you begin to see the world of programming with your eyes wide open…painfully wide open. Unfortunately for me, this realization wasn’t a stepping out of a cave moment (see Plato) but more of a getting lost in forest moment.</p>
+          <p>JS itself supports Concurrent, Functional, Imperative, Reactive, Reflective,, and Object-Oriented programming. At the very least if you, like me, are learning JS you should be aware of what those mean and how you can utilize them to write better code. For the moment let’s just dive into Object Oriented Programming in JS.</p>
+        </section>
+        <section>
+          <h3>Problems : State and Complexity </h3>
+          <p>Here’s what Object Oriented Programming is good at - HIDING INFORMATION. There’s <a href="https://www.quora.com/What-are-the-4-pillars-of-OOPs">four key pillars of OOP</a> there’s also a list of design principles (<a href="https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)">SOLID</a>) but really it just boils down to that. The idea is you identify a noun in your program then you make some infrastructure that allows you do CRUD (Create, Read, Update, Destroy) operations on those nouns. Then if you want to use those nouns you don’t need to consider the implementation details at all. This creates a very nice decoupling between your program’s logic and your nouns which lowers the overall complexity of your program which almost always leads to less bugs. It also makes your code a lot more reusable, since you interact with the nouns only through an interface you can quickly use code that you wrote months ago without having to relearn how everything you wrote works.</p>
+        </section>
+        <section>
+          <h3>Stack</h3>
+          <p>Here’s an example from <a href='https://code.tutsplus.com/articles/data-structures-with-javascript-stack-and-queue--cms-23348'>Tutsplus</a></p>
+{{>code code="function Stack() {
+    this._size = 0;
+    this._storage = {};
+}
+
+Stack.prototype.push = function(data) {
+    var size = ++this._size;
+    this._storage[size] = data;
+};
+
+Stack.prototype.pop = function() {
+    var size = this._size,
+        deletedData;
+
+    if (size) {
+        deletedData = this._storage[size];
+
+        delete this._storage[size];
+        this._size--;
+
+        return deletedData;
+    }
+};"}}
+          <p>So thinking in OOP what do we have going on here? Wait, why are there no Class definitions?? Just kidding, Javascript allows you to use Class but it’s all a sham anyway because it’s just syntactic sugar for this kind of <a href="http://eloquentjavascript.net/06_object.html">prototype-based inheritance</a>. So we’re defining a noun called a stack and saying that we want our stacks to hold information about their own size, and an unsorted dump of data in the form of ‘this._storage’; we also want our stacks to be capable of pushing information onto storage and for our stacks to be able to pop off the top element of storage. Well what’s the advantage to this structure that we’re imposing on ourselves? With a simple example like this it can be hard to see but we can see some benefits if we start imagining this code after some coffee fueled late night sessions. For instance, maybe we decide to that implementing storage as an object is foolish and want to implement it as a string. This implementation could get pretty crazy pretty quickly and our Stack could become indecipherable to anyone unfamilar with it. But if we keep our interfaces up to date then none of that matters and two weeks later when you forget your caffeine-driven string method madness you won't have to relearn your Stack code to be able to use it again.
+          </p>
+          <p>This seems all good and well but what’s with these underscores? Maybe I’m a little paranoid but when I see _’s being used to indicate private variables I get a sinking feeling in my stomach. Underscores are an informal method in JS to indicate that a variable is private and thus shouldn’t be accessed from outside the instance; but it doesn’t enforce this. For me they are just bugs waiting to happen so let’s clean up this example a bit by making a stack with actual private variables by using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures">closures</a>.</p>
+        </section>
+        <section>
+          <h3>Closures</h3>
+          <p>Here’s a quick example of how closures work </p>
+{{>code code="//makeAdder returns an adder function,
+function makeAdder(x) {
+  var lhs = x; //note this line
+  return function(y) {
+    rhs = y;
+    return lhs + rhs;
+  };
+}
+var add5 = makeAdder(5);
+console.log(add5(2)); //=> 7
+var add10 = makeAdder(10);
+console.log(add10(2)); //=> 12
+//I called makeAdder again, but has has it changed add5's version of lhs ??
+console.log(add5(2)); // => 7    //nope"}}
+          <p>As you can see the lhs variable is sort of frozen into the function that makeAdder returns. This works because we defined a reference to lhs in our returned function. Here’s a quote from the MDN page on closures.</p>
+          <p><em>“The reason is that functions in JavaScript form closures. A closure is the combination of a function and the lexical environment within which that function was declared. This environment consists of any local variables that were in-scope at the time that the closure was created.”</em></p>
+          <p>After reading this initially I wondered if EVERYTHING in the above scopes where sealed into closures so I wrote a little test of that.</p>
+{{>code code="// a note on closures, the returned function of makeThing has access to the lexical scope of makeThing right? But how much access?
+function makeThing() {
+  randomUnneededStuff = 'SUCH THINGS';
+  let store = 'IM AT THE STORE';
+  return function(stuff) {
+    console.log(store);
+    console.log(stuff);
+  };
+}
+let l = makeThing();
+console.log(l); // => function
+console.log(l.randomUnneededStuff); // => undefined"}}
+          <p>As you can see only the variables that we reference in our returned functions are packaged into closures. One last thing, what’s being enclosed into our returned function is a reference (a variable) and not a value. So accidentally modifying it like below will affect our returned function even if we modify the variable after returned is defined.</p>
+{{>code code="//makeAdder returns an adder function,
+function makeAdder(x, override) {
+  var lhs = x;
+  let returned = function(y) {
+    rhs = y;
+    return lhs + rhs;
+  };
+  lhs = override;
+  return returned;
+}
+var add5 = makeAdder(5, 9001);
+console.log(add5(2)); //=> 9003
+var add10 = makeAdder(10, Infinity);
+console.log(add10(2)); //=> Infinity
+//I called makeAdder again, but has has it changed add5's version of lhs ??
+console.log(add5(2)); // => 9003    //nope"}}
+          <p>This means we can define separate functions with closures that reference the same variable like in the code below.</p>
+{{>code code="//makeAdder returns an adder function,
+function makeAdder(x) {
+  var lhs = x;
+  let returned = function(y) {
+    rhs = y;
+    return lhs + rhs;
+  };
+  //let's also return a function that will attempt to modify lhs
+  let overrideFunction = override => (lhs = override);
+  return [returned, overrideFunction];
+}
+var [add5, goNaNers] = makeAdder(5);
+console.log(add5(2)); //=> 7
+//now we use our overrideFunction to modify lhs
+goNaNers(NaN);
+//now our add5 function goes Naners
+console.log(add5(2)); //=> NaN
+"}}
+        </section>
+        <section>
+          <h3>Implementing with Closures</h3>
+          <p>Now that our interlude on closures is done and dusted we can implement a stack using them. I'll still use the _ prefix for clarity sake. Now all the Stack methods will refer to a _size and _storage that's only internally accesible. The downside is we have to package all our functionality as instance methods instead of putting them on the Stack.prototype.</p>
+  {{>code code="function Stack2() {
+  _size = 0;
+  _storage = {};
+  this.size = function() {
+    return _size;
+  };
+  this.storage = function() {
+    return _storage;
+  };
+  this.pop = function() {
+    if (!_size) return null;
+    const popped = _storage[_size];
+    delete _storage[_size--];
+    return popped;
+  };
+  this.push = function(...data) {
+    data.forEach(element => (_storage[++_size] = element));
+  };
+  this.isEmpty = function() {
+    return _size === 0 ? true : false;
+  };
+  this.top = function() {
+    return _storage[_size];
+  };
+}"}}
+        </section>
+        <section>
+          <h3>Advantages and Disadvantages</h3>
+          <h5>Private Variables as _'s</h5>
+          <ul>
+            <li>Advantages
+              <ol>
+                <li>Express intent for the variables to private</li>
+                <li>Very quick and easy to implement, allow you to declare all your functionality on the prototype</li>
+              </ol>
+              <li>Disadvantages
+                <ol>
+                  <li>Provide no actual protection against code accessing _var directly</li>
+                </ol>
+              </li>
+          </ul>
+          <h5>Private Variables as Closures</h5>
+          <ul>
+            <li>Advantages
+              <ol>
+                <li>Express intent for the variables to private</li>
+                <li>Provide actual protection against direct access</li>
+              </ol>
+              <li>Disadvantages
+                <ol>
+                  <li>You can't set the getters/setters on the prototype, so all your functionality needs to be done with instance methods</li>
+                  <li>Other instances of the same 'class' don't have access to each others private variables (maybe an advantage?)</li>
+                </ol>
+              </li>
+          </ul>
+          <p>Check out this great <a href='https://developer.mozilla.org/en-US/Add-ons/SDK/Guides/Contributor_s_Guide/Private_Properties'>MDN article</a> for more (they also include a method for implementing private variables using Weak Maps which is pretty cool)</p>
+        </section>
+        <section>
+          <h3>OOPs, you did it again</h3>
+          <p>Finally, let’s talk about some of the criticisms of OOP (of which there are many). Many people think it encourages / enforces over-architecting. Functional programmers say that it’s use of state is silly and that data shouldn’t be highly coupled with transformations of that data. The point being, if it makes sense to use with what you’re trying to write and your language supports it then go for it.
+Here’s a pretty reasonable post about oop, functional and procedural programming. https://stackoverflow.com/questions/552336/oop-vs-functional-programming-vs-procedural</p>
+        </section>
+      </article>
+    </main>
+    <footer>
+      {{>blogLinks}}
+    </footer>
+  </main>
+</div>

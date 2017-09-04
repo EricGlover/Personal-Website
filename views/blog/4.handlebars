@@ -10,7 +10,7 @@
     <article class='post'>
       <header>
         <h2>Asynchronous JS Programming Pitfall #1</h2>
-        <h5>As explained by an exploring of conceptual pits</h5>
+        <h5>As explained by an explorer of conceptual pits</h5>
         <h5 id='detail'>Date : 8/14/17 </h5>
       </header>
       <section>
@@ -25,8 +25,7 @@
         <h3>Node Ain’t Got Time For That</h3>
         <p>Node is a strong independent framework, it’s got a tight schedule and I should just be happy that it finds time to get back to my code at all. And you know what, Node’s right. It’s incredibly egotistical of me to assume that I’m the most important thing in Node’s day. Anyway, this brings me to the issues I have writing code for Node in this wonderous JS world. Let’s look at an example:
 </p>
-        <pre>
-DA CODE
+{{>code code="DA CODE
 //get categories
 let getCategories = async function() {
 //spawn a process to read the directory that contains a bunch of
@@ -34,8 +33,8 @@ let getCategories = async function() {
 cp.exec(`ls ${productPath}`, (err, out, stdErr) => {
   //ignore all the .txt files
   //reject if empty or includes '.'
-  const categories = out.split("\n").filter(item => {
-    return !(item.includes(".") || !item);
+  const categories = out.split('\n').filter(item => {
+    return !(item.includes('.') || !item);
   });
   console.log(`Line 28: categories = `, categories);
   return categories;
@@ -45,10 +44,9 @@ cp.exec(`ls ${productPath}`, (err, out, stdErr) => {
 (function makeModels() {
 let categories = getCategories();
 console.log(`Line 38: categories = `, categories);
-})();
-</pre>
+})();"}}
       <p>This is a modified version of some code I wrote recently. I was writing a e-commerce project I decided to have my site sell only the items in Skyrim because I grandiose schemes in my mind about later adding some ridiculous features that would make the e-commerce site a virtual store in Skyrim (complete with a virtual economy.) For more info check out my Wiki-page -> <a href='https://en.wikipedia.org/wiki/Feature_creep'>here</a>. My plan for this small first step was relatively simple: make a directory with sub-directories of the category of items and then fill these sub-directories with the needed info (for now just the img file), to seed my database I would read the directory and for each sub-directory create  products corresponding to all the imgs there.</p>
-          <pre>  MY FILES
+{{>code code="MY FILES
 [HoratioFox]: images$ ls -R
 products
 
@@ -67,9 +65,9 @@ DB-icon-armor-Nordic_Shield.png falkreath_shield.jpg            shield.jpg      
 ./products/weapons:
 DB-icon-weapon-Nordic_Bow.png        DB-icon-weapon-Nordic_Greatsword.png DB-icon-weapon-Nordic_Sword.png      dwarven_sword.jpg
 DB-icon-weapon-Nordic_Dagger.png     DB-icon-weapon-Nordic_Mace.png       DB-icon-weapon-Nordic_War_Axe.png    war_axe.jpg
-[HoratioFox]: images$ </pre>
+[HoratioFox]: images$ "}}
         <p>TL;DR I wanted to read /images and make a product instance for all the images that it contained. Option #1 Hard-Code everything. Ain’t nobody got time for that. Option #2 make a whole load of asynchronous calls -without knowing beforehand how many I’d be making. That last bit means hard coding a promise chain for each category is out. Anyway back to the code shown above, the first step is we gotta get all the categories by reading a directory and doing some filtering. Simple enough </p>
-          <pre>  DA CODE
+{{>code code="DA CODE
 //get categories
 let getCategories = async function() {
 //spawn a process to read the directory that contains a bunch of
@@ -77,8 +75,8 @@ let getCategories = async function() {
 cp.exec(`ls ${productPath}`, (err, out, stdErr) => {
   //ignore all the .txt files
   //reject if empty or includes '.'
-  const categories = out.split("\n").filter(item => {
-    return !(item.includes(".") || !item);
+  const categories = out.split('\n').filter(item => {
+    return !(item.includes('.') || !item);
   });
   console.log(`Line 28: categories = `, categories);
   return categories;
@@ -88,19 +86,18 @@ cp.exec(`ls ${productPath}`, (err, out, stdErr) => {
 (function makeModels() {
 let categories = getCategories();
 console.log(`Line 38: categories = `, categories);
-})();
-
-DA OUTPUTS
+})();"}}
+{{>code code="DA OUTPUTS
 [HoratioFox]: sequelize$ node test.js
 Line 38: categories =  Promise { undefined }
-Line 28: categories =  [ 'armor', 'helmets', 'shields', 'weapons' ]</pre>
+Line 28: categories =  [ 'armor', 'helmets', 'shields', 'weapons' ]"}}
       </section>
       <section>
         <h3>WAIT A SECOND</h3>
         <p>Line 38 ran before Line 28???
 To many this may seems obvious but perhaps someone out there will read this and share in my flabbergast-hood. Let me explain: my brain interprets the function getCategories as doing this - 1.read directory then 2. find all the folder names in the directory then 3. return those names as an array of strings. This is incorrect. What happens is this: 1.spawn a child process and tell that process to do things later THE END.</p>
         <p>Solution to our problems:</p>
-          <pre>  let getCategories = function() {
+{{>code code="let getCategories = function() {
 //spawn a process to read the directory that contains a bunch of
 ///folders and some files
 return new Promise((resolve, reject) => {
@@ -109,8 +106,8 @@ return new Promise((resolve, reject) => {
     if (stdErr) reject(stdErr);
     //ignore all the .txt files
     //reject if empty or includes '.'
-    const categories = out.split("\n").filter(item => {
-      return !(item.includes(".") || !item);
+    const categories = out.split('\n').filter(item => {
+      return !(item.includes('.') || !item);
     });
     console.log(`Line 32: categories = `, categories);
     resolve(categories);
@@ -123,13 +120,13 @@ getCategories().then(categories => {
   console.log(`Line 40: categories = `, categories);
 });
 console.log(“remember I’ll run before categories”);
-})();
+})();"}}
 
-DA OUTPUTS
+{{>code code="DA OUTPUTS
 [HoratioFox]: sequelize$ node test.js
 remember I'll run before categories
 Line A: categories =  [ 'armor', 'helmets', 'shields', 'weapons' ]
-Line B: categories =  [ 'armor', 'helmets', 'shields', 'weapons' ]</pre>
+Line B: categories =  [ 'armor', 'helmets', 'shields', 'weapons' ]"}}
         <p>Conceptual Pitfall: Non-blocking
 Stop thinking writing code that tells Node to do stuff now and start thinking about writing code as telling node the sequence of operations that you want to happen. To explain a bit further, what you want to is do an asynchronous call (cp.exec) that’s wrapped in a promise that will resolve to the info you want later, and .then() after. </p>
       </section>
@@ -139,7 +136,7 @@ Stop thinking writing code that tells Node to do stuff now and start thinking ab
 Sequence 1: get the categories
 Sequence 2: add the category to a hash, and read it’s directory
 Sequence 3: using the hash make objects that I then insert into my database.</p>
-          <pre>  (function makeModels() {
+{{>code code="(function makeModels() {
 getCategories().then(categories => {
   console.log(`Line 40: categories = `, categories);
   let productHash = {};
@@ -164,15 +161,15 @@ then iterate of the categories and make a new product
     });
   });
   Promise.all(promises).then(urls => {
-    console.log("productHash = ", productHash);
+    console.log('productHash = ', productHash);
     //make some products
     let seeds = [];
     Object.keys(productHash).forEach((key, index) => {
       for (let i = 0; i < productHash[key].length; i++) {
-        let name = "bob";
+        let name = 'bob';
         let p = {
           name: name.trim(),
-          description: "Awesome Things",
+          description: 'Awesome Things',
           price: faker.random.number(500),
           sku: Math.random() * 122221,
           img: `images/products/${key}/${productHash[key][i]}`,
@@ -181,11 +178,11 @@ then iterate of the categories and make a new product
         seeds.push(p);
       }
     });
-    console.log("seeds =", seeds);
-    //return queryInterface.bulkInsert("Products", seeds, {});
+    console.log('seeds =', seeds);
+    //return queryInterface.bulkInsert('Products', seeds, {});
   });
 });
-})();</pre>
+})();"}}
         <p>In the end I might have been better off doing this :
 Sequence 1: get the categories
 Sequence 2: read that directory, make the products and store them in a shared variable
