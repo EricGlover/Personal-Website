@@ -1,13 +1,23 @@
 const express = require("express");
 let router = express.Router();
 
-//legacy support
+//map of urls to their handlebars files
 let urls = {
-  "47edaa7269d266e037079567291f0dda": 1,
-  2: ["2"],
-  3: ["3"],
-  4: ["4"],
-  5: ["5"]
+  "Quick-HTML-CSS-Tip-7367f5a80fc5fa80118e7a86751a4e72": 1,
+  "Making-the-most-of-Git-a5b4775aa68bcc483c9155ced98ca4b9": 2,
+  "Switches-be-damned-Rest-and-Spread-ed14f497c32901e32b900e29019c8ec3": 3,
+  "Asynchronous-JS-Programming-Pitfall-1-4047dc17031186c82be6eed5a3e4474e": 4,
+  "When-to-use-recursion-802347e1211b0eda372ca0345360ff6b": 5,
+  6: ["6"]
+};
+//legacy support
+let legacyUrls = {
+  1: "Quick-HTML-CSS-Tip-7367f5a80fc5fa80118e7a86751a4e72",
+  2: "Making-the-most-of-Git-a5b4775aa68bcc483c9155ced98ca4b9",
+  3: "Switches-be-damned-Rest-and-Spread-ed14f497c32901e32b900e29019c8ec3",
+  4: "Asynchronous-JS-Programming-Pitfall-1-4047dc17031186c82be6eed5a3e4474e",
+  5: "When-to-use-recursion-802347e1211b0eda372ca0345360ff6b",
+  6: ["6"]
 };
 
 //set up blog id's later
@@ -16,9 +26,12 @@ router.get("/", (req, res) => {
   res.render("blog/index", { blog: true });
 });
 router.get("/:id", (req, res) => {
-  //get handle blog requests
   //get number from url
-  let blogNum = urls[req.params.id] || req.params.id;
+  //handle legacy urls
+  if (req.params.id > 0 && req.params.id <= 6) {
+    return res.redirect(`/blog/${legacyUrls[req.params.id]}`);
+  }
+  let blogNum = urls[req.params.id];
   res.render("blog/" + blogNum, { blog: true });
 });
 
