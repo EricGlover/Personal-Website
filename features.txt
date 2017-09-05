@@ -3,25 +3,25 @@ Product Backlog
 Change blog urls to their permanent homes
   -keep the links to old blog posts backwards compatible
   -use a hash of their title and creation date
-  -use a database for the blog posts
   -consider changing the blog posts themselves from plain html to .md files
 
--Consider Implementing better code sections with CodeMirror
+-grab some domain names
 
-Bootstrap the front-end: IN PROGRESS
+--Database for blog posts
+----Tags, and the aside section
 
-
+-Project improve the front-end ...again
+--after databases for blog posts have been implemented add a index page for blog posts using cards
 
 //Notes: change text to 'Source Code Pro'
 
 -------------------------
 Icebox-------------------
 -------------------------
-
-Refactor Front-End to Use some sick templates
-
+-Consider Implementing better code sections with CodeMirror
+--Custom Themes : Night-mode && Day-mode, optional E-Dog's Blog
 --Custom HTTP server/router
-
+-Add some project pages
 
 -------------------------
 Completed----------------
@@ -82,3 +82,4 @@ As a user I want to read a little bit about you
   -use partials
   -use cookies
   -
+  Bootstrap the front-end: COMPLETE-ISH
