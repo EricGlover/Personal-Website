@@ -7,6 +7,10 @@ Change blog urls to their permanent homes
 
 -grab some domain names
 
+-do some backflips for google seo
+  -submit a sitemap
+  -something else I'm sure
+
 --Database for blog posts
 ----Tags, and the aside section
 
