@@ -9,7 +9,8 @@ let urls = {
   "Asynchronous-JS-Programming-Pitfall-1-4047dc17031186c82be6eed5a3e4474e": 4,
   "When-to-use-recursion-802347e1211b0eda372ca0345360ff6b": 5,
   "OOP-and-private-vars-in-JS-edcaf6524baa5f72528b84935e1db61e": 6,
-  "Using-Generators-for-Dates-9752a54a516c0ff2f6bff57fb41bec0a": 7
+  "Using-Generators-for-Dates-9752a54a516c0ff2f6bff57fb41bec0a": 7,
+  "The-Challenge-of-Communication-d2bc9fd247c27341a9ad418a1e1a2ff9": 8
 };
 //legacy support
 let legacyUrls = {
