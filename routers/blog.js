@@ -11,7 +11,8 @@ let urls = {
   "OOP-and-private-vars-in-JS-edcaf6524baa5f72528b84935e1db61e": 6,
   "Using-Generators-for-Dates-9752a54a516c0ff2f6bff57fb41bec0a": 7,
   "The-Challenge-of-Communication-d2bc9fd247c27341a9ad418a1e1a2ff9": 8,
-  "Linked-Lists-and-Pigeons-08174b70c89f8fd8cc9c719b336e0edc": 9
+  "Linked-Lists-and-Pigeons-08174b70c89f8fd8cc9c719b336e0edc": 9,
+  "A-not-so-quick-blog-about-Quicksort-c4897a7e05dd2b464e7de1f50f2eb167": 10
 };
 //legacy support
 let legacyUrls = {

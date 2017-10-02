@@ -1,6 +1,6 @@
 const md5 = require("md5");
-let title = "Linked Lists and Pigeons";
+let title = "A not so quick blog about Quicksort";
 title = title.split(" ").join("-");
-let date = "9/24/17";
+let date = "10/1/17";
 console.log("new url = \n", `${title}-${md5(title + date)}`);
 // console.log(md5(stuff));
