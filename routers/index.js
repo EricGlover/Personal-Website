@@ -8,5 +8,6 @@ router.get("/", (req, res) => {
 module.exports = {
   indexRouter: router,
   blogRouter: require("./blog"),
-  projectRouter: require("./projects")
+  projectRouter: require("./projects"),
+  testRouter: require("./test")
 };

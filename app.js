@@ -10,11 +10,17 @@ app.engine("handlebars", hbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 //ROUTERS
-const { indexRouter, blogRouter, projectRouter } = require("./routers");
+const {
+  indexRouter,
+  blogRouter,
+  projectRouter,
+  testRouter
+} = require("./routers");
 
 app.use(logger("dev"));
 app.use("/blog", blogRouter);
 app.use("/projects", projectRouter);
+app.use("/test", testRouter);
 app.use("/", indexRouter);
 
 app.use(express.static(__dirname + "/public"));

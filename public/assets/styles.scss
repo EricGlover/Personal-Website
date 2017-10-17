@@ -12,7 +12,7 @@ $primary-color: black;
 
 * {
   box-sizing: border-box;
-  font-family: 'AndaleMono', sans-serif;
+  font-family: "AndaleMono", sans-serif;
   //font-family: 'Norse', 'Nunito','Times New Roman', monospace, 'Courier New';
   //color: #ccc;
   font-size: 16px;
@@ -101,6 +101,7 @@ $primary-color: black;
 //     font-weight: 100;
 //   }
 // }
+
 #main-wrapper {
   height: $screen-height - $nav-height;
   width: 100%;
@@ -110,7 +111,7 @@ $primary-color: black;
   }
 }
 #main-container:before {
-  content: ' ';
+  content: " ";
   display: block;
   position: absolute;
   left: 0;

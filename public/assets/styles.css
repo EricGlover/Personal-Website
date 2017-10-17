@@ -4,7 +4,7 @@
   src: url("fonts/AndaleMono.ttf"); }
 * {
   box-sizing: border-box;
-  font-family: 'AndaleMono', sans-serif;
+  font-family: "AndaleMono", sans-serif;
   font-size: 16px; }
   * h1,
   * h2,
@@ -61,7 +61,7 @@
     height: 760px; }
 
 #main-container:before {
-  content: ' ';
+  content: " ";
   display: block;
   position: absolute;
   left: 0;

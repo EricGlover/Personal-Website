@@ -1,0 +1,35 @@
+.project-image-box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center; }
+  .project-image-box h1,
+  .project-image-box h2,
+  .project-image-box h3,
+  .project-image-box h4,
+  .project-image-box h5 {
+    text-align: center;
+    font-size: 12px;
+    align-self: flex-end; }
+  .project-image-box img {
+    max-height: 200px;
+    max-width: 200px;
+    min-height: 100px;
+    min-width: 100px;
+    margin: 20px; }
+
+.center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center; }
+
+.frame {
+  margin: 40px; }
+  .frame * {
+    margin: 40px; }
+
+.modal {
+  width: auto; }
+
+/*# sourceMappingURL=projects.css.map */
