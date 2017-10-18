@@ -1,5 +1,32 @@
-<h3>All Blog Posts</h3>
-<ul>
+<div class='row'>
+  <div class='col-12'>
+    <br>
+    <h2>Posts</h2>
+    <br>
+    <div class="card-group card-group-custom">
+      <div class='row'>
+        {{#each posts as |post|}}
+          <div class='col-12 col-md-6 col-lg-3'>
+            <div class='card' onclick='location.assign("/blog/{{post.link}}")'>
+              <div class="card-body">
+                <h5 class="card-title">{{post.title}}</h5>
+                <p class="card-text">{{post.description}}</p>
+              </div>
+              <!-- <div class="card-footer">
+                <small class="text-muted">Last updated 3 mins ago</small>
+              </div> -->
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Old scrap code -->
+
+<!-- <ul>
   <li><a href='/blog/Quick-HTML-CSS-Tip-7367f5a80fc5fa80118e7a86751a4e72'>Quick HTML CSS Tip</a></li>
   <li><a href='/blog/Making-the-most-of-Git-a5b4775aa68bcc483c9155ced98ca4b9'>Making the most of Git</a></li>
   <li><a href='/blog/Switches-be-damned-Rest-and-Spread-ed14f497c32901e32b900e29019c8ec3'>Switches be damned, Rest, and Spread</a></li>
@@ -10,4 +37,4 @@
   <li><a href="/blog/The-Challenge-of-Communication-d2bc9fd247c27341a9ad418a1e1a2ff9">The Challenge of Communication</a></li>
   <li><a href="/blog/Linked-Lists-and-Pigeons-08174b70c89f8fd8cc9c719b336e0edc">Linked Lists and Pigeons</a></li>
   <li><a href="/blog/A-not-so-quick-blog-about-Quicksort-c4897a7e05dd2b464e7de1f50f2eb167">A not so quick blog about Quicksort</a></li>
-</ul>
+</ul> -->

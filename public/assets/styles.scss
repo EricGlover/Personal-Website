@@ -1,30 +1,35 @@
 $nav-height: 40px;
 $screen-height: 800px;
 //$screen-width: window.screen-width;
-$secondary-color: white;
 $primary-color: black;
+$secondary-color: white;
 
 /*FONTS*/
-@font-face {
-  font-family: "AndaleMono";
-  src: url("fonts/AndaleMono.ttf");
-}
+// @font-face {
+//   font-family: "AndaleMono";
+//   src: url("fonts/AndaleMono.ttf");
+// }
 
 * {
   box-sizing: border-box;
-  font-family: "AndaleMono", sans-serif;
-  //font-family: 'Norse', 'Nunito','Times New Roman', monospace, 'Courier New';
-  //color: #ccc;
+  font-family: sans-serif;
   font-size: 16px;
-  h1,
-  h2,
-  h3,
-  h4,
-  h5 {
-    padding: 10px;
-    margin: 0;
-    //font-size: 22px;
+}
+//hacky fix
+//I'm using this instead of a svg for the HaxRax icon atm
+.small-img {
+  height: 98px;
+  width: auto;
+  padding: 0px;
+  margin: 0px;
+  img {
+    height: 100%;
   }
+}
+
+.card-group-custom {
+  flex-wrap: wrap;
+  width: 200px;
 }
 
 .flex-row {
@@ -75,32 +80,6 @@ $primary-color: black;
     }
   }
 }
-// #nav-links {
-//   .flex-row {
-//     justify-content: flex-start;
-//   }
-//   a {
-//     color: white;
-//     text-decoration: none;
-//   }
-// }
-// #nav {
-//   width: 100%;
-//   height: $nav-height;
-//   padding: 10px;
-//   background-color: black;
-//   color: white;
-//   font-family: 'sans-serif';
-//
-//   h4,
-//   a {
-//     padding: 0;
-//     margin: 0;
-//     color: #ddd;
-//     font-family: 'Arial', 'serif';
-//     font-weight: 100;
-//   }
-// }
 
 #main-wrapper {
   height: $screen-height - $nav-height;
@@ -120,6 +99,6 @@ $primary-color: black;
   height: $screen-height - $nav-height;
   z-index: -1;
   opacity: 0.41;
-  background-image: url("images/checkers1.png");
+  background-image: url("/assets/images/checkers1.png");
   background-size: cover;
 }

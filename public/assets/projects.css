@@ -19,6 +19,10 @@
     min-width: 100px;
     margin: 20px; }
 
+div .layout-box {
+  height: 200px;
+  background-color: red; }
+
 .center {
   display: flex;
   flex-direction: row;

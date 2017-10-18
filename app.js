@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const compress = require("compression");
 const logger = require("morgan");
 
 const port = process.env.PORT || 3000;
@@ -8,6 +9,13 @@ const port = process.env.PORT || 3000;
 const hbs = require("express-handlebars");
 app.engine("handlebars", hbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
+
+const filter = (req, res) => {
+  console.log(req.headers);
+  console.log("running compression");
+  return true;
+};
+app.use(compress({ filter: filter, level: 1 }));
 
 //ROUTERS
 const {
