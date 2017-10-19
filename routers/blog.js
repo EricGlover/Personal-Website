@@ -1,6 +1,7 @@
 const express = require("express");
 let router = express.Router();
 
+//TODO: start using a db for posts
 const posts = [
   {
     link: "Quick-HTML-CSS-Tip-7367f5a80fc5fa80118e7a86751a4e72",

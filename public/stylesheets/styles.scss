@@ -15,6 +15,14 @@ $secondary-color: white;
   font-family: sans-serif;
   font-size: 16px;
 }
+body {
+  // padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00b7ff;
+}
 //hacky fix
 //I'm using this instead of a svg for the HaxRax icon atm
 .small-img {

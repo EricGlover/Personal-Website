@@ -10,9 +10,8 @@ const hbs = require("express-handlebars");
 app.engine("handlebars", hbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
+//compression
 const filter = (req, res) => {
-  console.log(req.headers);
-  console.log("running compression");
   return true;
 };
 app.use(compress({ filter: filter, level: 1 }));
