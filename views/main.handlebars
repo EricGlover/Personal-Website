@@ -1,37 +1,33 @@
 <!-- Main content -->
-<main id='main-wrapper'>
-  <!--we're attaching the background-image to the container -->
-  <div id='main-container'>
-    <section id='main-content' class='center flex-column'>
-      <div class='content-wrapper'>
-        <a href"#"><h1>Eric Glover</h1></a>
-        <h5>Full Stack Developer</h5>
-      </div>
-      <!-- About me -->
-      <hr>
-      <hr>
-      <hr>
-      <article class='content-wrapper'>
-        <header>
-          <h2>About Me</h2>
-        </header>
-        <main>
-          <p>My addiction to programming began with learning to make a flash game... and after my first bug I was hooked. So I took a class in C and found myself binge programming on the weekends. After I graduated I enrolled in <a href='http://www.vikingcodeschool.com/'>Viking Code School</a></p>
-          <div class='center flex-column'>
-            <p>Check me out on the interwebs </p>
-            <div class='flex-row' id='links'>
-              <a href='https://github.com/EricGlover'>
-                <i class='fa fa-github fa-3x' aria-hidden="true"></i>
-              </a>
-              <a class='small-img' href='https://www.hackerrank.com/HoratioFox'>
-                <img src="/assets/images/HackerRankGreen.png" alt="Hacker Rank Icon">
-              </a>
-              <a href='https://www.linkedin.com/in/eric-glover'>
-                <i class='fa fa-linkedin-square fa-3x' aria-hidden="true"></i>
-              </a>
-            </div>
-        </main>
-      </article>
-    </section>
-  </div>
+<main id='main-wrapper' class='container-fluid'>
+  <section id='main-content' class='landing-grid'>
+    <div class='lead'>
+      <h1>Eric Glover</h1>
+      <h5>Full Stack Developer</h5>
+    </div>
+    <!-- About me -->
+    <article class='summary'>
+      <header class='center'>
+        <h2>About Me</h2>
+      </header>
+      <main>
+        <p>My addiction to programming began with learning to make a flash game... and after my first bug I was hooked. So I took a class in C and found myself binge programming on the weekends. After graduating college launched my web development career by attending <a href='http://www.vikingcodeschool.com/'>Viking Code School</a> where I built lots of projects.</p>
+        <p>I spend most of my time tinkering with projects, experimenting with CS exercises, reading Roger Penrose's book (which I swear I'll finish one day...) or watching Star Trek.</p>
+      </main>
+      <footer>
+        <p>Check me out on the interwebs </p>
+        <div id='links'>
+          <a href='https://github.com/EricGlover'>
+            <i class='fa fa-github fa-3x' aria-hidden="true"></i>
+          </a>
+          <!-- <a class='small-img' href='https://www.hackerrank.com/HoratioFox'>
+            <img src="/assets/images/HackerRankGreen.png" alt="Hacker Rank Icon">
+          </a> -->
+          <a href='https://www.linkedin.com/in/eric-glover'>
+            <i class='fa fa-linkedin-square fa-3x' aria-hidden="true"></i>
+          </a>
+        </div>
+      </footer>
+    </article>
+  </section>
 </main>
