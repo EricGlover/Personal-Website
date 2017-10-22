@@ -114,6 +114,11 @@ a {
   flex-wrap: wrap;
   width: 200px;
 }
+.blog-post-card:hover {
+  *:hover {
+    cursor: pointer;
+  }
+}
 
 .flex-row {
   display: flex;
