@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAGE,6BAAQ;EACN,MAAM,EAAE,OAAO",
+"mappings": "AACA,eAAgB;EACd,aAAa,EAAE,IAAI;EACnB,uBAAQ;IACN,MAAM,EAAE,OAAO;EAEjB,0BAAW;IACT,UAAU,EAAE,IAAI",
 "sources": ["blog.scss"],
 "names": [],
 "file": "blog.css"

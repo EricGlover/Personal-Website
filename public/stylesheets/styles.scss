@@ -92,14 +92,6 @@ a {
     }
   }
 }
-// article {
-//   header {
-//     margin: 20px;
-//   }
-//   footer {
-//     margin: 20px;
-//   }
-// }
 
 #main-wrapper {
   // margin-top: $nav-height;
@@ -109,15 +101,6 @@ a {
   // opacity: 0.41;
   background-image: url("/assets/images/checkers1.png");
   background-size: cover;
-}
-.card-group-custom {
-  flex-wrap: wrap;
-  width: 200px;
-}
-.blog-post-card:hover {
-  *:hover {
-    cursor: pointer;
-  }
 }
 
 .flex-row {

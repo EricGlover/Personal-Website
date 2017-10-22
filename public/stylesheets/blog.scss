@@ -1,10 +1,14 @@
 ///Blog
-//blog header
-.blog-post-card:hover {
+.blog-post-card {
+  margin-bottom: 30px;
   *:hover {
     cursor: pointer;
   }
+  .card-body {
+    min-height: 8rem;
+  }
 }
+// old code
 // #main-wrapper {
 //   padding: 20px;
 //   background-color: #ddd;

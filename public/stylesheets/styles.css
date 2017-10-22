@@ -73,13 +73,6 @@ a {
   background-image: url("/assets/images/checkers1.png");
   background-size: cover; }
 
-.card-group-custom {
-  flex-wrap: wrap;
-  width: 200px; }
-
-.blog-post-card:hover *:hover {
-  cursor: pointer; }
-
 .flex-row {
   display: flex;
   flex-flow: row nowrap;

@@ -30,6 +30,7 @@ app.use("/projects", projectRouter);
 app.use("/test", testRouter);
 app.use("/", indexRouter);
 
+//Static files
 app.use(express.static(__dirname + "/public"));
 
 app.listen(port, (res, req) => {

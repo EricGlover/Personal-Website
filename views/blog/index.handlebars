@@ -6,27 +6,24 @@
       <br>
     </div>
     <div class='col-12'>
-      <!-- <div class="card-deck"> -->
-        <div class='row'>
-          {{#each posts as |post|}}
-          <div class='col-12 col-md-6 col-lg-4'>
-            <div class='card blog-post-card' style="margin-bottom: 30px;" onclick='location.assign("/blog/{{post.link}}")'>
-              <div class='card-header'>
-                <h5 class="card-title">{{post.title}}</h5>
-                <h6 class='card-subtitle font-weight-light mb-2 text-muted'>{{post.subtitle}}</h6>
-              </div>
-              <div class="card-body" style="min-height: 8rem">
-
-                <p class="card-text">{{post.description}}</p>
-              </div>
-              {{#if post.labels}}
-                <div class='card-footer text-muted'>{{post.labelString}}</div>
-              {{/if}}
+      <div class='row'>
+        {{#each posts as |post|}}
+        <div class='col-12 col-md-6 col-lg-4'>
+          <div class='card blog-post-card' onclick='location.assign("/blog/{{post.link}}")'>
+            <div class='card-header'>
+              <h5 class="card-title">{{post.title}}</h5>
+              <h6 class='card-subtitle font-weight-light mb-2 text-muted'>{{post.subtitle}}</h6>
             </div>
+            <div class="card-body">
+              <p class="card-text">{{post.description}}</p>
+            </div>
+            {{#if post.labels}}
+              <div class='card-footer text-muted'>{{post.labelString}}</div>
+            {{/if}}
           </div>
-        {{/each}}
         </div>
-      <!-- </div> -->
+      {{/each}}
+      </div>
     </div>
   </div>
 </div>
