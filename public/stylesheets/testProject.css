@@ -1,0 +1,39 @@
+body {
+  margin-top: 60px; }
+
+.fullScreen {
+  height: calc(100vh - 60px);
+  width: 100%; }
+
+.fixed-carousel-image {
+  max-height: 300px;
+  max-width: 100%; }
+
+.carousel-image-fix {
+  width: 100%;
+  height: auto; }
+
+.display {
+  min-height: 200px;
+  color: white;
+  background-color: black; }
+  .display h1 {
+    margin: 20px; }
+
+.f-g-1 {
+  flex-grow: 1; }
+
+.f-g-2 {
+  flex-grow: 2; }
+
+.f-g-3 {
+  flex-grow: 3; }
+
+.blog-post-card {
+  margin-bottom: 30px; }
+  .blog-post-card *:hover {
+    cursor: pointer; }
+  .blog-post-card .card-body {
+    min-height: 8rem; }
+
+/*# sourceMappingURL=testProject.css.map */

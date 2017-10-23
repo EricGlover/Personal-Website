@@ -5,28 +5,53 @@ let router = express.Router();
 //TODO: start using a db for posts
 const posts = [
   {
-    link: "Quick-HTML-CSS-Tip-7367f5a80fc5fa80118e7a86751a4e72",
-    title: "Quick HTML CSS Tip",
-    subtitle: "To make the HTML nightmares go away",
+    link:
+      "A-not-so-quick-blog-about-Quicksort-c4897a7e05dd2b464e7de1f50f2eb167",
+    title: "Quicksort",
+    subtitle: "A not so quick blog about Quicksort",
     description:
-      "When I first began learning HTML / CSS it was an absolute nightmare. My navbars looked like jumbled cubes, my images hovered over each other, and the thought of someone viewing the site from a screen with different dimensions....oh gahd...",
-    labels: ["HTML5"]
+      "This week we did a lot of algorithms in VCS. When we were doing sorting algorithms I found quicksort to be a bit of a stumbling block. So I figured I’d try my hand at a human legible explanation of it…then I realized I’d made a never-ending rant so …..sorry about that...",
+    labels: ["CS", "Algorithms"]
   },
   {
-    link: "Making-the-most-of-Git-a5b4775aa68bcc483c9155ced98ca4b9",
-    title: "Making the most of Git",
-    subtitle: "I solemnly swear to version control like I'm up to no good.",
+    link: "Linked-Lists-and-Pigeons-08174b70c89f8fd8cc9c719b336e0edc",
+    title: "Linked Lists and Pigeons",
+    subtitle: "",
     description:
-      "I’ll be honest, I don’t use git. At least not in the way it seems you should. For longer than I care to remember I didn’t use it at all. Let’s take a trip back to those dark times, when it seemed like every hour or so was playing Russian Roulette with your program, it’ll be fun...",
-    labels: ["Git"]
+      "This week at VCS we implemented a bunch of data structures in JS and since everyone loves their data structured I figured I should spread the joy. My hope is this will be part of a small series of posts that will build upon each other culminating in a test of our final data structure against a graphing problem on HackerRank. But first let’s talk about linked lists!",
+    labels: ["CS", "Algorithms"]
   },
   {
-    link: "Switches-be-damned-Rest-and-Spread-ed14f497c32901e32b900e29019c8ec3",
-    title: "Switches be damned, Rest, and Spread",
-    subtitle: "CLI: a code-walkthrough",
+    link: "The-Challenge-of-Communication-d2bc9fd247c27341a9ad418a1e1a2ff9",
+    title: "The Challenge of Communication",
+    subtitle: "Philosophy and Programming",
     description:
-      "Let’s look at a few language features provided by JS to make our lives a little bit easier. To do this we’ll walkthrough some of the decisions you’d face when making a command line interface.",
+      "Today I find myself thinking about philosophy and it’s similarities with programming. At first glance the two seem quite disparate; most people think of philosophy as the long-winded, pedantic meandering thoughts of old men in lofty ivory towers, programming seems to stand in stark contrast with this because of it’s immense practical utility...",
+    labels: ["randomMusings"]
+  },
+  {
+    link: "Using-Generators-for-Dates-9752a54a516c0ff2f6bff57fb41bec0a",
+    title: "Using Generators for Dates",
+    subtitle: "",
+    description:
+      "Generator are rather fun. Dates are rather not fun. Let’s make Dates a little more fun by using Generators and Iterators.",
     labels: ["JS", "es6"]
+  },
+  {
+    link: "OOP-and-private-vars-in-JS-edcaf6524baa5f72528b84935e1db61e",
+    title: "OOP and private vars in JS",
+    subtitle: "Hide that Data",
+    description:
+      "Ok, this isn’t quite intended as an actual defense of OOP - I just liked the title too much - but I am going to do a brief drive-by of what OOP is useful for.",
+    labels: ["JS", "OOP"]
+  },
+  {
+    link: "When-to-use-recursion-802347e1211b0eda372ca0345360ff6b",
+    title: "When to use recursion",
+    subtitle: "How I learned to love (tolerate) the infinite stack",
+    description:
+      "Recursion, is it useful? This week I stumbled upon a definite use case and learned that the squirreler the recursive function the more likely it is that it’s necessary. Before we look at that let’s dive into recursion!",
+    labels: ["JS", "CS"]
   },
   {
     link:
@@ -38,53 +63,28 @@ const posts = [
     labels: ["JS", "Asynchronous JS"]
   },
   {
-    link: "When-to-use-recursion-802347e1211b0eda372ca0345360ff6b",
-    title: "When to use recursion",
-    subtitle: "How I learned to love (tolerate) the infinite stack",
+    link: "Switches-be-damned-Rest-and-Spread-ed14f497c32901e32b900e29019c8ec3",
+    title: "Switches be damned, Rest, and Spread",
+    subtitle: "CLI: a code-walkthrough",
     description:
-      "Recursion, is it useful? This week I stumbled upon a definite use case and learned that the squirreler the recursive function the more likely it is that it’s necessary. Before we look at that let’s dive into recursion!",
-    labels: ["JS", "CS"]
-  },
-  {
-    link: "OOP-and-private-vars-in-JS-edcaf6524baa5f72528b84935e1db61e",
-    title: "OOP and private vars in JS",
-    subtitle: "Hide that Data",
-    description:
-      "Ok, this isn’t quite intended as an actual defense of OOP - I just liked the title too much - but I am going to do a brief drive-by of what OOP is useful for.",
-    labels: ["JS", "OOP"]
-  },
-  {
-    link: "Using-Generators-for-Dates-9752a54a516c0ff2f6bff57fb41bec0a",
-    title: "Using Generators for Dates",
-    subtitle: "",
-    description:
-      "Generator are rather fun. Dates are rather not fun. Let’s make Dates a little more fun by using Generators and Iterators.",
+      "Let’s look at a few language features provided by JS to make our lives a little bit easier. To do this we’ll walkthrough some of the decisions you’d face when making a command line interface.",
     labels: ["JS", "es6"]
   },
   {
-    link: "The-Challenge-of-Communication-d2bc9fd247c27341a9ad418a1e1a2ff9",
-    title: "The Challenge of Communication",
-    subtitle: "Philosophy and Programming",
+    link: "Making-the-most-of-Git-a5b4775aa68bcc483c9155ced98ca4b9",
+    title: "Making the most of Git",
+    subtitle: "I solemnly swear to version control like I'm up to no good.",
     description:
-      "Today I find myself thinking about philosophy and it’s similarities with programming. At first glance the two seem quite disparate; most people think of philosophy as the long-winded, pedantic meandering thoughts of old men in lofty ivory towers, programming seems to stand in stark contrast with this because of it’s immense practical utility...",
-    labels: ["randomMusings"]
+      "I’ll be honest, I don’t use git. At least not in the way it seems you should. For longer than I care to remember I didn’t use it at all. Let’s take a trip back to those dark times, when it seemed like every hour or so was playing Russian Roulette with your program, it’ll be fun...",
+    labels: ["Git"]
   },
   {
-    link: "Linked-Lists-and-Pigeons-08174b70c89f8fd8cc9c719b336e0edc",
-    title: "Linked Lists and Pigeons",
-    subtitle: "",
+    link: "Quick-HTML-CSS-Tip-7367f5a80fc5fa80118e7a86751a4e72",
+    title: "Quick HTML CSS Tip",
+    subtitle: "To make the HTML nightmares go away",
     description:
-      "This week at VCS we implemented a bunch of data structures in JS and since everyone loves their data structured I figured I should spread the joy. My hope is this will be part of a small series of posts that will build upon each other culminating in a test of our final data structure against a graphing problem on HackerRank. But first let’s talk about linked lists!",
-    labels: ["CS", "Algorithms"]
-  },
-  {
-    link:
-      "A-not-so-quick-blog-about-Quicksort-c4897a7e05dd2b464e7de1f50f2eb167",
-    title: "Quicksort",
-    subtitle: "A not so quick blog about Quicksort",
-    description:
-      "This week we did a lot of algorithms in VCS. When we were doing sorting algorithms I found quicksort to be a bit of a stumbling block. So I figured I’d try my hand at a human legible explanation of it…then I realized I’d made a never-ending rant so …..sorry about that...",
-    labels: ["CS", "Algorithms"]
+      "When I first began learning HTML / CSS it was an absolute nightmare. My navbars looked like jumbled cubes, my images hovered over each other, and the thought of someone viewing the site from a screen with different dimensions....oh gahd...",
+    labels: ["HTML5"]
   }
 ];
 

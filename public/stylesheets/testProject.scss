@@ -1,0 +1,60 @@
+//make a margin for our nav
+body {
+  margin-top: 60px;
+}
+.fullScreen {
+  height: calc(100vh - 60px);
+  width: 100%;
+}
+// .outline {
+//   border: 5px solid green;
+// }
+.fixed-carousel-image {
+  // max-height: 200px;
+  // max-width: 200px;
+  // min-height: 100px;
+  // min-width: 100px;
+  // margin: 20px;
+  max-height: 300px;
+  max-width: 100%;
+}
+.carousel-image-fix {
+  width: 100%;
+  height: auto;
+}
+.display {
+  min-height: 200px;
+  color: white;
+  background-color: black;
+  h1 {
+    margin: 20px;
+  }
+}
+.f-g-1 {
+  flex-grow: 1;
+}
+.f-g-2 {
+  flex-grow: 2;
+}
+.f-g-3 {
+  flex-grow: 3;
+}
+.blog-post-card {
+  margin-bottom: 30px;
+  *:hover {
+    cursor: pointer;
+  }
+  .card-body {
+    min-height: 8rem;
+  }
+}
+// .green {
+//   background-color: green;
+// }
+// .blue {
+//   background-color: blue;
+// }
+// .red {
+//   background-color: red;
+//   border: 5px solid black;
+// }
