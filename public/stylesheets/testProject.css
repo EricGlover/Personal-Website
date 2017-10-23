@@ -20,6 +20,17 @@ body {
   .display h1 {
     margin: 20px; }
 
+.w-auto {
+  width: auto; }
+
+.h-auto {
+  height: auto;
+  max-width: 100%; }
+
+.responsive {
+  max-height: 100%;
+  width: auto; }
+
 .f-g-1 {
   flex-grow: 1; }
 
