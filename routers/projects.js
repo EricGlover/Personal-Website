@@ -2,8 +2,8 @@ const express = require("express");
 let router = express.Router();
 
 router.get("/", (req, res) => {
-  // return res.render("projects/portfolio");
-  res.render("testProject");
+  return res.render("projects/portfolio");
+  // res.render("testProject", { projects: true });
 });
 
 router.get("/lca", (req, res) => {

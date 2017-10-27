@@ -1,0 +1,176 @@
+//make a margin for our nav
+body {
+  margin-top: 60px;
+}
+// @include media-breakpoint-up(sm) {
+//   .row-sm {
+//     height: 500px;
+//   }
+// }
+
+/* experimenting with sassy things */
+
+/* added row-size-x bootstrap-eske classes
+for controlling the height of rows based on the device size
+*/
+
+// Extra small devices (portrait phones, less than 576px)
+// No media query since this is the default in Bootstrap
+
+// Small devices (landscape phones, 576px and up)
+.row-1 {
+  height: calc(100vh / 12);
+}
+.row-3 {
+  height: 25vh;
+}
+.row-4 {
+  height: 33vh;
+}
+.row-6 {
+  height: 50vh;
+}
+.row-12 {
+  height: 100vh;
+}
+@media (min-width: 576px) {
+  .row-sm-1 {
+    height: calc(100vh / 12);
+  }
+  .row-sm-3 {
+    height: 25vh;
+  }
+  .row-sm-4 {
+    height: 33vh;
+  }
+  .row-sm-6 {
+    height: 50vh;
+  }
+  .row-sm-12 {
+    height: 100vh;
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+  .row-md-1 {
+    height: calc(100vh / 12);
+  }
+  .row-md-3 {
+    height: 25vh;
+  }
+  .row-md-4 {
+    height: 33vh;
+  }
+  .row-md-6 {
+    height: 50vh;
+  }
+  .row-md-12 {
+    height: 100vh;
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  .row-lg-1 {
+    height: calc(100vh / 12);
+  }
+  .row-lg-3 {
+    height: 25vh;
+  }
+  .row-lg-4 {
+    height: 33vh;
+  }
+  .row-lg-6 {
+    height: 50vh;
+  }
+  .row-lg-12 {
+    height: 100vh;
+  }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+  .row-xl-1 {
+    height: calc(100vh / 12);
+  }
+  .row-xl-3 {
+    height: 25vh;
+  }
+  .row-xl-4 {
+    height: 33vh;
+  }
+  .row-xl-6 {
+    height: 50vh;
+  }
+  .row-xl-12 {
+    height: 100vh;
+  }
+}
+
+/* classes for the Project carousel / sections */
+
+.carousel-head {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.carousel-image-container {
+  // margin: 20px;
+  background-color: "black";
+  .carousel-item {
+    background-color: "black";
+    height: 100%;
+    width: 100%;
+    // display: flex;
+    // flex-direction: row;
+    // justify-content: center;
+    top: 0px;
+    left: 0px;
+    img {
+      max-width: 100%;
+      width: auto;
+      max-height: 100%;
+      margin: auto;
+    }
+  }
+}
+.carousel-main {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.carousel-footer {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/* old projects styles */
+
+.old-project-container {
+  // margin: 4rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.flex-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.full-width-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
