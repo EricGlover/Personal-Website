@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const compress = require("compression");
 const logger = require("morgan");
+const security = require("./middleware/security");
 
 const port = process.env.PORT || 3000;
 
@@ -16,18 +17,24 @@ const filter = (req, res) => {
 };
 app.use(compress({ filter: filter, level: 1 }));
 
+//security (prevents click jacking)
+app.use(security);
+
 //ROUTERS
 const {
   indexRouter,
   blogRouter,
   projectRouter,
-  testRouter
+  testRouter,
+  loaderRouter
 } = require("./routers");
+const loaderFileURL = "/loaderio-e18afa5e6a1d14daaca79f678fd43915";
 
 app.use(logger("dev"));
 app.use("/blog", blogRouter);
 app.use("/projects", projectRouter);
 app.use("/test", testRouter);
+app.use(loaderFileURL, loaderRouter);
 app.use("/", indexRouter);
 
 //Static files
