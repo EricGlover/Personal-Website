@@ -65,6 +65,10 @@ a {
     .summary footer #links a {
       margin: 10px;
       color: inherit; }
+      .summary footer #links a i,
+      .summary footer #links a img {
+        max-width: 61px;
+        max-height: 47px; }
 
 #main-wrapper {
   height: inherit;

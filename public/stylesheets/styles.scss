@@ -82,6 +82,7 @@ a {
   }
   footer #links {
     // height: 60px;
+
     display: flex;
     flex-direction: row;
     // justify-content: center;
@@ -89,6 +90,11 @@ a {
     a {
       margin: 10px;
       color: inherit;
+      i,
+      img {
+        max-width: 61px;
+        max-height: 47px;
+      }
     }
   }
 }
@@ -109,6 +115,7 @@ a {
   align-items: flex-end;
   justify-content: space-between;
 }
+
 .flex-column {
   display: flex;
   flex-flow: column nowrap;
