@@ -9,11 +9,6 @@ body {
   height: 100%;
   width: 100%; }
 
-#nav {
-  height: 60px;
-  position: fixed;
-  z-index: 1; }
-
 a {
   color: #00b7ff; }
 

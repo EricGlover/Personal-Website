@@ -1,8 +1,10 @@
 let router = require("express").Router();
 
-router.get("/flash", (req, res) => {
-  res.render("testFlash");
+//mandelbrot testing
+router.get("/mandelbrot", (req, res) => {
+  res.render("mandelbrot");
 });
+
 router.get("*", (req, res) => {
   res.render("test");
 });
