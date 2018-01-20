@@ -1,76 +1,73 @@
-<div class="row">
-  <!-- Main content -->
-  <main id='main-wrapper' class='col-12 col-sm-10 col-lg-10'>
-    <!-- Blog header -->
-    <header id='title' class='col-12'>
-      <!-- <h3>Blog</h3> -->
-      <!-- hero image here? -->
-    </header>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Main content -->
+    <main id='main-wrapper' class='col-12 col-sm-10 col-lg-10'>
+      <!-- Blog header -->
+      <header id='title' class='col-12'>
+      </header>
 
-    <!-- Post -->
-    <main>
-      <!-- general format -->
-      <article class='post'>
-        <header>
-          <h2>Linked Lists and Pigeons</h2>
-          <h5 id='detail'>Date : 9/24/17 </h5>
-        </header>
-        <section>
-          <h3>Linked Lists In JS</h3>
-          <p>This week at VCS we implemented a bunch of data structures in JS and since everyone loves their data structured I figured I should spread the joy. My hope is this will be part of a small series of posts that will build upon each other culminating in a test of our final data structure against a graphing problem on HackerRank. But first let’s talk about linked lists!</p>
-        </section>
-        <section>
-          <h3>Linked Lists: Broad Strokes </h3>
-          <p>If you’re familiar with the concept feel free to skip ahead to the implementation section.
-A linked list is a data structure comprised of nodes. Each node holds some data and a reference to the next node in the list. You can implement a linked list by just writing a Node class and saving the first node (the head node) into a variable. Before we hop into the code let’s imagine an implementation of this concept in the real world.</p>
-        </section>
-        <section>
-          <h3>Pigeon tracking system - the steampunk cellphone-less future is now</h3>
-          <p>Let’s imagine that I have ten brothers and ten sisters. Since we’re an adventurous bunch it’s terribly difficult to locate one of us at a given time. Fortunately Bobby-Sue was clever enough to devise a scheme to keep track of everyone - carrier pigeons! Whenever one heads off to adventure in a distant land they send out 20 carrier pigeons  - one for each sibling - with a note of their new location. After a week we decided that Bobby-Sue wasn’t the cleverest person ever and that we hated carrying 20 pigeons around. If only there was a way to just carry one with us that’d be tolerable. Then Bobby-Sue suggested that we used cell phones but most of our family doesn’t believe in such dark magicks. After shunning Bobby-Sue, Susan came up with a novel approach - each of us would keep a notepad and keep track of the next youngest sibling, and each day one of us would stay at home all day to keep track of the eldest sibling, now whenever we want to know where someone is we dispatch a pigeon home. That pigeon is directed to the eldest sibling and then they direct them to the next eldest and so on until they reach the sibling we wanted to find. They write their location on a note and send the pigeon back to the original sender. Truly a glorious system.</p>
-          <p>Now our pigeon tracking system works fairly well but the only downside is that getting information takes some time because our pigeons have to travel to many different siblings before finally finding the one we were looking for.</p>
-        </section>
-        <section>
-          <h2>Implementation</h2>
-          <h3>Back to Programming - Linked Lists MVP … MV..Data-Structure…</h3>
-          <p>Acronyms and pigeons aside, linked lists aren’t the end all be all of data structures - but they are an exceedingly useful building block for other structures (that do some really nifty things, ie Hash Tables, and Adjacency Lists) so let’s take the time to build one. The basic operations we need our List to perform are : Insertion, Updating, Searching, and Removal of Nodes. So what does our Node look like ?</p>
-          <script src="https://gist.github.com/EricGlover/857324ba56486f25fa2887c16f97dc31.js"></script>
-          <h5>Insertion</h5>
-          <p>So how do we insert one into our list? We create a new List and save the reference to the Node as the head. Then for all the next nodes we could start at the head and run through our list using the this.next until we see a null value and assign that Node’s next value to our new Node. A better way to do this though is to either prepend our Node to the beginning of our list OR we can append it to the end if we always keep a reference to the tail (end) laying around. If we do either of those our insertion time complexity is O(1) - hard to beat that.</p>
-          <h5>Searching</h5>
-          <p>What about updating? Well, you could update a Node at a particular index but it’s a little more useful to update a node that based on it’s data - either way we need to implement searching first. You may be tempted to directly reference your Node’s data in your searching function - BUT DONT. Keeping your Linked List agnostic to the data you put in it allows you to write it once and forget it, so when you jump from implementing Hash Tables to doing some graphing algorithm problem you don’t need to edit your linked list code at all. Linked List = Honey Badger. Here’s my implementation of searching functionality.</p>
-          <script src="https://gist.github.com/EricGlover/30a8d7f92ab96b99ed61ee938bf00bd9.js"></script>
-          <h5>Updating</h5>
-          <p>With searching functionality, updating becomes a walk in the park, grab your old node with a search then change a data value on it. BOOM.</p>
-          <h5>Removal</h5>
-          <p>Removal of nodes is a bit trickier because of a few edge cases but the general procedure is simple enough - you grab the node before the one you want to remove, and the one after it. You set the before node’s next pointer (reference) to the after node, and that’s it. Make sure you’re removal handles removing the head and the tail node well.</p>
-        </section>
-        <section>
-          <h2>Why Linked Lists?</h2>
-          <p>Because nobody wanted to carry around 20 pidgeons of course!</p>
-          <p>It’s all about choosing the appropriate data structure for you needs. For JS arrays normally do just fine especially considering that they’re actually dynamic arrays but linked lists do you give better insertion times. <a href="https://en.wikipedia.org/wiki/Linked_list#Tradeoffs">Check this out for an in-depth comparison.</a></p>
-          <p>Also if you haven't coded in lower-level languages that make you do your own memory management (and or don't have dynamic arrays by default, *cough*cough* LOOKING AT YOU C) then just keep a note in the back of your head in case you do wind up writing some C code because they're quite useful.</p>
-          <script src="https://gist.github.com/EricGlover/ca7a5a1c298594a6a2a07dd2d12e997a.js"></script>
-          <h5>Further Features</h5>
-          <p>Try implementing some further features like reversing the direction of your list || maybe some linked list variants (circular lists, doubly-linked lists) || try implementing cycle detection!</p>
-          <h5>General Implemenation Advice</h5>
-          <p>For reversal do an inplace reverse (try to just use the existing nodes without making a separate copy of your linked list).</p>
-          <p>Keep a length property on your list.</p>
-          <p>Add a toString() for easy printing. - Shout out to <a href="https://willt.codes/">Will Timpson</a> for that pro-tip</p>
-          <p>If you need to grab three different nodes don’t call a search function three separate times, that’s just silly.</p>
-        </section>
-        <section>
-          <h2>Here's my implementation</h2>
-          <p>There's a test script that you can run at the bottom if you're so inclined.</p>
-          <h2>DA CODE</h2>
-          <script src="https://gist.github.com/EricGlover/ded69d86d14afbb3979fef4dc806d06e.js"></script>
-        </section>
-      </article>
+      <!-- Post -->
+      <main>
+        <!-- general format -->
+        <article class='post'>
+          <header>
+            <h2>Linked Lists and Pigeons</h2>
+            <h5 id='detail'>Date : 9/24/17 </h5>
+          </header>
+          <section>
+            <h3>Linked Lists In JS</h3>
+            <p>This week at VCS we implemented a bunch of data structures in JS and since everyone loves their data structured I figured I should spread the joy. My hope is this will be part of a small series of posts that will build upon each other culminating in a test of our final data structure against a graphing problem on HackerRank. But first let’s talk about linked lists!</p>
+          </section>
+          <section>
+            <h3>Linked Lists: Broad Strokes </h3>
+            <p>If you’re familiar with the concept feel free to skip ahead to the implementation section.
+  A linked list is a data structure comprised of nodes. Each node holds some data and a reference to the next node in the list. You can implement a linked list by just writing a Node class and saving the first node (the head node) into a variable. Before we hop into the code let’s imagine an implementation of this concept in the real world.</p>
+          </section>
+          <section>
+            <h3>Pigeon tracking system - the steampunk cellphone-less future is now</h3>
+            <p>Let’s imagine that I have ten brothers and ten sisters. Since we’re an adventurous bunch it’s terribly difficult to locate one of us at a given time. Fortunately Bobby-Sue was clever enough to devise a scheme to keep track of everyone - carrier pigeons! Whenever one heads off to adventure in a distant land they send out 20 carrier pigeons  - one for each sibling - with a note of their new location. After a week we decided that Bobby-Sue wasn’t the cleverest person ever and that we hated carrying 20 pigeons around. If only there was a way to just carry one with us that’d be tolerable. Then Bobby-Sue suggested that we used cell phones but most of our family doesn’t believe in such dark magicks. After shunning Bobby-Sue, Susan came up with a novel approach - each of us would keep a notepad and keep track of the next youngest sibling, and each day one of us would stay at home all day to keep track of the eldest sibling, now whenever we want to know where someone is we dispatch a pigeon home. That pigeon is directed to the eldest sibling and then they direct them to the next eldest and so on until they reach the sibling we wanted to find. They write their location on a note and send the pigeon back to the original sender. Truly a glorious system.</p>
+            <p>Now our pigeon tracking system works fairly well but the only downside is that getting information takes some time because our pigeons have to travel to many different siblings before finally finding the one we were looking for.</p>
+          </section>
+          <section>
+            <h2>Implementation</h2>
+            <h3>Back to Programming - Linked Lists MVP … MV..Data-Structure…</h3>
+            <p>Acronyms and pigeons aside, linked lists aren’t the end all be all of data structures - but they are an exceedingly useful building block for other structures (that do some really nifty things, ie Hash Tables, and Adjacency Lists) so let’s take the time to build one. The basic operations we need our List to perform are : Insertion, Updating, Searching, and Removal of Nodes. So what does our Node look like ?</p>
+            <script src="https://gist.github.com/EricGlover/857324ba56486f25fa2887c16f97dc31.js"></script>
+            <h5>Insertion</h5>
+            <p>So how do we insert one into our list? We create a new List and save the reference to the Node as the head. Then for all the next nodes we could start at the head and run through our list using the this.next until we see a null value and assign that Node’s next value to our new Node. A better way to do this though is to either prepend our Node to the beginning of our list OR we can append it to the end if we always keep a reference to the tail (end) laying around. If we do either of those our insertion time complexity is O(1) - hard to beat that.</p>
+            <h5>Searching</h5>
+            <p>What about updating? Well, you could update a Node at a particular index but it’s a little more useful to update a node that based on it’s data - either way we need to implement searching first. You may be tempted to directly reference your Node’s data in your searching function - BUT DONT. Keeping your Linked List agnostic to the data you put in it allows you to write it once and forget it, so when you jump from implementing Hash Tables to doing some graphing algorithm problem you don’t need to edit your linked list code at all. Linked List = Honey Badger. Here’s my implementation of searching functionality.</p>
+            <script src="https://gist.github.com/EricGlover/30a8d7f92ab96b99ed61ee938bf00bd9.js"></script>
+            <h5>Updating</h5>
+            <p>With searching functionality, updating becomes a walk in the park, grab your old node with a search then change a data value on it. BOOM.</p>
+            <h5>Removal</h5>
+            <p>Removal of nodes is a bit trickier because of a few edge cases but the general procedure is simple enough - you grab the node before the one you want to remove, and the one after it. You set the before node’s next pointer (reference) to the after node, and that’s it. Make sure you’re removal handles removing the head and the tail node well.</p>
+          </section>
+          <section>
+            <h2>Why Linked Lists?</h2>
+            <p>Because nobody wanted to carry around 20 pidgeons of course!</p>
+            <p>It’s all about choosing the appropriate data structure for you needs. For JS arrays normally do just fine especially considering that they’re actually dynamic arrays but linked lists do you give better insertion times. <a href="https://en.wikipedia.org/wiki/Linked_list#Tradeoffs">Check this out for an in-depth comparison.</a></p>
+            <p>Also if you haven't coded in lower-level languages that make you do your own memory management (and or don't have dynamic arrays by default, *cough*cough* LOOKING AT YOU C) then just keep a note in the back of your head in case you do wind up writing some C code because they're quite useful.</p>
+            <script src="https://gist.github.com/EricGlover/ca7a5a1c298594a6a2a07dd2d12e997a.js"></script>
+            <h5>Further Features</h5>
+            <p>Try implementing some further features like reversing the direction of your list || maybe some linked list variants (circular lists, doubly-linked lists) || try implementing cycle detection!</p>
+            <h5>General Implemenation Advice</h5>
+            <p>For reversal do an inplace reverse (try to just use the existing nodes without making a separate copy of your linked list).</p>
+            <p>Keep a length property on your list.</p>
+            <p>Add a toString() for easy printing. - Shout out to <a href="https://willt.codes/">Will Timpson</a> for that pro-tip</p>
+            <p>If you need to grab three different nodes don’t call a search function three separate times, that’s just silly.</p>
+          </section>
+          <section>
+            <h2>Here's my implementation</h2>
+            <p>There's a test script that you can run at the bottom if you're so inclined.</p>
+            <h2>DA CODE</h2>
+            <script src="https://gist.github.com/EricGlover/ded69d86d14afbb3979fef4dc806d06e.js"></script>
+          </section>
+        </article>
+      </main>
+      <footer>
+        {{>blogLinks}}
+      </footer>
     </main>
-    <footer>
-      {{>blogLinks}}
-    </footer>
-  </main>
-  <!-- <aside class="col-1 col-sm2 col-lg-2">
-    <p>things over here!!!!!</p>
-  </aside> -->
+  </div>
 </div>

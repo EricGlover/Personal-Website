@@ -5,4 +5,19 @@
   .blog-post-card .card-body {
     min-height: 8rem; }
 
+body {
+  background-color: lemonchiffon; }
+
+header {
+  padding: 20px; }
+
+section {
+  background-color: aliceblue;
+  border: thin solid lemonchiffon;
+  padding: 10px; }
+  section #title,
+  section h3 {
+    padding: 20px;
+    text-decoration: underline; }
+
 /*# sourceMappingURL=blog.css.map */

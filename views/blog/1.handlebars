@@ -1,36 +1,39 @@
-<!-- Main content -->
-<main id='main-wrapper'>
+<div class="container-fluid">
+  <!-- Main content -->
+  <main id='main-wrapper'>
 
-  <article class='post'>
-    <header>
-      <h2>Quick HTML CSS Tip</h2>
-      <h4>To make the HTML nightmares go away</h4>
-      <h5 id='detail'>Date : 7/16/17 </h5>
-    </header>
-    <section>
-      <p>When I first began learning HTML / CSS it was an absolute nightmare. My navbars looked like jumbled cubes, my images hovered over each other, and the thought of someone viewing the site from a screen with different dimensions....oh gahd.</p>
-      <p>If you're beginning to hallucinate div repositioning themselves in your sleep, perhaps this will help ease your mind.</p>
-    </section>
-    <section>
-      <h3>Close Your Eyes to EVERYTHING but divs</h3>
-      <p>Yep. You probably just read a lot of tutorials about all the fabulous CSS styling properties but these will only distract you. They will confuse you to know end. So for the moment, let's just breakdown the problem a bit.</p>
-      <p>Whatever it is that your making, take a good look at it and sketch out the general layout. Nav bar here. Buttons on the left, links on the right. Main content of the page there. Etc.. Now recreate this layout with divs. Make some basic classes like .red .blue .green .box and so on. If you can get your boxes to recreate this page's layout you can do anything.</p>
-      <p>Make sure to start broad here, and then focus on the details - don't make divs for every button in the nav bar, just get a general navbar first then the rest of the page then add in all the details you want.</p>
-    </section>
-    <section>
-      <h3>Break down making the site into components.</h3>
-      <ul>The general flow
-        <li>--page layout (only use colored divs) </li>
-        <li>--component layout (again colored divs)    [keep track of these, put them in a scrap file or something]</li>
-        <li>--make components (flesh them out)    [keep track of these, put them in a scrap file or something]</li>
-        <li>--insert components into your pages</li>
-        <li>--make everything else</li>
-        <li>--add some style touch ups</li>
-        <li>--refactor</li>
-      </ul>
-    </section>
-  </article>
-  <footer>
-    {{>blogLinks}}
-  </footer>
-</main>
+    <article class='post'>
+      <header>
+        <h2>Quick HTML CSS Tip</h2>
+        <h4>To make the HTML nightmares go away</h4>
+        <h5 id='detail'>Date : 7/16/17 </h5>
+      </header>
+      <section>
+        <p>When I first began learning HTML / CSS it was an absolute nightmare. My navbars looked like jumbled cubes, my images hovered over each other, and the thought of someone viewing the site from a screen with different dimensions....oh gahd.</p>
+        <p>If you're beginning to hallucinate div repositioning themselves in your sleep, perhaps this will help ease your mind.</p>
+      </section>
+      <section>
+        <h3>Close Your Eyes to EVERYTHING but divs</h3>
+        <p>Yep. You probably just read a lot of tutorials about all the fabulous CSS styling properties but these will only distract you. They will confuse you to know end. So for the moment, let's just breakdown the problem a bit.</p>
+        <p>Whatever it is that your making, take a good look at it and sketch out the general layout. Nav bar here. Buttons on the left, links on the right. Main content of the page there. Etc.. Now recreate this layout with divs. Make some basic classes like .red .blue .green .box and so on. If you can get your boxes to recreate this page's layout you can do anything.</p>
+        <p>Make sure to start broad here, and then focus on the details - don't make divs for every button in the nav bar, just get a general navbar first then the rest of the page then add in all the details you want.</p>
+      </section>
+      <section>
+        <h3>Break down making the site into components.</h3>
+        <ul>The general flow
+          <li>--page layout (only use colored divs) </li>
+          <li>--component layout (again colored divs)    [keep track of these, put them in a scrap file or something]</li>
+          <li>--make components (flesh them out)    [keep track of these, put them in a scrap file or something]</li>
+          <li>--insert components into your pages</li>
+          <li>--make everything else</li>
+          <li>--add some style touch ups</li>
+          <li>--refactor</li>
+        </ul>
+      </section>
+    </article>
+    <footer>
+      {{>blogLinks}}
+    </footer>
+  </main>
+  
+</div>

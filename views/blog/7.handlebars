@@ -1,168 +1,167 @@
-<div class="row">
-  <!-- Main content -->
-  <main id='main-wrapper' class='col-12 col-sm-10 col-lg-10'>
-    <!-- Blog header -->
-    <header id='title' class='col-12'>
-      <!-- <h3>Blog</h3> -->
-      <!-- hero image here? -->
-    </header>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Main content -->
+    <main id='main-wrapper' class='col-12 col-sm-10 col-lg-10'>
+      <!-- Blog header -->
+      <header id='title' class='col-12'>
+        <!-- <h3>Blog</h3> -->
+        <!-- hero image here? -->
+      </header>
 
-    <!-- Post -->
-    <main>
-      <!-- general format -->
-      <article class='post'>
-        <header>
-          <h2>Using Generators / Iterators for Dates</h2>
-          <h5 id='detail'>Date : 9/11/17 </h5>
-        </header>
-        <section>
-          <h3>Intro </h3>
-          <p>Generator are rather fun. Dates are rather not fun. Let’s make Dates a little more fun by using Generators and Iterators.</p>
-          <p>If you haven't checked out Generators yet see the <a href="resources">resources</a> below for more info - really, check them out. I've just started playing around with them but they can do some very nifty things - <a href="http://exploringjs.com/es6/ch_generators.html#sec_generators-as-coroutines">LIKE using them for cooperative multitasking!</a></p>
-        </section>
-        <section>
-          <h3>Dates are wonky</h3>
-          <p>Honestly prime numbers make more sense to me than the calendar does. At least with primehood there’s two clear categories (composite numbers and prime numbers) and clear definitions - composites are composed of prime numbers, kinda like an array of prime factors [2, 3, 7] = 42. [fundamental theorem of arithmetic]. Best of all to find the next find number we have well defined rules we can follow. </p>
-          <p>prime n + 1 is the next integer that isn’t divisible by any previous primes (primes a_n … primes a_0)</p>
-          <p>Alas dates do not have such well defined rules, the calendar year is some kind of an odd consequence of our solar system and how we determined to organize us spinning around the sun. Fortunately for us, JS has a Date type which is tooled to handle all the messiness for us…kind of. </p>
-        </section>
-        <section>
-          <h3>Dates are too useful</h3>
-          <h5><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date">MDN Date</a></h5>
-          <p>We’ve all been there because when we have to use a Date we can never remember the dance of functions we need to get them to work how we need them to work. The Date type was built to be powerful enough to handle any use case which leaves us with a tool that has a ton of options and never quite the right one we need.</p>
-        </section>
-        <section>
-          <h3>My use case </h3>
-          <p>This week we were building a <a href="https://github.com/EricGlover/project_fideligard_spa">Stock Portfolio Simulater</a> in <a href="http://www.vikingcodeschool.com/">Viking Code School</a> and I needed to manipulate some api data into a more useful structure before I could pass it down to my front-end (which using the powers of React + Redux would really take care of itself once it had the appropriate data). The api I was using providing stock price data only for the days that the stock markets were in session, which is reasonable, but I needed to go in and add some data for all the missing dates.</p>
-          <h5>TL;DR :</h5>
-          <p>I needed to fill an array with data for every day of a given year, and have stock price data for that day.</p>
-        </section>
-        <section>
-          <h3>Dates as sequences</h3>
-          <p>To do so I decided to try out making a generator function for handling all the messy date nonsense. Why?? For one, as previously mentioned, they’re fun. We do get some pragmatic benefits as well, generators allow you to treat the dates like a sequence of values instead some abstract entity to be obeyed. For instance, now if you want to generate an array of Date objects for every day in 2016 you just write this:</p>
-{{>code code="//make an array of dates
-let date = genDate();
-const twenty16 = [...date];
-"}}
-          <p>You can also use this for infinite sequences, like <a href="#prime_generator">prime numbers.</a></p>
-{{>code code="var primes = primes();
-//I have a console.log embedding in the generator so we can print out all the prime numbers
-//(until node gives up, or I get bored of watching,
-//or (most likely) we run past Number.MAX_SAFE_INTEGER and everything becomes meaningless )
-[...primes];"}}
-          <h5>The main event: a Date generator</h5>
-          <p>Here’s my date generator</p>
-{{>code code="//a date generator that moves forward by one day by default
+      <!-- Post -->
+      <main>
+        <!-- general format -->
+        <article class='post'>
+          <header>
+            <h2>Using Generators / Iterators for Dates</h2>
+            <h5 id='detail'>Date : 9/11/17 </h5>
+          </header>
+          <section>
+            <h3>Intro </h3>
+            <p>Generator are rather fun. Dates are rather not fun. Let’s make Dates a little more fun by using Generators and Iterators.</p>
+            <p>If you haven't checked out Generators yet see the <a href="resources">resources</a> below for more info - really, check them out. I've just started playing around with them but they can do some very nifty things - <a href="http://exploringjs.com/es6/ch_generators.html#sec_generators-as-coroutines">LIKE using them for cooperative multitasking!</a></p>
+          </section>
+          <section>
+            <h3>Dates are wonky</h3>
+            <p>Honestly prime numbers make more sense to me than the calendar does. At least with primehood there’s two clear categories (composite numbers and prime numbers) and clear definitions - composites are composed of prime numbers, kinda like an array of prime factors [2, 3, 7] = 42. [fundamental theorem of arithmetic]. Best of all to find the next find number we have well defined rules we can follow. </p>
+            <p>prime n + 1 is the next integer that isn’t divisible by any previous primes (primes a_n … primes a_0)</p>
+            <p>Alas dates do not have such well defined rules, the calendar year is some kind of an odd consequence of our solar system and how we determined to organize us spinning around the sun. Fortunately for us, JS has a Date type which is tooled to handle all the messiness for us…kind of. </p>
+          </section>
+          <section>
+            <h3>Dates are too useful</h3>
+            <h5><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date">MDN Date</a></h5>
+            <p>We’ve all been there because when we have to use a Date we can never remember the dance of functions we need to get them to work how we need them to work. The Date type was built to be powerful enough to handle any use case which leaves us with a tool that has a ton of options and never quite the right one we need.</p>
+          </section>
+          <section>
+            <h3>My use case </h3>
+            <p>This week we were building a <a href="https://github.com/EricGlover/project_fideligard_spa">Stock Portfolio Simulater</a> in <a href="http://www.vikingcodeschool.com/">Viking Code School</a> and I needed to manipulate some api data into a more useful structure before I could pass it down to my front-end (which using the powers of React + Redux would really take care of itself once it had the appropriate data). The api I was using providing stock price data only for the days that the stock markets were in session, which is reasonable, but I needed to go in and add some data for all the missing dates.</p>
+            <h5>TL;DR :</h5>
+            <p>I needed to fill an array with data for every day of a given year, and have stock price data for that day.</p>
+          </section>
+          <section>
+            <h3>Dates as sequences</h3>
+            <p>To do so I decided to try out making a generator function for handling all the messy date nonsense. Why?? For one, as previously mentioned, they’re fun. We do get some pragmatic benefits as well, generators allow you to treat the dates like a sequence of values instead some abstract entity to be obeyed. For instance, now if you want to generate an array of Date objects for every day in 2016 you just write this:</p>
+            {{>code code="//make an array of dates
+            let date = genDate();
+            const twenty16 = [...date];
+            "}}
+            <p>You can also use this for infinite sequences, like <a href="#prime_generator">prime numbers.</a></p>
+            {{>code code="var primes = primes();
+            //I have a console.log embedding in the generator so we can print out all the prime numbers
+            //(until node gives up, or I get bored of watching,
+            //or (most likely) we run past Number.MAX_SAFE_INTEGER and everything becomes meaningless )
+            [...primes];"}}
+            <h5>The main event: a Date generator</h5>
+            <p>Here’s my date generator</p>
+            {{>code code="//a date generator that moves forward by one day by default
 
-////let date = genDate();
-////date.next(-1)   //moves it back a day
-const genDate = function*(startDate = '2016-01-01', endDate = '2017-01-01') {
-  startDate = new Date(startDate);
-  endDate = new Date(endDate);
-  let currentDate = startDate;
-  while (currentDate <= endDate) {
-    let injected = yield currentDate;
-    injected = injected || 1;
-    currentDate = new Date(
-      currentDate.setDate(currentDate.getDate() + injected)
-    );
-  }
-  return null;
-};"}}
-          <p>First off I set some defaults for the start and end Date and ensure that they are Date objects</p>
-          <p>Then the magic happens: we write a while loop so that later our date.next().value with be the next date in the calendar year</p>
-{{>code code="let injected = yield currentDate"}}
-          <p>We allow assign anything passed in our date.next(arg) to injected so that we can allow for custom behaviors. This was necessary in my case because I occasionally would have a date and need to search backwards through the calendar until I found a date that I had data for.</p>
-{{>code code="currentDate = new Date(
-  currentDate.setDate(currentDate.getDate() + injected)
-);"}}
-          <p>Last of all is the code dance required of us to set the current Date forward by a day - assuming injected = +1</p>
-          <p>The standardly useful things I've noticed that you can implement in all your generators are: 1. Setting starting and stopping points. 2. Assigning args passed in via next() to a variable to define either a new starting point or to change how you iterate through the sequence</p>
-        </section>
-        <section>
-          <h3>So what does it do???</h3>
-          <p>Check out this method to print out all the dates in 2016</p>
-{{>code code="//print all the dates out from startDate to endDate
-const printDates = () => {
-  let date = genDate();
-  let day;
-  while ((day = date.next().value)) {
-    console.log(day);
-  }
-};
-printDates();"}}
-          <p>While this code doesn’t do anything terribly useful the while-loop assignment pattern is pretty handy. Using this pattern we can easily search through our Date sequence until we find a particular date.</p>
-{{>code code="let dateIter = genDate(date, endDate);
-      let yesterday;
-      while (
-        (yesterday =
-	dateIter.next(-1)) !== stockData[tmpCounter])
-      ) {
-        //keep looking for a day we have data for
-        tmpCounter--;
-      }"}}
-          <p>Things get even crazier when you start adding <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/yield*">yield*</a> into the mix, for example you could write a generator that would give you all the Friday's falling on the 13th by delegating some responsiblities to the dateGen we have here.</p>
-        </section>
-        <section>
-          <h3 id='prime_generator'>Prime Generator</h3>
-          <p>Last but not least here's the generator I mentioned earlier. It doesn't work according to the rules for finding the next prime number that I mentioned before because doing so would lead to us storing the previous prime numbers. This tradeoff would increase it's speed significantly but it leads us away from the idea of using an iterator to represent an infinite sequence.</p>
-          <p>If you really wanted to find large swaths of prime numbers, or extremely large prime numbers quickly you'd use a <a href="https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes">sieve</a> anyway so I think brute force division checking is moderately appropriate.</p>
-{{>code code="//a Prime generator using iterators/generators,
-//finds by primes by brute force division checking
-//which is absymal but not a terrible method if you only needed one more prime
-//on occassion and not the next 10^5 primes, you get the idea
+            ////let date = genDate();
+            ////date.next(-1)   //moves it back a day
+            const genDate = function*(startDate = '2016-01-01', endDate = '2017-01-01') {
+              startDate = new Date(startDate);
+              endDate = new Date(endDate);
+              let currentDate = startDate;
+              while (currentDate <= endDate) {
+                let injected = yield currentDate;
+                injected = injected || 1;
+                currentDate = new Date(
+                currentDate.setDate(currentDate.getDate() + injected)
+                );
+              }
+              return null;
+            };"}}
+            <p>First off I set some defaults for the start and end Date and ensure that they are Date objects</p>
+            <p>Then the magic happens: we write a while loop so that later our date.next().value with be the next date in the calendar year</p>
+            {{>code code="let injected = yield currentDate"}}
+            <p>We allow assign anything passed in our date.next(arg) to injected so that we can allow for custom behaviors. This was necessary in my case because I occasionally would have a date and need to search backwards through the calendar until I found a date that I had data for.</p>
+            {{>code code="currentDate = new Date(
+            currentDate.setDate(currentDate.getDate() + injected)
+            );"}}
+            <p>Last of all is the code dance required of us to set the current Date forward by a day - assuming injected = +1</p>
+            <p>The standardly useful things I've noticed that you can implement in all your generators are: 1. Setting starting and stopping points. 2. Assigning args passed in via next() to a variable to define either a new starting point or to change how you iterate through the sequence</p>
+          </section>
+          <section>
+            <h3>So what does it do???</h3>
+            <p>Check out this method to print out all the dates in 2016</p>
+            {{>code code="//print all the dates out from startDate to endDate
+            const printDates = () => {
+              let date = genDate();
+              let day;
+              while ((day = date.next().value)) {
+                console.log(day);
+              }
+            };
+            printDates();"}}
+            <p>While this code doesn’t do anything terribly useful the while-loop assignment pattern is pretty handy. Using this pattern we can easily search through our Date sequence until we find a particular date.</p>
+            {{>code code="let dateIter = genDate(date, endDate);
+            let yesterday;
+            while (
+            (yesterday =
+            dateIter.next(-1)) !== stockData[tmpCounter])
+            ) {
+              //keep looking for a day we have data for
+              tmpCounter--;
+            }"}}
+            <p>Things get even crazier when you start adding <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/yield*">yield*</a> into the mix, for example you could write a generator that would give you all the Friday's falling on the 13th by delegating some responsiblities to the dateGen we have here.</p>
+          </section>
+          <section>
+            <h3 id='prime_generator'>Prime Generator</h3>
+            <p>Last but not least here's the generator I mentioned earlier. It doesn't work according to the rules for finding the next prime number that I mentioned before because doing so would lead to us storing the previous prime numbers. This tradeoff would increase it's speed significantly but it leads us away from the idea of using an iterator to represent an infinite sequence.</p>
+            <p>If you really wanted to find large swaths of prime numbers, or extremely large prime numbers quickly you'd use a <a href="https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes">sieve</a> anyway so I think brute force division checking is moderately appropriate.</p>
+            {{>code code="//a Prime generator using iterators/generators,
+            //finds by primes by brute force division checking
+            //which is absymal but not a terrible method if you only needed one more prime
+            //on occassion and not the next 10^5 primes, you get the idea
 
-function* primes(maxRange = Number.MAX_SAFE_INTEGER, numberOfPrimes = 1000) {
-  let prime = 2;
-  let count = 0;
-  let bruteCheck = number => {
-    if (!Number.isInteger(number)) return false;
-    if (number <= 1) return false;
-    if (number % 2 === 0) return false;
-    const m = Math.sqrt(number);
-    for (let i = 3; i <= m; i += 2) {
-      if (number % i === 0) return false;
-    }
-    return true;
-  };
-  while (prime <= maxRange && count <= numberOfPrimes) {
-    let injected;
-    if (bruteCheck(prime)) {
-      count++;
-      injected = yield console.log(prime) || prime;
-    }
-    prime = injected || ++prime;
-  }
-  return new Error('JS no math good, sorry');
-}
-var primes = primes();
-primes.next(); //=>2
-primes.next(); //=>3
-primes.next(); //=>5
-primes.next(1); //=>2
-primes.next(); //=>3
-primes.next(100); //=>101
-primes.next(11); //=>11
-let first1000primes = [...primes];
-"}}
-        </section>
-        <section>
-          <h5>Resources</h5>
-          <ul>
-            <li><a href="https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes">Sieves</a></li>
-            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators">MDN : iterators and generators</a></li>
-            <li><a href="https://ponyfoo.com/articles/es6-generators-in-depth">Pony Foo's article on Generators</a> a very nice introduction</li>
-            <li><a href="http://2ality.com/2015/03/es6-generators.html">Dr. Axel Rauschmayer's article on generators</a>, a little heavier post on generators</li>
-            <li><a href="http://exploringjs.com/es6/ch_generators.html">Dr. Axel Rauschmayer's chapter on Generators</a>, for a thorough expoloration of all things generating (seriously it's an insane guide)</li>
-          </ul>
-        </section>
-      </article>
+            function* primes(maxRange = Number.MAX_SAFE_INTEGER, numberOfPrimes = 1000) {
+              let prime = 2;
+              let count = 0;
+              let bruteCheck = number => {
+                if (!Number.isInteger(number)) return false;
+                if (number <= 1) return false;
+                if (number % 2 === 0) return false;
+                const m = Math.sqrt(number);
+                for (let i = 3; i <= m; i += 2) {
+                  if (number % i === 0) return false;
+                }
+                return true;
+              };
+              while (prime <= maxRange && count <= numberOfPrimes) {
+                let injected;
+                if (bruteCheck(prime)) {
+                  count++;
+                  injected = yield console.log(prime) || prime;
+                }
+                prime = injected || ++prime;
+              }
+              return new Error('JS no math good, sorry');
+            }
+            var primes = primes();
+            primes.next(); //=>2
+            primes.next(); //=>3
+            primes.next(); //=>5
+            primes.next(1); //=>2
+            primes.next(); //=>3
+            primes.next(100); //=>101
+            primes.next(11); //=>11
+            let first1000primes = [...primes];
+            "}}
+          </section>
+          <section>
+            <h5>Resources</h5>
+            <ul>
+              <li><a href="https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes">Sieves</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators">MDN : iterators and generators</a></li>
+              <li><a href="https://ponyfoo.com/articles/es6-generators-in-depth">Pony Foo's article on Generators</a> a very nice introduction</li>
+              <li><a href="http://2ality.com/2015/03/es6-generators.html">Dr. Axel Rauschmayer's article on generators</a>, a little heavier post on generators</li>
+              <li><a href="http://exploringjs.com/es6/ch_generators.html">Dr. Axel Rauschmayer's chapter on Generators</a>, for a thorough expoloration of all things generating (seriously it's an insane guide)</li>
+            </ul>
+          </section>
+        </article>
+      </main>
+      <footer>
+        {{>blogLinks}}
+      </footer>
     </main>
-    <footer>
-      {{>blogLinks}}
-    </footer>
-  </main>
-  <!-- <aside class="col-1 col-sm2 col-lg-2">
-    <p>things over here!!!!!</p>
-  </aside> -->
+  </div>  
 </div>
