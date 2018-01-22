@@ -1,13 +1,14 @@
-//the idea hear is we test using the canvas api
+//return time taken to run fn
+const benchmark = fn => {
+  const start = new Date();
+  fn();
+  const finish = new Date();
+  const elapsed = finish - start;
+};
+
+//the idea here is we test using the canvas api
 //to draw the mandelbrot set
-const depth = 100; //all cases pass at 100 for sure
-//
-// const complex = function(){
-//   return {
-//     r: 0,
-//     i: 0
-//   }
-// }
+const depth = 100; //all cases pass at 100 for sure, so far
 
 //check to see if c is in the mandlebrot set
 const isMandelbrot = (cR, cI) => {
@@ -42,6 +43,42 @@ const isMandelbrot = (cR, cI) => {
   }
   return true;
 };
+
+//given width in pixels and height in pixels
+//return a matrix of bools indicating if that pixel is part of
+//the mandelbrot set
+const makeMandelbrotPixels = (width, height) => {
+  //dimensions of our mandelbrot set
+  //x axis : [-2.5, 1]      [ = inclusive
+  //y axis : [-1, 1]
+  msWidth = 3.5;
+  msHeight = 2;
+  xRatio = 3.5 / width;
+  yRatio = 2 / height;
+
+  //make a 2d array of bools
+  pixels = Array(width)
+    .fill(0)
+    .map(row => Array(height).fill(false));
+  // console.log(pixels);
+  for (let x = 0; x < width; x++) {
+    for (let y = 0; y < height; y++) {
+      //translate pixels coordinates to mandelbrot coordinates
+      let mX = xRatio * x - 2.5;
+      let mY = yRatio * y - 1;
+      pixels[x][y] = isMandelbrot(mX, mY);
+    }
+  }
+  return pixels;
+};
+pix = makeMandelbrotPixels(35, 20);
+const print = arrDD => {
+  arrDD.forEach(row => {
+    str = row.reduce((str, el) => (str += String(el) + ","), "");
+    console.log(str);
+  });
+};
+print(pix);
 
 //TODO: setup some tests for pixels scaling
 //TODO: add some benchmarking

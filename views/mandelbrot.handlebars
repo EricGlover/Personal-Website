@@ -1,12 +1,82 @@
-<div class="container-fluid">
-  <p>test container</p>
+<!-- I'm a nasty individual, using styles tags...lol  -->
+<style>
+  body {
+    width: 100vw;
+    height: 100vh;
+  }
+  .container-fluid {
+    width: 100%;
+    height: 100%;
+  }
+  canvas {
+    border: 1px solid black;
+  }
+</style>
+<div class="container-fluid" id="wrapper">
+  <h1>Mandelbrot Set</h1>
+  <p>Fun Stats:</p>
+  <p id='mandlebrotTime'></p>
+  <!-- testing  -->
+  <script type="text/javascript" src="/javascripts/mandlebrot.js"></script>
+  <script type="text/javascript">
+    //make a canvas with some dynamic sizing
+    //returns the created canvas
+    const makeCanvas = () => {
+      //make it
+      let canvas = document.createElement('canvas')
+      //size it, try and preserve the aspect ratio
+      let aspectRatio = m.aspectRatio
+      let width = document.body.scrollWidth
+      let unit = width / aspectRatio[0]
+      let height = (() => {
+         let height = document.body.scrollHeight
+         if (height / aspectRatio[1] > unit ){
+           height = Math.floor(unit * aspectRatio[1])
+         }
+         return height
+      })()
+      canvas.width = width
+      canvas.height = height
+      //insert into the dom dom dom dooom
+      let wrap = document.getElementById('wrapper')
+      wrap.append(canvas)
+      //ship it
+      return canvas
+    }
+    //render the mandelbrot set
+    const drawMandel = (canvas) => {
+      // console.log(canvas.width, canvas.height)
+      const pixels = m.makeMandelbrotPixels(canvas.width, canvas.height)
+      const delay = 10
+      //get canvas ready
+      let ctx = canvas.getContext('2d');
+      ctx.fillStyle = 'rgb(0, 0, 0)';
+      //render it
+      pixels.forEach((row, i) => {
+        //making a slight animation for the painting
+        let fn = () => {
+          row.forEach((isM, j) => {
+            if (isM) {
+              ctx.fillRect(i, j, 1, 1)
+            }
+          })
+        }
+        setTimeout(fn, i * delay)
+      })
+    }
+    //return time taken to run fn
+    const benchmark = fn => {
+      const start = new Date();
+      fn();
+      const finish = new Date();
+      const elapsed = finish - start;
+      return elapsed
+    };
+    window.onload = () => {
+      let canvas = makeCanvas()
+      let fn = () => drawMandel(canvas)
+      let t = benchmark(fn)
+      console.log("drawMandel took ", t / 1000, " seconds")
+    }
+  </script>
 </div>
-
-<p>mandelbrot test commence</p>
-<p>mandelbrot test commence</p>
-<p>mandelbrot test commence</p>
-<p>mandelbrot test commence</p>
-<p>mandelbrot test commence</p>
-<p>mandelbrot test commence</p>
-<p>mandelbrot test commence</p>
-<p>mandelbrot test commence</p>
