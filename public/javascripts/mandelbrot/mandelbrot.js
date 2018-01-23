@@ -193,7 +193,3 @@ Mandelbrot.prototype.test = () => {
 
 const printOverview = (c, i) =>
   console.log(`case ${i}: ${c.failed ? "FAIL" : "Pass"}`);
-
-// test();
-//what we're going to export
-const m = new Mandelbrot();
