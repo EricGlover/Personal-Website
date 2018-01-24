@@ -1,6 +1,13 @@
+//TODO: ADD COLORING
+//TODO: EXPERIMENT WITH DIFFERENT ALGORITHMS
+//TODO: consider throwing this on the backend and doing some caching,
+///////of course that kind of defeats the point
+//TODO: consider rendering as you test
+
 //the idea here is we test using the canvas api
 //to draw the mandelbrot set
 // const depth = 100; //all cases pass at 100 for sure, so far
+//80 seems fine //100 is better
 
 const Mandelbrot = function() {
   this.depth = 100; //all cases pass at 100 for sure, so far
@@ -69,6 +76,64 @@ Mandelbrot.prototype.makeMandelbrotPixels = function(width, height) {
     }
   }
   return pixels;
+};
+//return only pixels in the set, return when complete or when timeAllotted runs out
+Mandelbrot.prototype.pixelPatcher = function*(
+  width,
+  height,
+  timeAllotted = 100
+) {
+  //dimensions of our mandelbrot set
+  //x axis : [-2.5, 1]      [ = inclusive
+  //y axis : [-1, 1]
+  const msWidth = 3.5;
+  const msHeight = 2;
+  const xRatio = 3.5 / width;
+  const yRatio = 2 / height;
+  let pixels = [];
+  let start = new Date();
+
+  for (let x = 0; x < width; x++) {
+    for (let y = 0; y < height; y++) {
+      //translate pixels coordinates to mandelbrot coordinates
+      let mX = xRatio * x - 2.5;
+      let mY = yRatio * y - 1;
+      if (this.isMandelbrot(mX, mY)) {
+        pixels.push([x, y]);
+      }
+    }
+    //time to check in
+    let now = new Date();
+    if (timeAllotted > now - start) {
+      //if past due then throw our results
+      yield pixels;
+      //reset things
+      pixels = [];
+      start = new Date();
+    }
+  }
+  return;
+};
+
+//
+Mandelbrot.prototype.pixelGenerator = function*(width, height) {
+  //dimensions of our mandelbrot set
+  //x axis : [-2.5, 1]      [ = inclusive
+  //y axis : [-1, 1]
+  msWidth = 3.5;
+  msHeight = 2;
+  xRatio = 3.5 / width;
+  yRatio = 2 / height;
+
+  for (let x = 0; x < width; x++) {
+    for (let y = 0; y < height; y++) {
+      //translate pixels coordinates to mandelbrot coordinates
+      let mX = xRatio * x - 2.5;
+      let mY = yRatio * y - 1;
+      yield [x, y, this.isMandelbrot(mX, mY)];
+    }
+  }
+  return;
 };
 // pix = makeMandelbrotPixels(35, 20);
 // const print = arrDD => {
