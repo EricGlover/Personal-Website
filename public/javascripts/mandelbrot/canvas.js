@@ -7,7 +7,7 @@
 const makeCanvas = (aspectRatio, width, height) => {
   //make it
   let canvas = document.createElement("canvas");
-
+  canvas.classList.add("background");
   //try to size it to use maximal amount of width
   //size it, try and preserve the aspect ratio
 
@@ -28,13 +28,14 @@ const makeCanvas = (aspectRatio, width, height) => {
   }
   canvas.width = width;
   canvas.height = height;
-  //insert into the dom dom dom dooom
+  //insert canvas into the dom dom dom dooom
   let wrap = document.getElementById("wrapper");
   wrap.append(canvas);
   //ship it
   return canvas;
 };
 
+//NOTE: this has a lot of different rendering methods stored
 //render the mandelbrot set
 const drawMandel = (canvas, mandelbrotSet) => {
   const weirdRender = (canvas, mandelbrotSet) => {
@@ -132,6 +133,70 @@ const drawMandel = (canvas, mandelbrotSet) => {
           nextRun = runMaker();
           //weave in some downtime
           setTimeout(nextRun, timeBetween);
+        } else {
+          //TODO:
+          //add some promise resolving for timing
+        }
+      };
+    };
+    nextRun = runMaker();
+    setTimeout(nextRun, timeBetween);
+  };
+  //same thing as patch work but it gradually increases
+  //the iterations
+  const multiplePassRender = (canvas, mandelbrotSet) => {
+    let ctx = canvas.getContext("2d");
+    ctx.fillStyle = "rgb(0, 0, 0)";
+    let pixels = [];
+    let current;
+    let timeBetween = 10;
+    let nextRun;
+    let i = 0;
+    let iterations = [16, 32, 64, 128, 256, 512, 1024, 2048];
+    let currentIteration = 0;
+    mandelbrotSet.depth = iterations[currentIteration];
+    let iter = mandelbrotSet.pixelPatcher2(canvas.width, canvas.height, 500);
+
+    let runMaker = () => {
+      i++;
+      return () => {
+        //complete a run
+        if (!(current = iter.next()).done) {
+          pixels = current.value;
+          for (let x in pixels) {
+            for (let y in pixels[x]) {
+              if (pixels[x][y]) {
+                ctx.fillStyle = "rgb(0,0,0)";
+                ctx.fillRect(x, y, 1, 1);
+              } else {
+                ctx.fillStyle = "rgb(255,255,255)";
+                ctx.fillRect(x, y, 1, 1);
+              }
+            }
+          }
+          //create the next function to run
+          nextRun = runMaker();
+          //weave in some downtime
+          setTimeout(nextRun, timeBetween);
+        } else {
+          currentIteration++;
+          if (currentIteration + 1 > iterations.length) {
+            //we're done
+            console.log("done");
+            //TODO:
+            //add some promise resolving for timing
+          } else {
+            console.log(`current depth = ${iterations[currentIteration]}`);
+            mandelbrotSet.depth = iterations[currentIteration];
+            iter = mandelbrotSet.pixelPatcher2(
+              canvas.width,
+              canvas.height,
+              800
+            );
+            nextRun = runMaker();
+            //weave in some downtime
+            setTimeout(nextRun, timeBetween);
+          }
         }
       };
     };
@@ -141,7 +206,8 @@ const drawMandel = (canvas, mandelbrotSet) => {
   // sweep(canvas, mandelbrotSet);
   // realTimeRender(canvas, mandelbrotSet);
   // weirdRender(canvas, mandelbrotSet);
-  patchWorkDraw(canvas, mandelbrotSet);
+  // patchWorkDraw(canvas, mandelbrotSet);
+  multiplePassRender(canvas, mandelbrotSet);
 };
 
 //return time taken to run fn
@@ -191,6 +257,7 @@ window.onload = () => {
   const draw = () => {
     //make the canvas, make and render the mandelbrot set
     //and benchmark I suppose
+    // let res = benchmark(() => makeCanvas(m.aspectRatio, 2000, 1000)); //kills computer :(
     let res = benchmark(() => makeCanvas(m.aspectRatio));
     canvas = res[1];
     console.log(`make canvas took ${res[0] / 1000} seconds`);
@@ -211,7 +278,8 @@ window.onload = () => {
   //     this.el.val(value)
   //   }
   // }
-  const ui = () => {
+  //IIFE  ftw
+  const ui = (() => {
     //hook up the UI functionality
     //set the current stats
     // return {
@@ -243,13 +311,15 @@ window.onload = () => {
         `It took ${timeTaken / 1000} seconds to make the mandelbrot set`
       );
     };
-  };
+  })();
   //first render
   draw();
   ui();
 
   //redraw button
   $("#redrawButton").click(e => {
+    //remove old canvas
+    $("canvas").remove();
     draw();
     ui();
   });

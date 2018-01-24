@@ -1,4 +1,6 @@
 //TODO: ADD COLORING
+//TODO: ADD CHANGING OUR LOCATION ON COMPLEX PLANE
+//TODO: MAKE MULTIPLE RESOLUTIONS
 //TODO: EXPERIMENT WITH DIFFERENT ALGORITHMS
 //TODO: consider throwing this on the backend and doing some caching,
 ///////of course that kind of defeats the point
@@ -77,6 +79,7 @@ Mandelbrot.prototype.makeMandelbrotPixels = function(width, height) {
   }
   return pixels;
 };
+
 //return only pixels in the set, return when complete or when timeAllotted runs out
 Mandelbrot.prototype.pixelPatcher = function*(
   width,
@@ -115,7 +118,53 @@ Mandelbrot.prototype.pixelPatcher = function*(
   return;
 };
 
-//
+//return both in set and out of set,
+//return when complete or when timeAllotted runs out
+Mandelbrot.prototype.pixelPatcher2 = function*(
+  width,
+  height,
+  timeAllotted = 100
+) {
+  //dimensions of our mandelbrot set
+  //x axis : [-2.5, 1]      [ = inclusive
+  //y axis : [-1, 1]
+  const msWidth = 3.5;
+  const msHeight = 2;
+  const xRatio = 3.5 / width;
+  const yRatio = 2 / height;
+  let pixels = {};
+  let start = new Date();
+
+  for (let x = 0; x < width; x++) {
+    for (let y = 0; y < height; y++) {
+      //translate pixels coordinates to mandelbrot coordinates
+      let mX = xRatio * x - 2.5;
+      let mY = yRatio * y - 1;
+      if (this.isMandelbrot(mX, mY)) {
+        if (!pixels[x]) {
+          pixels[x] = {};
+        }
+        pixels[x][y] = true;
+      } else {
+        if (!pixels[x]) {
+          pixels[x] = {};
+        }
+        pixels[x][y] = false;
+      }
+    }
+    //time to check in
+    let now = new Date();
+    if (timeAllotted > now - start) {
+      //if past due then throw our results
+      yield pixels;
+      //reset things
+      pixels = {};
+      start = new Date();
+    }
+  }
+  return;
+};
+//yields a pixel at a time
 Mandelbrot.prototype.pixelGenerator = function*(width, height) {
   //dimensions of our mandelbrot set
   //x axis : [-2.5, 1]      [ = inclusive
@@ -135,14 +184,6 @@ Mandelbrot.prototype.pixelGenerator = function*(width, height) {
   }
   return;
 };
-// pix = makeMandelbrotPixels(35, 20);
-// const print = arrDD => {
-//   arrDD.forEach(row => {
-//     str = row.reduce((str, el) => (str += String(el) + ","), "");
-//     console.log(str);
-//   });
-// };
-// print(pix);
 
 //TODO: setup some tests for pixels scaling
 //TODO: add some benchmarking
