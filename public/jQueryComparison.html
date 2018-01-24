@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Secret testgrounds</title>
+    <link href="http://www.ericglover.me" rel="canonical">
+    <title>Eric Glover</title>
+    <!-- jQuery & Popper.js b/c bootstrap-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <h1>A few benchmarks</h1>
+    <p></p>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <p>we're finding this div</p>
+        </div>
+        <div class='col-12' id="a">
+          <input type="number" name="b" value="100">
+          <input type="number" name="c" value="100">
+        </div>
+
+        <p>and then changing it's children's values</p>
+      </div>
+
+      <div class="" style="display: flex;">
+        <p>after 10e<input type="text" id="tries" name="tries" value="4"/>tries of this</p>
+      </div>
+      <p id='j'>jQuery tooK :</p>
+      <p id='d'>dom api took : </p>
+      <button type="button" id="retest" class="btn btn-primary" name="retest">Retest</button>
+      <h1 id='report'></h1>
+      <h1 id='average'>Average</h1>
+    </div>
+
+    <script type="text/javascript">
+    //return time taken to run fn
+const benchmark = fn => {
+  const start = new Date();
+  fn();
+  const finish = new Date();
+  const elapsed = finish - start;
+  return elapsed;
+};
+let tries = 10e4;
+const testD = () => {
+  let c;
+  let names = ["height", "width"];
+  for (let i = 0; i < tries; i++) {
+    c = document.getElementById("a");
+    c.children["b"].value = 0;
+    c.children["c"].value = 0;
+  }
+  console.log(`dom api found ${c}`);
+};
+const testJ = () => {
+  let c;
+  let names = ["height", "width"];
+  for (let i = 0; i < tries; i++) {
+    c = $("#a");
+    $(c.children()[0]).val(0);
+    $(c.children()[1]).val(0);
+    //alt method
+    // c.children().each(function() {
+    //   $(this).val(0);
+    // });
+  }
+  console.log(`jQuery found ${c}`);
+};
+const run = () => {
+  //silly benchmark test
+  let fn = () => testD();
+  let fn1 = () => testJ();
+  //dom api
+  let td = benchmark(fn);
+  document.getElementById("d").innerText = `dom api took ${td / 1000} seconds`;
+  //jQuery
+  let tj = benchmark(fn1);
+  $("#j").text(`jQuery took : ${tj / 1000} seconds`);
+  // console.log(`jQuery api took ${t / 1000}`);
+  $("#report").text(`dom api is ${Math.floor(tj / td)} times faster`);
+  return tj / td;
+};
+run();
+const findAverage = (trials = 10) => {
+  let total = 0;
+  for (let i = 0; i < trials; i++) {
+    total += run();
+  }
+  return total / trials;
+};
+let trials = 10;
+let av = findAverage(trials);
+$("#average").text(
+  `over ${trials} trials dom api is ${Math.floor(av)} times faster`
+);
+$("#retest").click(function(e) {
+  console.log("running");
+  console.log(tries);
+  //update tries
+  tries = 10 ** $("#tries").val();
+  run();
+});
+</script>
+
+  </body>
+</html>

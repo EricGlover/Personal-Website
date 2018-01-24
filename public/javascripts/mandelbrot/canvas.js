@@ -1,3 +1,5 @@
+//TODO: look into bundling these scripts together
+
 /*  drawing functions */
 
 //make a canvas with some dynamic sizing
@@ -32,6 +34,7 @@ const makeCanvas = (aspectRatio, width, height) => {
   //ship it
   return canvas;
 };
+
 //render the mandelbrot set
 const drawMandel = (canvas, mandelbrotSet) => {
   const pixels = mandelbrotSet.makeMandelbrotPixels(
@@ -55,6 +58,7 @@ const drawMandel = (canvas, mandelbrotSet) => {
     setTimeout(fn, i * delay);
   });
 };
+
 //return time taken to run fn
 const benchmark = fn => {
   const start = new Date();
@@ -63,64 +67,100 @@ const benchmark = fn => {
   const elapsed = finish - start;
   return elapsed;
 };
-
+let s;
 /* main entry point */
-
+const test = () => {
+  let statsUI = $("#canvasStats");
+  s = statsUI;
+  let obj = {
+    width: 0,
+    height: 0
+  };
+  //grab the values
+  statsUI.children().each(function(idx) {
+    console.log(`idx ${idx}, this ${this}`);
+    if (obj[this.name]) {
+      console.log("found ", this.name);
+      obj[this.name] = this.value;
+    }
+  });
+  //silly benchmark test
+  let fn = () => testD();
+  let fn1 = () => testJ();
+  let t = benchmark(fn);
+  console.log(`dom api took ${t / 1000}`);
+  t = benchmark(fn1);
+  console.log(`jQuery api took ${t / 1000}`);
+  return obj;
+};
+const tries = 10e4;
+const testD = () => {
+  let c;
+  let names = ["height", "width"];
+  for (let i = 0; i < tries; i++) {
+    c = document.getElementById("canvasStats");
+    c.children[names[0]].value = 0;
+    c.children[names[1]].value = 0;
+  }
+  console.log(`dom api found ${c}`);
+};
+const testJ = () => {
+  let c;
+  let names = ["height", "width"];
+  for (let i = 0; i < tries; i++) {
+    c = $("#canvasStats");
+    $(c.children()[0]).val(0);
+    $(c.children()[1]).val(0);
+    // c.children().each(function() {
+    //   $(this).val(0);
+    // });
+  }
+  console.log(`jQuery found ${c}`);
+};
 window.onload = () => {
+  let obj = test();
+  console.log(obj);
   //make our mandelbrot
   const m = new Mandelbrot();
-  console.log(m);
-  //make the canvas, make and render the mandelbrot set
-  //and benchmark I suppose
-  let canvas = makeCanvas(m.aspectRatio);
-  let fn = () => drawMandel(canvas, m);
-  let t = benchmark(fn);
-  console.log("drawMandel took ", t / 1000, " seconds");
-
-  //hook up the UI functionality
-  //set the current stats
-  let w = $("#statCanvasWidth");
-  let h = $("#statCanvasHeight");
-  h.text(`Canvas height : ${canvas.height}`);
-  w.text(`Canvas width : ${canvas.width}`);
-
-  //iteration depth
-  $("#statIterationDepth").text(`Iteration depth : ${m.depth}`);
-
-  //benchmark section
-  $("#statBenchmark").text(
-    `It took ${t / 1000} seconds to make the mandelbrot set`
-  );
-
-  //redraw button
-  $("#redrawButton").click(e => {
-    // draw()
+  //set up some variable for reuse
+  let canvas;
+  let timeTaken;
+  const draw = () => {
     //make the canvas, make and render the mandelbrot set
     //and benchmark I suppose
-    let canvas = makeCanvas(m.aspectRatio);
+    canvas = makeCanvas(m.aspectRatio);
     let fn = () => drawMandel(canvas, m);
-    let t = benchmark(fn);
-    console.log("drawMandel took ", t / 1000, " seconds");
-    // updateUI()
-
+    timeTaken = benchmark(fn);
+  };
+  const ui = () => {
     //hook up the UI functionality
     //set the current stats
     let w = $("#statCanvasWidth");
     let h = $("#statCanvasHeight");
-    h.text(`Canvas height : ${canvas.height}`);
-    w.text(`Canvas width : ${canvas.width}`);
+    let i = $("#statIterationDepth");
+    let timeUI = $("#statBenchmark");
+    return () => {
+      h.text(`Canvas height : ${canvas.height}`);
+      w.text(`Canvas width : ${canvas.width}`);
+      //iteration depth
+      i.text(`Iteration depth : ${m.depth}`);
+      //benchmark section
+      timeUI.text(
+        `It took ${timeTaken / 1000} seconds to make the mandelbrot set`
+      );
+    };
+  };
+  //first render
+  // draw();
+  // ui();
 
-    //iteration depth
-    $("#statIterationDepth").text(`Iteration depth : ${m.depth}`);
-
-    //benchmark section
-    $("#statBenchmark").text(
-      `It took ${t / 1000} seconds to make the mandelbrot set`
-    );
+  //redraw button
+  $("#redrawButton").click(e => {
+    draw();
+    ui();
   });
 
   //TODO: CLEAN / REFACTOR THIS NONSENSE LATER
   //TODO: MAKE INTO FORM
-  //TODO: ADD REDRAW FUNCTIONALITY
   //might as well make this into a form
 };

@@ -1,0 +1,61 @@
+<h1>A few benchmarks</h1>
+<p></p>
+<div class="container-fluid">
+  <div class="row">
+    <p>we're finding this div</p>
+    <div id="a">
+      <input type="number" name="b" value="100">
+      <input type="number" name="c" value="100">
+    </div>
+    <p>and then changing it's children's values</p>
+  </div>
+  <p>after 10e4 tries of this</p>
+  <p id='j'>jQuery tooK :</p>
+  <p id='d'>dom api took : </p>
+</div>
+
+<script type="text/javascript">
+  //return time taken to run fn
+  const benchmark = fn => {
+    const start = new Date();
+    fn();
+    const finish = new Date();
+    const elapsed = finish - start;
+    return elapsed;
+  };
+  const tries = 10e4;
+  const testD = () => {
+    let c;
+    let names = ["height", "width"];
+    for (let i = 0; i < tries; i++) {
+      c = document.getElementById("a");
+      c.children["b"].value = 0;
+      c.children["c"].value = 0;
+    }
+    console.log(`dom api found ${c}`);
+  };
+  const testJ = () => {
+    let c;
+    let names = ["height", "width"];
+    for (let i = 0; i < tries; i++) {
+      c = $("#a");
+      $(c.children()[0]).val(0);
+      $(c.children()[1]).val(0);
+      //alt method
+      // c.children().each(function() {
+      //   $(this).val(0);
+      // });
+    }
+    console.log(`jQuery found ${c}`);
+  };
+  //silly benchmark test
+  let fn = () => testD();
+  let fn1 = () => testJ();
+  let t = benchmark(fn);
+  // console.log(`dom api took ${t / 1000}`);
+  $("#j").text(`jQuery took : ${t / 1000} seconds`)
+  t = benchmark(fn1);
+  document.getElementById("d").innerText = `dom api took ${t / 1000} seconds`
+  // console.log(`jQuery api took ${t / 1000}`);
+
+</script>

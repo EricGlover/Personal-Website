@@ -14,7 +14,6 @@
 </style>
 <div class="container-fluid" id="wrapper">
   <h1>Mandelbrot Set</h1>
-  <p>Fun Stats:</p>
   <div class="row">
     <div class="col-12">
       <h1>Fun Stats</h1>
@@ -33,7 +32,16 @@
       <button id="redrawButton" type="button" class='btn btn-primary'>re-draw</button>
     </div>
   </div>
-  <p id='mandlebrotTime'></p>
+  <div class="row">
+    <div class="col-12">
+      <h1>Fun Stats</h1>
+    </div>
+    <div class="col-3" id='canvasStats'>
+      <input type="number" name="height" value="200">
+      <input type="number" name="width" value="350">
+    </div>
+  </div>
+  <p id='mandelbrotTime'></p>
   <!-- load the mandelbrot functionality -->
   <script type="text/javascript" src="/javascripts/mandelbrot/mandelbrot.js"></script>
   <!-- load the rendering script -->
