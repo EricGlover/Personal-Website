@@ -26,7 +26,8 @@ const {
   blogRouter,
   projectRouter,
   testRouter,
-  loaderRouter
+  loaderRouter,
+  experimentRouter
 } = require("./routers");
 
 //what is this ?
@@ -36,6 +37,7 @@ app.use(logger("dev"));
 app.use("/blog", blogRouter);
 app.use("/projects", projectRouter);
 app.use("/test", testRouter);
+app.use("/x", experimentRouter);
 app.use(loaderFileURL, loaderRouter);
 app.use("/", indexRouter);
 

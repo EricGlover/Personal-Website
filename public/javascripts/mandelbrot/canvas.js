@@ -1,5 +1,8 @@
 //TODO: look into bundling these scripts together
-
+//TODO: relook at the imageData canvas stuff
+//TODO: AFTER ADDING COLOR ADD, ATTEMPT TO SPEED IT UP
+//THEN ADD IT AS MY NEW BACKGROUND IMAGE
+let zzz = 0;
 /*  drawing functions */
 
 //make a canvas with some dynamic sizing
@@ -38,6 +41,61 @@ const makeCanvas = (aspectRatio, width, height) => {
 //NOTE: this has a lot of different rendering methods stored
 //render the mandelbrot set
 const drawMandel = (canvas, mandelbrotSet) => {
+  // inSet
+  // const Color = (r, g, b, a) => {
+  //   this.red = r;
+  //   this.green = g;
+  //   this.blue = b;
+  //   this.alpha = a;
+  // };
+  const Color = function(r, g, b, a) {
+    this.red = r;
+    this.green = g;
+    this.blue = b;
+    this.alpha = a;
+  };
+
+  const colorPicker = (() => {
+    //colors ... hide them from ns
+    const alpha = 255;
+    const white = new Color(0, 0, 0, 0);
+    const blue = new Color(25, 169, 252, alpha);
+    const red = new Color(220, 0, 0, alpha);
+    const gold = new Color(243, 247, 12, alpha - 100);
+    const gold2 = new Color(243, 247, 12, alpha);
+    const black = new Color(0, 0, 0, 255);
+    // const black = gold;
+
+    //picker function
+    return iteration => {
+      if (iteration === true) {
+        return black;
+      } else if (typeof iteration !== "number") {
+        console.error(
+          `colorPicker error iteration should be true or a number : ${iteration}`
+        );
+      }
+
+      if (iteration < 3) {
+        return blue;
+      } else if (iteration < 10) {
+        return white;
+      } else if (iteration < 20) {
+        return red;
+      } else if (iteration < 30) {
+        return gold;
+      } else if (iteration < 80) {
+        return gold2;
+      }
+      return black;
+    };
+  })();
+
+  // //color scheme , color [rgba]
+  // const colors = {
+  //   10:
+  // }
+
   const weirdRender = (canvas, mandelbrotSet) => {
     let ctx = canvas.getContext("2d");
     ctx.fillStyle = "rgb(0,0,0)";
@@ -146,60 +204,96 @@ const drawMandel = (canvas, mandelbrotSet) => {
   //the iterations
   const multiplePassRender = (canvas, mandelbrotSet) => {
     let ctx = canvas.getContext("2d");
-    ctx.fillStyle = "rgb(0, 0, 0)";
+    // ctx.fillStyle = "rgb(0, 0, 0)";
+    // let imgData;
     let pixels = [];
     let current;
     let timeBetween = 10;
     let nextRun;
-    let i = 0;
+    let i = 0; //?
     let iterations = [16, 32, 64, 128, 256, 512, 1024, 2048];
     let currentIteration = 0;
     mandelbrotSet.depth = iterations[currentIteration];
-    let iter = mandelbrotSet.pixelPatcher2(canvas.width, canvas.height, 500);
+    let timeAllotted = 500;
+    let genFn = mandelbrotSet.pixelPatcherColor;
+    let iter = genFn(canvas.width, canvas.height, timeAllotted);
+    let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-    let runMaker = () => {
+    //here's the crux of our cooperative routine
+    const runMaker = () => {
       i++;
       return () => {
-        //complete a run
-        if (!(current = iter.next()).done) {
-          pixels = current.value;
-          for (let x in pixels) {
-            for (let y in pixels[x]) {
-              if (pixels[x][y]) {
-                ctx.fillStyle = "rgb(0,0,0)";
-                ctx.fillRect(x, y, 1, 1);
-              } else {
-                ctx.fillStyle = "rgb(255,255,255)";
-                ctx.fillRect(x, y, 1, 1);
-              }
-            }
-          }
-          //create the next function to run
-          nextRun = runMaker();
-          //weave in some downtime
-          setTimeout(nextRun, timeBetween);
-        } else {
+        //get the next batch of pixels from our generator
+        current = iter.next();
+
+        //if we've completed all the pixels needed at this depth / iteration
+        //level for the mandelbrot set
+        if (current.done) {
           currentIteration++;
-          if (currentIteration + 1 > iterations.length) {
-            //we're done
+          if (currentIteration > iterations.length - 1) {
+            //we're done, we've gone through all the iterations
             console.log("done");
             //TODO:
             //add some promise resolving for timing
           } else {
+            //set up a new run
             console.log(`current depth = ${iterations[currentIteration]}`);
             mandelbrotSet.depth = iterations[currentIteration];
-            iter = mandelbrotSet.pixelPatcher2(
-              canvas.width,
-              canvas.height,
-              800
-            );
+            iter = genFn(canvas.width, canvas.height, timeAllotted);
             nextRun = runMaker();
             //weave in some downtime
             setTimeout(nextRun, timeBetween);
           }
         }
+
+        //if the we haven't run through all the pixels
+        if (!current.done) {
+          pixels = current.value;
+          imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          // let imgData = ctx.createImageData(canvas.width, canvas.height);
+          //old method of using fillRect, works but attempting to imageData now
+          // for (let x in pixels) {
+          //   for (let y in pixels[x]) {
+          //     if (pixels[x][y]) {
+          //       ctx.fillStyle = "rgb(0,0,0)";
+          //       ctx.fillRect(x, y, 1, 1);
+          //     } else {
+          //       ctx.fillStyle = "rgb(255,255,255)";
+          //       ctx.fillRect(x, y, 1, 1);
+          //     }
+          //   }
+          // }
+
+          // manipulate some pixels
+          let data = imgData.data;
+          const bytesPerPixel = 4;
+          //iterate over the pixels we completed
+          for (let x in pixels) {
+            for (let y in pixels[x]) {
+              //transform our x,y coords in the index in the pixel array
+              let idx =
+                (y - 1) * bytesPerPixel * canvas.width +
+                (x - 1) * bytesPerPixel; //is it 0 based
+              //if pixel is in set color black
+              let color = colorPicker(pixels[x][y]);
+              //set color
+              data[idx] = color.red;
+              data[idx + 1] = color.green;
+              data[idx + 2] = color.blue;
+              data[idx + 3] = color.alpha;
+            }
+          }
+          // //render
+          ctx.putImageData(imgData, 0, 0);
+          //create the next function to run
+          nextRun = runMaker();
+          //weave in some downtime
+          setTimeout(nextRun, timeBetween);
+        }
       };
-    };
+    }; //end of runMaker()
+
+    //make our function and set it to run soon
     nextRun = runMaker();
     setTimeout(nextRun, timeBetween);
   };

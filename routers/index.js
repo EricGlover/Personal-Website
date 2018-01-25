@@ -13,5 +13,6 @@ module.exports = {
   loaderRouter: require("./loader"),
   blogRouter: require("./blog"),
   projectRouter: require("./projects"),
-  testRouter: require("./test")
+  testRouter: require("./test"),
+  experimentRouter: require("./experiment")
 };
