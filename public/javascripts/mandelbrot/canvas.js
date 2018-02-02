@@ -1,8 +1,16 @@
+/* utility functions */
+//arr1, arr2 => Map(arr1[i] => arr2[i], ...)
+const mapper = (keys, values) => {
+  let m = new Map();
+  keys.forEach((key, i) => {
+    m.set(key, values[i]);
+  });
+  return m;
+};
+
 //TODO: look into bundling these scripts together
-//TODO: relook at the imageData canvas stuff
-//TODO: AFTER ADDING COLOR ADD, ATTEMPT TO SPEED IT UP
+//TODO: ATTEMPT TO SPEED IT UP
 //THEN ADD IT AS MY NEW BACKGROUND IMAGE
-let zzz = 0;
 /*  drawing functions */
 
 //make a canvas with some dynamic sizing
@@ -41,13 +49,8 @@ const makeCanvas = (aspectRatio, width, height) => {
 //NOTE: this has a lot of different rendering methods stored
 //render the mandelbrot set
 const drawMandel = (canvas, mandelbrotSet) => {
-  // inSet
-  // const Color = (r, g, b, a) => {
-  //   this.red = r;
-  //   this.green = g;
-  //   this.blue = b;
-  //   this.alpha = a;
-  // };
+  //
+  //color constructor
   const Color = function(r, g, b, a) {
     this.red = r;
     this.green = g;
@@ -55,8 +58,10 @@ const drawMandel = (canvas, mandelbrotSet) => {
     this.alpha = a;
   };
 
+  //colorPicker, given some iteration value return the corresponding color
   const colorPicker = (() => {
-    //colors ... hide them from ns
+    //first we make our colors
+    //then we'll return a picker function
     const alpha = 255;
     const white = new Color(0, 0, 0, 0);
     const blue = new Color(25, 169, 252, alpha);
@@ -64,7 +69,20 @@ const drawMandel = (canvas, mandelbrotSet) => {
     const gold = new Color(243, 247, 12, alpha - 100);
     const gold2 = new Color(243, 247, 12, alpha);
     const black = new Color(0, 0, 0, 255);
+
+    //color scheme #2
+    const pink = new Color(253, 0, 255, alpha);
+    const yellow = new Color(253, 255, 0, alpha);
+    const lime = new Color(0, 255, 56, alpha);
+    const cyan = new Color(0, 249, 255, alpha);
+    const navy = new Color(60, 0, 255, alpha);
+
+    const colors = [white, pink, cyan, gold, red, navy, gold2, blue];
     // const black = gold;
+    const iterations = [16, 32, 64, 128, 256, 512, 1024, 2048];
+    // const colors = [blue, white, red, gold, gold2];
+    //tie the two arrays together in a map, iterate over it later
+    const colorMap = mapper(iterations, colors);
 
     //picker function
     return iteration => {
@@ -75,27 +93,16 @@ const drawMandel = (canvas, mandelbrotSet) => {
           `colorPicker error iteration should be true or a number : ${iteration}`
         );
       }
-
-      if (iteration < 3) {
-        return blue;
-      } else if (iteration < 10) {
-        return white;
-      } else if (iteration < 20) {
-        return red;
-      } else if (iteration < 30) {
-        return gold;
-      } else if (iteration < 80) {
-        return gold2;
+      for (let [num, color] of colorMap.entries()) {
+        if (iteration < num) {
+          return color;
+        }
       }
       return black;
     };
   })();
 
-  // //color scheme , color [rgba]
-  // const colors = {
-  //   10:
-  // }
-
+  //an accidental render function
   const weirdRender = (canvas, mandelbrotSet) => {
     let ctx = canvas.getContext("2d");
     ctx.fillStyle = "rgb(0,0,0)";
@@ -120,6 +127,7 @@ const drawMandel = (canvas, mandelbrotSet) => {
     }
   };
 
+  //
   const realTimeRender = (canvas, mandelbrotSet) => {
     let ctx = canvas.getContext("2d");
     ctx.fillStyle = "rgb(0,0,0)";
@@ -140,6 +148,8 @@ const drawMandel = (canvas, mandelbrotSet) => {
       }
     }
   };
+
+  //?
   const sweep = (canvas, mandelbrotSet) => {
     const pixels = mandelbrotSet.makeMandelbrotPixels(
       canvas.width,
@@ -151,11 +161,6 @@ const drawMandel = (canvas, mandelbrotSet) => {
     ctx.fillStyle = "rgb(0, 0, 0)";
     //render it
     pixels.forEach((row, i) => {
-      // row.forEach((isM, j) => {
-      //   if (isM) {
-      //     ctx.fillRect(i, j, 1, 1);
-      //   }
-      // });
       // //making a slight animation for the painting
       let fn = () => {
         row.forEach((isM, j) => {
@@ -168,6 +173,7 @@ const drawMandel = (canvas, mandelbrotSet) => {
     });
   };
   //holy shit this works
+  //uses cooperative runtimes or whatever
   const patchWorkDraw = (canvas, mandelbrotSet) => {
     let ctx = canvas.getContext("2d");
     ctx.fillStyle = "rgb(0, 0, 0)";
@@ -202,10 +208,9 @@ const drawMandel = (canvas, mandelbrotSet) => {
   };
   //same thing as patch work but it gradually increases
   //the iterations
-  const multiplePassRender = (canvas, mandelbrotSet) => {
+  //now uses imageData instead of fillRect
+  const multiplePassRender = (canvas, mandelbrotSet, resolve) => {
     let ctx = canvas.getContext("2d");
-    // ctx.fillStyle = "rgb(0, 0, 0)";
-    // let imgData;
     let pixels = [];
     let current;
     let timeBetween = 10;
@@ -235,6 +240,7 @@ const drawMandel = (canvas, mandelbrotSet) => {
             console.log("done");
             //TODO:
             //add some promise resolving for timing
+            if (resolve) resolve();
           } else {
             //set up a new run
             console.log(`current depth = ${iterations[currentIteration]}`);
@@ -297,6 +303,9 @@ const drawMandel = (canvas, mandelbrotSet) => {
     nextRun = runMaker();
     setTimeout(nextRun, timeBetween);
   };
+
+  //The actual call to the current render function being used
+  ////
   // sweep(canvas, mandelbrotSet);
   // realTimeRender(canvas, mandelbrotSet);
   // weirdRender(canvas, mandelbrotSet);

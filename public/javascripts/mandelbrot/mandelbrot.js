@@ -1,16 +1,13 @@
-//TODO: ADD COLORING
 //TODO: ADD CHANGING OUR LOCATION ON COMPLEX PLANE
 //TODO: MAKE MULTIPLE RESOLUTIONS
 //TODO: EXPERIMENT WITH DIFFERENT ALGORITHMS
 //TODO: consider throwing this on the backend and doing some caching,
 ///////of course that kind of defeats the point
-//TODO: consider rendering as you test
 
 //the idea here is we test using the canvas api
 //to draw the mandelbrot set
-// const depth = 100; //all cases pass at 100 for sure, so far
-//80 seems fine //100 is better
 
+//MANDELBROT CONSTRUCTOR
 const Mandelbrot = function() {
   //all cases pass at 100 for sure, so far
   this.depth = 100; //number of iterations
@@ -53,10 +50,10 @@ Mandelbrot.prototype.isMandelbrot = function(cR, cI) {
   };
 
   let z = [0, 0];
-  maxIterations = this.depth;
-  distance = 2 * 2;
+  const maxIterations = this.depth;
+  const distance = 2 * 2;
   for (let i = 0; i < maxIterations; i++) {
-    z = fn(...z, cR, cI);
+    z = fn(z[0], z[1], cR, cI);
     // console.log(`iteration ${i}: z is now ${z}`);
     if (z[0] * z[0] + z[1] * z[1] > distance) {
       return false;
@@ -88,10 +85,10 @@ Mandelbrot.prototype.inSet = function(cR, cI) {
   };
 
   let z = [0, 0];
-  maxIterations = this.depth;
-  distance = 2 * 2;
+  const maxIterations = this.depth;
+  const distance = 2 * 2;
   for (let i = 0; i < maxIterations; i++) {
-    z = fn(...z, cR, cI);
+    z = fn(z[0], z[1], cR, cI);
     if (z[0] * z[0] + z[1] * z[1] > distance) {
       return [false, i];
     }
