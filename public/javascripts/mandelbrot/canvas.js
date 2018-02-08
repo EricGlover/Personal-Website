@@ -1,3 +1,6 @@
+import("isomorphic-fetch");
+// require("isomorphic-fetch");
+
 /* utility functions */
 //arr1, arr2 => Map(arr1[i] => arr2[i], ...)
 const mapper = (keys, values) => {
@@ -79,20 +82,23 @@ const drawMandel = (canvas, mandelbrotSet) => {
 
     const colors = [white, pink, cyan, gold, red, navy, gold2, blue];
     // const black = gold;
-    const iterations = [16, 32, 64, 128, 256, 512, 1024, 2048];
+    // const iterations = [16, 32, 64, 128, 256, 512, 1024, 2048];
+    const iterations = [16, 24, 28, 44, 64, 128, 400, 512];
     // const colors = [blue, white, red, gold, gold2];
     //tie the two arrays together in a map, iterate over it later
     const colorMap = mapper(iterations, colors);
+    const flagValue = 0;
 
     //picker function
     return iteration => {
-      if (iteration === true) {
+      if (iteration === true || iteration === flagValue) {
         return black;
       } else if (typeof iteration !== "number") {
         console.error(
           `colorPicker error iteration should be true or a number : ${iteration}`
         );
       }
+      //find the smallest color greater than the escape iteration
       for (let [num, color] of colorMap.entries()) {
         if (iteration < num) {
           return color;
@@ -303,14 +309,68 @@ const drawMandel = (canvas, mandelbrotSet) => {
     nextRun = runMaker();
     setTimeout(nextRun, timeBetween);
   };
+  const renderFromAPI = async (canvas, mSet) => {
+    let ctx = canvas.getContext("2d");
+    let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    //
+    //then make a call to our go api
+    // let port = 8080;
+    let url = "/api/img";
+    let domain = "https://mandelbrot-fox.herokuapp.com";
+    const makeParams = obj => {
+      return Object.keys(obj)
+        .map(key => `${key}=${obj[key]}`)
+        .join("&");
+    };
+    const q = {
+      canvasWidth: canvas.width,
+      canvasHeight: canvas.height,
+      maxIterations: 100,
+      planeCoordinates: [1, 1, -1, -2]
+    };
+    const params = makeParams(q);
+    // console.log(`params = ${params}`);
+    const endpoint = "img";
+    // console.log(`${host}:${port}/api/${endpoint}?${params}`);
+    let res;
+    let pixels;
+    try {
+      res = await fetch(`${domain}/api/${endpoint}?${params}`);
+      pixels = await res.json();
+    } catch (e) {
+      console.error(e);
+    }
+    //
+    // manipulate some pixels
+    let data = imgData.data;
 
+    const bytesPerPixel = 4;
+    //iterate over the pixels we completed
+    for (let x in pixels) {
+      for (let y in pixels[x]) {
+        //transform our x,y coords in the index in the pixel array
+        let idx =
+          (y - 1) * bytesPerPixel * canvas.width + (x - 1) * bytesPerPixel; //is it 0 based
+        //if pixel is in set color black
+        let color = colorPicker(pixels[x][y]);
+        //set color
+        data[idx] = color.red;
+        data[idx + 1] = color.green;
+        data[idx + 2] = color.blue;
+        data[idx + 3] = color.alpha;
+      }
+    }
+    // //render
+    ctx.putImageData(imgData, 0, 0);
+  };
   //The actual call to the current render function being used
   ////
   // sweep(canvas, mandelbrotSet);
   // realTimeRender(canvas, mandelbrotSet);
   // weirdRender(canvas, mandelbrotSet);
   // patchWorkDraw(canvas, mandelbrotSet);
-  multiplePassRender(canvas, mandelbrotSet);
+  // multiplePassRender(canvas, mandelbrotSet);
+  renderFromAPI(canvas, mandelbrotSet);
 };
 
 //return time taken to run fn
