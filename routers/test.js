@@ -5,6 +5,10 @@ router.get("/mandelbrot", (req, res) => {
   res.render("mandelbrot");
 });
 
+router.get("/jQueryComparison", (req, res) => {
+  res.render("jQueryComparison");
+});
+
 router.get("*", (req, res) => {
   res.render("test");
 });

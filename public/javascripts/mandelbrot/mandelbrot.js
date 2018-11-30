@@ -8,7 +8,7 @@
 //to draw the mandelbrot set
 
 //MANDELBROT CONSTRUCTOR
-const Mandelbrot = function() {
+function Mandelbrot() {
   //all cases pass at 100 for sure, so far
   this.depth = 100; //number of iterations
 
@@ -26,7 +26,7 @@ const Mandelbrot = function() {
 
   this.aspectRatio = [7, 4];
   this.pixelPatcherColor = Mandelbrot.prototype.pixelPatcherColor.bind(this);
-};
+}
 
 //check to see if c is in the mandlebrot set
 Mandelbrot.prototype.isMandelbrot = function(cR, cI) {
@@ -386,3 +386,5 @@ Mandelbrot.prototype.test = () => {
 
 const printOverview = (c, i) =>
   console.log(`case ${i}: ${c.failed ? "FAIL" : "Pass"}`);
+
+export default Mandelbrot;

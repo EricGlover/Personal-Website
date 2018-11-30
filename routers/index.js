@@ -10,6 +10,7 @@ router.get("/secret*", (req, res) => {
 
 module.exports = {
   indexRouter: router,
+  mandelbrotRouter: require("./mandelbrot"),
   loaderRouter: require("./loader"),
   blogRouter: require("./blog"),
   projectRouter: require("./projects"),

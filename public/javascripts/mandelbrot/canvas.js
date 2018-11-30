@@ -1,5 +1,14 @@
-import("isomorphic-fetch");
-// require("isomorphic-fetch");
+"use strict";
+
+import LoadBar from "./Utils/LoadBar.js";
+import Stats from "./Utils/Stats.js";
+import Mandelbrot from "./mandelbrot.js";
+// import "LoadBar";
+// import LoadBar;
+// import LoadBar from "./Utils/LoadBar.js";
+
+const stats = new Stats();
+const loadBar = new LoadBar();
 
 /* utility functions */
 //arr1, arr2 => Map(arr1[i] => arr2[i], ...)
@@ -51,7 +60,7 @@ const makeCanvas = (aspectRatio, width, height) => {
 
 //NOTE: this has a lot of different rendering methods stored
 //render the mandelbrot set
-const drawMandel = (canvas, mandelbrotSet) => {
+function drawMandel(canvas, mandelbrotSet, renderer = "goAPI") {
   //
   //color constructor
   const Color = function(r, g, b, a) {
@@ -183,14 +192,16 @@ const drawMandel = (canvas, mandelbrotSet) => {
   const patchWorkDraw = (canvas, mandelbrotSet) => {
     let ctx = canvas.getContext("2d");
     ctx.fillStyle = "rgb(0, 0, 0)";
-    let iter = mandelbrotSet.pixelPatcher(canvas.width, canvas.height, 800);
+    let iter = mandelbrotSet.pixelPatcher(canvas.width, canvas.height, 800000);
     let pixels = [];
     let current;
     let timeBetween = 20;
     let nextRun;
     let i = 0;
+    loadBar.reset();
+    loadBar.start();
     let runMaker = () => {
-      // console.log("runmaker");
+      console.log("runmaker", i);
       i++;
       return () => {
         // console.log(`run ${i}`);
@@ -206,6 +217,9 @@ const drawMandel = (canvas, mandelbrotSet) => {
         } else {
           //TODO:
           //add some promise resolving for timing
+          loadBar.stop();
+          console.log("done");
+          loadBar.updateUI();
         }
       };
     };
@@ -309,7 +323,7 @@ const drawMandel = (canvas, mandelbrotSet) => {
     nextRun = runMaker();
     setTimeout(nextRun, timeBetween);
   };
-  const renderFromAPI = async (canvas, mSet) => {
+  const renderFromAPI = async (canvas, mSet, maxIterations) => {
     let ctx = canvas.getContext("2d");
     let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     //
@@ -325,7 +339,7 @@ const drawMandel = (canvas, mandelbrotSet) => {
     const q = {
       canvasWidth: canvas.width,
       canvasHeight: canvas.height,
-      maxIterations: 100,
+      maxIterations: maxIterations || 100,
       planeCoordinates: [1, 1, -1, -2]
     };
     const params = makeParams(q);
@@ -335,8 +349,11 @@ const drawMandel = (canvas, mandelbrotSet) => {
     let res;
     let pixels;
     try {
+      loadBar.start();
       res = await fetch(`${domain}/api/${endpoint}?${params}`);
       pixels = await res.json();
+      loadBar.stop();
+      loadBar.updateUI();
     } catch (e) {
       console.error(e);
     }
@@ -365,12 +382,39 @@ const drawMandel = (canvas, mandelbrotSet) => {
   };
   //The actual call to the current render function being used
   ////
-  // sweep(canvas, mandelbrotSet);
-  // realTimeRender(canvas, mandelbrotSet);
-  // weirdRender(canvas, mandelbrotSet);
-  // patchWorkDraw(canvas, mandelbrotSet);
-  // multiplePassRender(canvas, mandelbrotSet);
-  renderFromAPI(canvas, mandelbrotSet);
+  var render = renderer;
+  switch (render) {
+    case "sweep":
+      sweep(canvas, mandelbrotSet);
+      break;
+    case "realTime":
+      realTimeRender(canvas, mandelbrotSet);
+      break;
+    case "weird":
+      weirdRender(canvas, mandelbrotSet);
+      break;
+    case "patchWork":
+      patchWorkDraw(canvas, mandelbrotSet);
+      break;
+    case "multiPassRender":
+      multiplePassRender(canvas, mandelbrotSet);
+      break;
+    case "goAPI":
+      renderFromAPI(canvas, mandelbrotSet);
+      break;
+    default:
+      renderFromAPI(canvas, mandelbrotSet);
+  }
+}
+drawMandel.prototype.getRendererOptions = function() {
+  return [
+    "sweep",
+    "realTime",
+    "weird",
+    "patchWork",
+    "multiPassRender",
+    "goAPI"
+  ];
 };
 
 //return time taken to run fn
@@ -405,89 +449,83 @@ const test = () => {
   return obj;
 };
 
+function getCanvasSettings($container = $("#stats")) {
+  let width = $container.find("#canvasWidth").val();
+  let height = $container.find("#canvasHeight").val();
+  let aspectRatio = $container.find("#canvasAspectRatio").val() || [7, 4];
+  let iterations = $container.find("#iterations").val() || 100;
+  let renderMethod = $container.find("#renderer").val() || "goAPI";
+  return {
+    width,
+    height,
+    aspectRatio,
+    iterations,
+    renderer: renderMethod
+  };
+}
+
 /* main entry point */
 window.onload = () => {
+  //populate options for renders
+  let renderers = drawMandel.prototype.getRendererOptions();
+  let $select = $("#stats").find("#renderer");
+  renderers.forEach(option => {
+    let selected = option === "goAPI";
+    $select.append(
+      $(`<option ${selected ? selected : ""}val=${option}>${option}</option>`)
+    );
+  });
+  $("#canvasWidth").val(document.body.scrollWidth);
+  $("#canvasHeight").val(document.body.scrollHeight);
+  $("#renderer").val("goAPI");
   ///////////
   //testing , see the note above
   // let obj = test();
   // console.log(obj);
   ///////////
+
   //make our mandelbrot
   const m = new Mandelbrot();
+  window.m = m;
   //set up some variable for reuse
   let canvas;
   let timeTaken;
-  const draw = () => {
+  const draw = (useDefault = true) => {
+    let width, height, aspectRatio, iterations, renderer;
+    if (useDefault) {
+      width = document.body.scrollWidth;
+      height = document.body.scrollHeight;
+      aspectRatio = m.aspectRatio;
+      iterations = 100;
+    } else {
+      let data = getCanvasSettings();
+      width = data.width;
+      height = data.height;
+      aspectRatio = data.aspectRatio;
+      iterations = data.iterations;
+      renderer = data.renderer;
+    }
     //make the canvas, make and render the mandelbrot set
     //and benchmark I suppose
+
     // let res = benchmark(() => makeCanvas(m.aspectRatio, 2000, 1000)); //kills computer :(
-    let res = benchmark(() => makeCanvas(m.aspectRatio));
+    let res = benchmark(() => makeCanvas(aspectRatio, width, height));
     canvas = res[1];
     console.log(`make canvas took ${res[0] / 1000} seconds`);
     // canvas = makeCanvas(m.aspectRatio);
 
-    let fn = () => drawMandel(canvas, m);
+    let fn = () => drawMandel(canvas, m, renderer);
     timeTaken = benchmark(fn);
     console.log(`draw took ${timeTaken / 1000} seconds`);
   };
-  // class UIComponent {
-  //   constructor(name){
-  //     this.el = $(`#statsCanvas${name}`)
-  //   }
-  //   get(){
-  //     this.el.val()
-  //   }
-  //   set(value){
-  //     this.el.val(value)
-  //   }
-  // }
-  //IIFE  ftw
-  const ui = (() => {
-    //hook up the UI functionality
-    //set the current stats
-    // return {
-    //   fields: {
-    //     width: new UIComponent("Width"),
-    //     height: new UIComponent("Height"),
-    //     iteration: new UIComponent("Iteration"),
-    //     time: new UIComponent("Time")
-    //   },
-    //
-    //   update: function(){
-    //     this.fields.forEach()
-    //   }
-    // }
-    //grab these first so we don't have to later
-    let w = $("#statCanvasWidth");
-    let h = $("#statCanvasHeight");
-    let i = $("#statIterationDepth");
-    let timeUI = $("#statBenchmark");
 
-    //return a function that updates their values
-    return () => {
-      h.text(`Canvas height : ${canvas.height}`);
-      w.text(`Canvas width : ${canvas.width}`);
-      //iteration depth
-      i.text(`Iteration depth : ${m.depth}`);
-      //benchmark section
-      timeUI.text(
-        `It took ${timeTaken / 1000} seconds to make the mandelbrot set`
-      );
-    };
-  })();
   //first render
   draw();
-  ui();
 
   //redraw button
   $("#redrawButton").click(e => {
     //remove old canvas
     $("canvas").remove();
-    draw();
-    ui();
+    draw(false);
   });
-
-  //TODO: CLEAN / REFACTOR THIS NONSENSE LATER
-  //TODO: MAKE INTO FORM
-  //might as well make this into a form
 };

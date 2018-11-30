@@ -12,46 +12,55 @@
     border: 1px solid black;
   }
   .background {
-    position: absolute;
+    /* position: absolute; */
     opacity: 0.33;
     top: 0;
     left: 0;
     z-index: -1;
   }
 </style>
-<div class="container-fluid" id="wrapper">
+<div class="container-fluid">
   <h1>Mandelbrot Set</h1>
   <div class="row">
-    <div class="col-12">
-      <h1>Fun Stats</h1>
-    </div>
     <div class="col-3">
-      <p id="statCanvasWidth">blah1</p>
-      <p id="statCanvasHeight">blah2</p>
+      <p id="loading">Loading</p>
     </div>
-    <div class="col-3">
-      <p id="statBenchmark">Time elapsed</p>
+    <div class="col-6" id="stats">
+        <div class="row">
+          <div>
+            <label for="width">Canvas Width</label>
+            <input type="number" name="width" id="canvasWidth" value="">
+          </div>
+          <div>
+            <label for="height">Canvas Height</label>
+            <input type="number" name="height" id="canvasHeight" value="">
+          </div>
+          <div>
+            <label for="iterations">Iterations</label>
+            <input type="number" name="iterations" value="100" readonly>
+          </div>
+          <div>
+            <select class="" name="renderer" id="renderer">
+            </select>
+          </div>
+          <div>
+            <!-- aspect ratio -->
+          </div>
+        </div>
     </div>
-    <div class="col-3">
-      <p id="statIterationDepth">???</p>
-    </div>
+
     <div class="col-3">
       <button id="redrawButton" type="button" class='btn btn-primary'>re-draw</button>
     </div>
   </div>
-  <!-- <div class="row">
-    <div class="col-12">
-      <h1>Fun Stats</h1>
-    </div>
-    <div class="col-3" id='canvasStats'>
-      <input type="number" name="height" value="200">
-      <input type="number" name="width" value="350">
-    </div>
-  </div> -->
   <p id='mandelbrotTime'></p>
   <!-- load the mandelbrot functionality -->
-  <script type="text/javascript" src="/javascripts/mandelbrot/mandelbrot.js"></script>
+  <script type="module" src="javascripts/mandelbrot/mandelbrot.js"></script>
   <!-- load the rendering script -->
-  <script type="text/javascript" src="/javascripts/mandelbrot/canvas.js"></script>
-
+  <script type="module" src="javascripts/mandelbrot/canvas.js"></script>
+  <div class="container-fluid">
+    <div id="wrapper">
+      <!-- Canvas inserted here -->
+    </div>
+  </div>
 </div>

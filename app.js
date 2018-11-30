@@ -26,6 +26,7 @@ const {
   blogRouter,
   projectRouter,
   testRouter,
+  mandelbrotRouter,
   loaderRouter,
   experimentRouter
 } = require("./routers");
@@ -36,6 +37,7 @@ const loaderFileURL = "/loaderio-e18afa5e6a1d14daaca79f678fd43915";
 app.use(logger("dev"));
 app.use("/blog", blogRouter);
 app.use("/projects", projectRouter);
+app.use("/mandelbrot", mandelbrotRouter);
 app.use("/test", testRouter);
 app.use("/x", experimentRouter);
 app.use(loaderFileURL, loaderRouter);
