@@ -3,9 +3,6 @@
 import LoadBar from "./Utils/LoadBar.js";
 import Stats from "./Utils/Stats.js";
 import Mandelbrot from "./mandelbrot.js";
-// import "LoadBar";
-// import LoadBar;
-// import LoadBar from "./Utils/LoadBar.js";
 
 const stats = new Stats();
 const loadBar = new LoadBar();
