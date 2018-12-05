@@ -39,7 +39,7 @@ const posts = [
   },
   {
     link: "OOP-and-private-vars-in-JS-edcaf6524baa5f72528b84935e1db61e",
-    title: "OOP and private vars in JS",
+    title: "OOP and Private Vars in JS",
     subtitle: "Hide that Data",
     description:
       "Ok, this isn’t quite intended as an actual defense of OOP - I just liked the title too much - but I am going to do a brief drive-by of what OOP is useful for.",
@@ -47,7 +47,7 @@ const posts = [
   },
   {
     link: "When-to-use-recursion-802347e1211b0eda372ca0345360ff6b",
-    title: "When to use recursion",
+    title: "When to Use Recursion",
     subtitle: "How I learned to love (tolerate) the infinite stack",
     description:
       "Recursion, is it useful? This week I stumbled upon a definite use case and learned that the squirreler the recursive function the more likely it is that it’s necessary. Before we look at that let’s dive into recursion!",
@@ -64,7 +64,7 @@ const posts = [
   },
   {
     link: "Switches-be-damned-Rest-and-Spread-ed14f497c32901e32b900e29019c8ec3",
-    title: "Switches be damned, Rest, and Spread",
+    title: "Switches be Damned, Rest, and Spread",
     subtitle: "CLI: a code-walkthrough",
     description:
       "Let’s look at a few language features provided by JS to make our lives a little bit easier. To do this we’ll walkthrough some of the decisions you’d face when making a command line interface.",
@@ -72,7 +72,7 @@ const posts = [
   },
   {
     link: "Making-the-most-of-Git-a5b4775aa68bcc483c9155ced98ca4b9",
-    title: "Making the most of Git",
+    title: "Making the Most of Git",
     subtitle: "I solemnly swear to version control like I'm up to no good.",
     description:
       "I’ll be honest, I don’t use git. At least not in the way it seems you should. For longer than I care to remember I didn’t use it at all. Let’s take a trip back to those dark times, when it seemed like every hour or so was playing Russian Roulette with your program, it’ll be fun...",
@@ -88,6 +88,16 @@ const posts = [
   }
 ];
 
+//legacy support
+let legacyUrls = {
+  1: "Quick-HTML-CSS-Tip-7367f5a80fc5fa80118e7a86751a4e72",
+  2: "Making-the-most-of-Git-a5b4775aa68bcc483c9155ced98ca4b9",
+  3: "Switches-be-damned-Rest-and-Spread-ed14f497c32901e32b900e29019c8ec3",
+  4: "Asynchronous-JS-Programming-Pitfall-1-4047dc17031186c82be6eed5a3e4474e",
+  5: "When-to-use-recursion-802347e1211b0eda372ca0345360ff6b",
+  6: "OOP-and-private-vars-in-JS-edcaf6524baa5f72528b84935e1db61e"
+};
+
 //map of urls to their handlebars files
 let urls = {
   "Quick-HTML-CSS-Tip-7367f5a80fc5fa80118e7a86751a4e72": 1,
@@ -100,15 +110,6 @@ let urls = {
   "The-Challenge-of-Communication-d2bc9fd247c27341a9ad418a1e1a2ff9": 8,
   "Linked-Lists-and-Pigeons-08174b70c89f8fd8cc9c719b336e0edc": 9,
   "A-not-so-quick-blog-about-Quicksort-c4897a7e05dd2b464e7de1f50f2eb167": 10
-};
-//legacy support
-let legacyUrls = {
-  1: "Quick-HTML-CSS-Tip-7367f5a80fc5fa80118e7a86751a4e72",
-  2: "Making-the-most-of-Git-a5b4775aa68bcc483c9155ced98ca4b9",
-  3: "Switches-be-damned-Rest-and-Spread-ed14f497c32901e32b900e29019c8ec3",
-  4: "Asynchronous-JS-Programming-Pitfall-1-4047dc17031186c82be6eed5a3e4474e",
-  5: "When-to-use-recursion-802347e1211b0eda372ca0345360ff6b",
-  6: "OOP-and-private-vars-in-JS-edcaf6524baa5f72528b84935e1db61e"
 };
 
 //set up blog id's later
@@ -127,6 +128,7 @@ router.get("/:id", (req, res) => {
   if (req.params.id > 0 && req.params.id <= 6) {
     return res.redirect(`/blog/${legacyUrls[req.params.id]}`);
   }
+  //if not legacy url grab the appropriate post via my blog title -> number.handlebars mapping system
   let blogNum = urls[req.params.id];
   res.render("blog/" + blogNum, { blog: true });
 });
