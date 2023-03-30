@@ -7,9 +7,11 @@ const security = require("./middleware/security");
 const port = process.env.PORT || 3000;
 
 //handlebars
-const hbs = require("express-handlebars");
-app.engine("handlebars", hbs({ defaultLayout: "main" }));
-app.set("view engine", "handlebars");
+// const hbs = require("handlebars");
+const hbs = require('express-handlebars');
+console.log(hbs);
+app.engine('handlebars', hbs.engine());
+app.set('view engine', 'handlebars');
 
 //compression
 const filter = (req, res) => {
