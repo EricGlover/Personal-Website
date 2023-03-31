@@ -21,6 +21,8 @@
 </style>
 <div class="container-fluid">
   <h1>Mandelbrot Set</h1>
+  <p>The <a href="https://en.wikipedia.org/wiki/Mandelbrot_set">Mandelbrot Set</a> is a set of complex numbers c where the function f(z) = z^2 + c , doesn't trail off to infinity.</p>
+  <p>The neat part of all this is that it's creates an extremely pretty pattern. Zooming in on some of the edges of the sets will show yet more wonderous things. Give it a shot.</p>
   <div class="row">
     <div class="col-3">
       <p id="loading">Loading</p>
@@ -37,12 +39,23 @@
           </div>
           <div>
             <label for="iterations">Iterations</label>
-            <input type="number" name="iterations" value="100" readonly>
+            <input type="number" name="iterations" value="100">
           </div>
           <div>
+            <label for="iterations">Rendering Method</label>
             <select class="" name="renderer" id="renderer">
             </select>
           </div>
+          <div>
+            <div>
+              <label for="coordinates">Coordinates</label>
+              <input type="number" name="coordinate1" value="100">
+              <input type="number" name="coordinate1" value="100">
+              <input type="number" name="coordinate1" value="100">
+              <input type="number" name="coordinate1" value="100">
+          </div>
+          </div>
+          
           <div>
             <!-- aspect ratio -->
           </div>
