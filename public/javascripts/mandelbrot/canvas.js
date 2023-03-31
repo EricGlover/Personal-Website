@@ -3,7 +3,7 @@
 import LoadBar from "./Utils/LoadBar.js";
 import Stats from "./Utils/Stats.js";
 import Mandelbrot from "./mandelbrot.js";
-import drawMandel from "./DrawMandel.js";
+import {drawMandel, getRendererOptions} from "./DrawMandel.js";
 
 const stats = new Stats();
 const loadBar = new LoadBar();
@@ -78,7 +78,7 @@ const test = () => {
     iteration: 0
   };
   //grab the values
-  statsUI.children().each(function(idx) {
+  statsUI.children().each(function (idx) {
     console.log(`idx ${idx}, this ${this}`);
     if (obj[this.name]) {
       console.log("found ", this.name);
@@ -104,9 +104,9 @@ function getCanvasSettings($container = $("#stats")) {
 }
 
 /* main entry point */
-window.onload = () => {
+window.onload = async () => {
   //populate options for renders
-  let renderers = drawMandel.prototype.getRendererOptions();
+  let renderers = getRendererOptions();
   let $select = $("#stats").find("#renderer");
   renderers.forEach(option => {
     let selected = option === "goAPI";
@@ -117,11 +117,6 @@ window.onload = () => {
   $("#canvasWidth").val(document.body.scrollWidth);
   $("#canvasHeight").val(document.body.scrollHeight);
   $("#renderer").val("goAPI");
-  ///////////
-  //testing , see the note above
-  // let obj = test();
-  // console.log(obj);
-  ///////////
 
   //make our mandelbrot
   const m = new Mandelbrot();
@@ -129,7 +124,7 @@ window.onload = () => {
   //set up some variable for reuse
   let canvas;
   let timeTaken;
-  const draw = (useDefault = true) => {
+  const draw = async (useDefault = true) => {
     let width, height, aspectRatio, iterations, renderer;
     if (useDefault) {
       width = document.body.scrollWidth;
@@ -148,26 +143,30 @@ window.onload = () => {
     //and benchmark I suppose
 
     // let res = benchmark(() => makeCanvas(m.aspectRatio, 2000, 1000)); //kills computer :(
-    let res = benchmark(() => makeCanvas(aspectRatio, width, height));
-    canvas = res[1];
-    console.log(`make canvas took ${res[0] / 1000} seconds`);
+    // let res = benchmark(() => makeCanvas(aspectRatio, width, height));
+    // canvas = res[1];
+    canvas = makeCanvas(aspectRatio, width, height);
     // canvas = makeCanvas(m.aspectRatio);
-
-    let fn = () => drawMandel(canvas, m, renderer);
-    timeTaken = benchmark(fn);
-    console.log(`draw took ${timeTaken / 1000} seconds`);
+    console.log("renderer = ", renderer)
+    // let fn = () => drawMandel(canvas, m, renderer);
+    // timeTaken = benchmark(fn);
+    // console.log(`draw took ${timeTaken / 1000} seconds`);
+    await drawMandel(canvas, m, renderer);
   };
 
   //first render
-  draw();
+  loadBar.start();
+  await draw();
+  loadBar.stop();
+  loadBar.updateUI();
 
   //redraw button
-  $("#redrawButton").click(e => {
+  $("#redrawButton").click(async (e) => {
     //remove old canvas
     $("canvas").remove();
-    draw(false);
+    loadBar.start();
+    await draw(false);
+    loadBar.stop();
+    loadBar.updateUI();
   });
-   loadBar.start();
-   loadBar.stop();
-   loadBar.updateUI();
 };

@@ -10,7 +10,7 @@ const mapper = (keys, values) => {
 
 //NOTE: this has a lot of different rendering methods stored
 //render the mandelbrot set
-function drawMandel(canvas, mandelbrotSet, renderer = "goAPI") {
+async function drawMandel(canvas, mandelbrotSet, renderer = "goAPI") {
     //
     //color constructor
     const Color = function(r, g, b, a) {
@@ -350,13 +350,13 @@ function drawMandel(canvas, mandelbrotSet, renderer = "goAPI") {
         multiplePassRender(canvas, mandelbrotSet);
         break;
       case "goAPI":
-        renderFromAPI(canvas, mandelbrotSet);
+        await renderFromAPI(canvas, mandelbrotSet);
         break;
       default:
-        renderFromAPI(canvas, mandelbrotSet);
+        await renderFromAPI(canvas, mandelbrotSet);
     }
   }
-  drawMandel.prototype.getRendererOptions = function() {
+  function getRendererOptions() {
     return [
       "sweep",
       "realTime",
@@ -367,4 +367,4 @@ function drawMandel(canvas, mandelbrotSet, renderer = "goAPI") {
     ];
   };
   
-  export default drawMandel;
+  export {drawMandel, getRendererOptions};

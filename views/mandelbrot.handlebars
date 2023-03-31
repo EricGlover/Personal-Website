@@ -1,16 +1,19 @@
 <!-- I'm a nasty individual, using styles tags...lol  -->
-<style>
+{{!-- <style>
   body {
     width: 100vw;
     height: 100vh;
   }
+
   .container-fluid {
     width: 100%;
     height: 100%;
   }
+
   canvas {
     border: 1px solid black;
   }
+
   .background {
     /* position: absolute; */
     opacity: 0.33;
@@ -18,52 +21,84 @@
     left: 0;
     z-index: -1;
   }
-</style>
-<div class="container-fluid">
+</style> --}}
+<div class="container">
+  <br>
   <h1>Mandelbrot Set</h1>
-  <p>The <a href="https://en.wikipedia.org/wiki/Mandelbrot_set">Mandelbrot Set</a> is a set of complex numbers c where the function f(z) = z^2 + c , doesn't trail off to infinity.</p>
-  <p>The neat part of all this is that it's creates an extremely pretty pattern. Zooming in on some of the edges of the sets will show yet more wonderous things. Give it a shot.</p>
+  <p>The <a href="https://en.wikipedia.org/wiki/Mandelbrot_set">Mandelbrot Set</a> is a set of complex numbers c where
+    the function f(z) = z^2 + c , doesn't trail off to infinity.</p>
+  <p>The neat part of all this is that it's creates an extremely pretty pattern. Zooming in on some of the edges of the
+    sets will show yet more wonderous things. Give it a shot.</p>
+  <br>
+  <br>
   <div class="row">
     <div class="col-3">
       <p id="loading">Loading</p>
+      <form>
+        <button id="redrawButton" type="button" class='btn btn-primary form-control'><span
+            class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Loading...</button>
+      </form>
     </div>
-    <div class="col-6" id="stats">
-        <div class="row">
-          <div>
-            <label for="width">Canvas Width</label>
-            <input type="number" name="width" id="canvasWidth" value="">
+    <div class="col-9" id="stats">
+      <form>
+        <div class="mb-3 row">
+          <div class="col">
+            <label for="canvasWidth" class="form-label">Canvas Width</label>
+            <input type="number" name="canvasWidth" id="canvasWidth" value="" class="form-control form-control-sm"
+              readonly>
           </div>
-          <div>
-            <label for="height">Canvas Height</label>
-            <input type="number" name="height" id="canvasHeight" value="">
+          <div class="col">
+            <label for="canvasHeight" class="form-label">Canvas Height</label>
+            <input type="number" name="canvasHeight" id="canvasHeight" value="" class="form-control form-control-sm"
+              readonly>
           </div>
-          <div>
-            <label for="iterations">Iterations</label>
-            <input type="number" name="iterations" value="100">
+          <!-- <div> -->
+          <!-- aspect ratio -->
+          <!-- </div> -->
+        </div>
+        <div class="mb-3 row">
+          <div class="col">
+            <label for="iterations" class="form-label">Iterations</label>
+            <input type="number" name="iterations" id="iteration" value="1000" min="1" max="20000" class="form-control">
           </div>
-          <div>
-            <label for="iterations">Rendering Method</label>
-            <select class="" name="renderer" id="renderer">
-            </select>
+          <div class="col">
+            <label for="iterations" class="form-label">Rendering Method</label>
+            <select class="form-control" name="renderer" id="renderer" disabled></select>
           </div>
-          <div>
-            <div>
-              <label for="coordinates">Coordinates</label>
-              <input type="number" name="coordinate1" value="100">
-              <input type="number" name="coordinate1" value="100">
-              <input type="number" name="coordinate1" value="100">
-              <input type="number" name="coordinate1" value="100">
+        </div>
+        <div class="mb-3 row">
+          <label for="coordinates">Coordinates</label>
+          <div class="col">
+            <label for="top-coordinate" class="form-label">Top</label>
+            <input type="number" name="top-coordinate" id="top-coordinate" value="1"
+              class="form-control form-control-sm" readonly>
           </div>
+
+          <div class="col">
+            <label for="right-coordinate" class="form-label">Right</label>
+            <input type="number" name="right-coordinate" id="right-coordinate" value="1"
+              class="form-control form-control-sm" readonly>
           </div>
-          
-          <div>
-            <!-- aspect ratio -->
+
+          <div class="col">
+            <label for="bottom-coordinate" class="form-label">Bottom</label>
+            <input type="number" name="bottom-coordinate" id="bottom-coordinate" value="-1"
+              class="form-control form-control-sm" readonly>
           </div>
+
+          <div class="col">
+            <label for="left-coordinate" class="form-label">Left</label>
+            <input type="number" name="left-coordinate" id="left-coordinate" value="-2"
+              class="form-control form-control-sm" readonly>
+          </div>
+
         </div>
     </div>
 
     <div class="col-3">
-      <button id="redrawButton" type="button" class='btn btn-primary'>re-draw</button>
+
+
     </div>
   </div>
   <p id='mandelbrotTime'></p>
