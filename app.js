@@ -3,7 +3,6 @@ const app = express();
 const compress = require("compression");
 const logger = require("morgan");
 const security = require("./middleware/security");
-
 const port = process.env.PORT || 3000;
 
 //handlebars
@@ -12,7 +11,6 @@ const hbs = require('express-handlebars');
 console.log(hbs);
 app.engine('handlebars', hbs.engine());
 app.set('view engine', 'handlebars');
-
 //compression
 const filter = (req, res) => {
   return true;
