@@ -10,6 +10,7 @@ const hbs = require('express-handlebars');
 app.engine('handlebars', hbs.engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
+
 //compression
 const filter = (req, res) => {
   return true;
@@ -47,7 +48,4 @@ app.use(express.static(__dirname + "/public"));
 
 app.listen(port, (res, req) => {
   console.log(`Running on port ${port}`);
-  console.log(process.env);
-  console.log(__dirname);
-  console.log(process.cwd());
 });
