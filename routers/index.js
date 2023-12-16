@@ -4,6 +4,9 @@ let router = express.Router();
 router.get("/", (req, res) => {
   res.render("main", { main: true });
 });
+router.get("/chess", (req, res) => {
+  res.render("chess");
+})
 router.get("/secret*", (req, res) => {
   res.render("secret");
 });

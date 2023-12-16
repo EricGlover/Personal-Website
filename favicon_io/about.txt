@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Handjet
+- Font Author: Copyright 2018 The Handjet Project Authors (https://github.com/rosettatype/Handjet/)
+- Font Source: http://fonts.gstatic.com/s/handjet/v19/oY1n8eXHq7n1OnbQrOY_2FrEwYEMLlcdP1mCtZaLaTutCwcIhGZ0lGU0akFcO3XFHTmaUkUsEHFAH2A.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))

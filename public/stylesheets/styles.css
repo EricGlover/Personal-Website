@@ -4,13 +4,25 @@
   font-family: sans-serif;
   font-size: 16px; }
 
+:root {
+  --color1: #ddd8c4;
+  --color2: #a3c9a8;
+  --color3: #84b59f;
+  --color4:  #69a297;
+  --color5: #50808e;
+}
+#nav {
+  background-color: var(--color1);
+}
+
 html,
 body {
   height: 100%;
   width: 100%; }
 
 a {
-  color: #00b7ff; }
+  color: white; 
+}
 
 .landing-grid {
   display: grid;
@@ -19,7 +31,6 @@ a {
   grid-template-rows: 2fr 1fr 2fr; }
 
 .lead {
-  color: white;
   grid-row-start: 1;
   grid-row-end: 2;
   margin-top: auto;
@@ -36,8 +47,7 @@ a {
 
 .summary {
   grid-row-start: 3;
-  background-color: black;
-  color: white;
+  /* background-color: black; */
   margin: 40px; }
   .summary header {
     margin: 20px; }
@@ -45,8 +55,6 @@ a {
     padding: 0px;
     margin-left: 10px;
     margin-right: 10px; }
-  .summary a {
-    color: white; }
   .summary footer {
     display: flex;
     flex-direction: column;
@@ -69,8 +77,9 @@ a {
   height: inherit;
   width: inherit;
   padding-top: 40px;
-  background-image: url("/assets/images/checkers1.png");
-  background-size: cover; }
+  background: var(--color2);
+  background: linear-gradient(65deg, var(--color2) 0%, var(--color5) 100%);
+}
 
 .flex-row {
   display: flex;
@@ -92,4 +101,7 @@ a {
   .small-img img {
     height: 100%; }
 
-/*# sourceMappingURL=styles.css.map */
+#navbar-brand {
+  margin-left: 1rem; 
+  margin-right: 1rem
+}
