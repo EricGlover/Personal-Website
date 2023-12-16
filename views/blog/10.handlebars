@@ -18,65 +18,131 @@
           </header>
           <section>
             <h3>TL;DR</h3>
-            <p>This week we did a lot of algorithms in VCS. When we were doing sorting algorithms I found quicksort to be a bit of a stumbling block. So I figured I’d try my hand at a human legible explanation of it…then I realized I’d made a never-ending rant so …..sorry about that.</p>
-            <p>You might be wondering, why bother learning how to implement quicksort when you can just use the built-in sorting methods of your language of choice? To which I say you definitely don't have to. I find it to be a rewarding experience for two reasons: first and foremost I find this kind of thing interesting, but secondly thinking about working through it really did illuminate why the general approach of Divide and Conquer works. Hopefully, if the Divide and Conquer strategy doesn't already resonate with you it will be the end of this trek through nerd-dom. If you don't enjoy trekking through through nerdom isn't your cup of tea do what the writers of Star Trek did and visually replace everything but the TL;DR's with [poorly written technobabble].</p>
-            <p>TL;DR : When implementing quicksort intelligently choose your pivot, sort into three groups (less than pivot, equal to pivot, and greater than pivot) to deal with duplicates, and really think through what test cases you need before you write your code then test it against a bunch of randomly generated arrays to be sure you didn’t miss a test case.</p>
+            <p>This week we did a lot of algorithms in VCS. When we were doing sorting algorithms I found quicksort to
+              be a bit of a stumbling block. So I figured I’d try my hand at a human legible explanation of it…then I
+              realized I’d made a never-ending rant so …..sorry about that.</p>
+            <p>You might be wondering, why bother learning how to implement quicksort when you can just use the built-in
+              sorting methods of your language of choice? To which I say you definitely don't have to. I find it to be a
+              rewarding experience for two reasons: first and foremost I find this kind of thing interesting, but
+              secondly thinking about working through it really did illuminate why the general approach of Divide and
+              Conquer works. Hopefully, if the Divide and Conquer strategy doesn't already resonate with you it will be
+              the end of this trek through nerd-dom. If you don't enjoy trekking through through nerdom isn't your cup
+              of tea do what the writers of Star Trek did and visually replace everything but the TL;DR's with [poorly
+              written technobabble].</p>
+            <p>TL;DR : When implementing quicksort intelligently choose your pivot, sort into three groups (less than
+              pivot, equal to pivot, and greater than pivot) to deal with duplicates, and really think through what test
+              cases you need before you write your code then test it against a bunch of randomly generated arrays to be
+              sure you didn’t miss a test case.</p>
           </section>
           <section>
             <h3>What is r quicksort??</h3>
-            <p>First off quicksort on average take O(n lg2(n) ) time to run which is the fastest possible time that a generalized sorting algorithm can run in, so think of quicksort as your best weapon- if you find yourself out in the wild chasing down algorithm solutions to some arcane problem involving a list of 10^12 integers thrown at random into an array and you need to sort them all you can always reach for your best implementation of quicksort. There’s a lot of other sorting algorithms out there and they all have advantages and disadvantages but for my own sanity I fully plan on throwing quicksort at my problems from now on until I run into troubles with it.</p>
+            <p>First off quicksort on average take O(n lg2(n) ) time to run which is the fastest possible time that a
+              generalized sorting algorithm can run in, so think of quicksort as your best weapon- if you find yourself
+              out in the wild chasing down algorithm solutions to some arcane problem involving a list of 10^12 integers
+              thrown at random into an array and you need to sort them all you can always reach for your best
+              implementation of quicksort. There’s a lot of other sorting algorithms out there and they all have
+              advantages and disadvantages but for my own sanity I fully plan on throwing quicksort at my problems from
+              now on until I run into troubles with it.</p>
           </section>
           <section>
             <h3>Quicksort : the elevator pitch</h3>
-            <p>You find yourself in an elevator with a movie exec, it comes up that they’re producing a movie about a sorting algorithm. The team of writers for the script are exactly technical people so after googling sorting algorithms they selected the one with the best name - Bubble Sort. You die a little inside then decide to sell them on a true hero for their blockbuster film - quicksort. Here’s what you tell them -</p>
-            <p>Don’t get me wrong, bubble sort is a way you could go but what if there was an algorithm that ran so fast it looked like <a href="http://gph.is/17XlkLU">Data sorting micro-liner chips??</a></p>
+            <p>You find yourself in an elevator with a movie exec, it comes up that they’re producing a movie about a
+              sorting algorithm. The team of writers for the script are exactly technical people so after googling
+              sorting algorithms they selected the one with the best name - Bubble Sort. You die a little inside then
+              decide to sell them on a true hero for their blockbuster film - quicksort. Here’s what you tell them -</p>
+            <p>Don’t get me wrong, bubble sort is a way you could go but what if there was an algorithm that ran so fast
+              it looked like <a href="http://gph.is/17XlkLU">Data sorting micro-liner chips??</a></p>
             <!-- <iframe src="https://giphy.com/embed/XpgiNJccZVPlm" width="480" height="341" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/star-trek-computer-fast-XpgiNJccZVPlm"></a></p> -->
-            <p>Something that took an array, and sorted them in-place! Here’s what I’m thinking - it picks a value from the end, and then sets mentally partitions the whole array into groups, unsorted stuff, stuff greater than that value, stuff less than that value, and all the duplicates of that value. Then it compares each value and puts it into it’s correct location!</p>
-            <p>-they respond: OH MY! …but wait wouldn’t that mean that [2,4,1,7,0] would become [0,2,4,1,7] ?? That’s not sorted at all!</p>
-            <p>-then you drop the bombshell:  EXACTLY!!! So it takes that [0,2,4,1,7], and runs the same algorithm on [], and [2,4,1,7] until they’re sorted!!! Giving you [0,1,2,4,7]!!!</p>
-            <p>So that’s the high-level idea. Before we walk through the algorithm let’s think through the concept of this comparison style of sorting. We want to divide our difficult task of sorting 10^12 integers in-place into some much more manageable tasks like sorting an empty array, sorting an array of one element, or sorting an array of two elements.</p>
+            <p>Something that took an array, and sorted them in-place! Here’s what I’m thinking - it picks a value from
+              the end, and then sets mentally partitions the whole array into groups, unsorted stuff, stuff greater than
+              that value, stuff less than that value, and all the duplicates of that value. Then it compares each value
+              and puts it into it’s correct location!</p>
+            <p>-they respond: OH MY! …but wait wouldn’t that mean that [2,4,1,7,0] would become [0,2,4,1,7] ?? That’s
+              not sorted at all!</p>
+            <p>-then you drop the bombshell: EXACTLY!!! So it takes that [0,2,4,1,7], and runs the same algorithm on [],
+              and [2,4,1,7] until they’re sorted!!! Giving you [0,1,2,4,7]!!!</p>
+            <p>So that’s the high-level idea. Before we walk through the algorithm let’s think through the concept of
+              this comparison style of sorting. We want to divide our difficult task of sorting 10^12 integers in-place
+              into some much more manageable tasks like sorting an empty array, sorting an array of one element, or
+              sorting an array of two elements.</p>
             <script src="https://gist.github.com/EricGlover/2dbed9f25b75c7fd96fb3c436851f5d4.js"></script>
-            <p>OK! But what about array’s of length > 2… I considered banning them from my programs, but alas it would preclude me writing one of my favorite arrays ever again so I’ll allow it!</p>
+            <p>OK! But what about array’s of length > 2… I considered banning them from my programs, but alas it would
+              preclude me writing one of my favorite arrays ever again so I’ll allow it!</p>
             <script src="https://gist.github.com/EricGlover/666024ed8dd55cb5a4260679ea2c3770.js"></script>
           </section>
           <section>
             <h3>The magic</h3>
-            <p>So what about [2,3,1] ? Here’s where the magic happens. We divide that array in half (ideally) and then it becomes two arrays that we can sort! Here that’d be [1] and [2,3]. Remember earlier when I said that it runs in O(n lg2(n) ) time, that’s why! It’s because we ideally run a linear operation (our comparison) lg2(n) times. Let’s look at the lg2(n) thing briefly, if we have an array size 64 and we break it into halves, and break those halves into halves and so on until we have two elements, how many times did we break our halves into halves? It’s easier to see the answer if you think of it like an upside down tree. Feel free to skip the extremely long winded explanation.</p>
+            <p>So what about [2,3,1] ? Here’s where the magic happens. We divide that array in half (ideally) and then
+              it becomes two arrays that we can sort! Here that’d be [1] and [2,3]. Remember earlier when I said that it
+              runs in O(n lg2(n) ) time, that’s why! It’s because we ideally run a linear operation (our comparison)
+              lg2(n) times. Let’s look at the lg2(n) thing briefly, if we have an array size 64 and we break it into
+              halves, and break those halves into halves and so on until we have two elements, how many times did we
+              break our halves into halves? It’s easier to see the answer if you think of it like an upside down tree.
+              Feel free to skip the extremely long winded explanation.</p>
             <script src="https://gist.github.com/EricGlover/3660aaf46ff8c00ae81c41cf1595752d.js"></script>
-            <p>The point being at each level of our tree we’re doing a O(n) operation and we have lg2(n) levels to our tree so the time complexity is O(n lg2(n) ) (technically O(n lg2(n-1) ) but we drop the one because we aren’t concerned with constants).</p>
+            <p>The point being at each level of our tree we’re doing a O(n) operation and we have lg2(n) levels to our
+              tree so the time complexity is O(n lg2(n) ) (technically O(n lg2(n-1) ) but we drop the one because we
+              aren’t concerned with constants).</p>
             <h5>TL;DR</h5>
-            <p>By breaking up our difficult to deal with array in to pieces of two or less we can easily sort them while doing only the minimum number of comparisons.</p>
+            <p>By breaking up our difficult to deal with array in to pieces of two or less we can easily sort them while
+              doing only the minimum number of comparisons.</p>
           </section>
           <section>
             <h3>Quicksort, the nitty gritty</h3>
             <script src="https://gist.github.com/EricGlover/32da204b75cb23f27e1767cd7128bc17.js"></script>
-            <p>That's the gist of the algorithm. You take an array, and since you’re shifting it in-place you mentally keep track of a couple of sections (you keep track of them via indexes as you loop through the entire array). When you start you have a pivot value (we’ll just choose the rightmost element) and everything else is unsorted. As you iterate through the array everything behind the current element has been sorted into Group A (stuff less than your pivot value) on the left, and Group B (stuff greater than your pivot value). On each iteration of the loop you compare the current element with the pivot, and swap values until it’s in the appropriate group. Once you’ve gone through the array once you have [stuff smaller than pivot….| stuff greater than pivot…..| pivot], you swap the pivot value to the middle of the array and then do the same algorithm for each half. Until you hit one of the base cases mentioned earlier. Note that sometimes duplicates can be troublesome depending on your implementation. At one point my implementation got into an infinite loop of breaking [9,9] into an left half - [ ] - and a right half [9,9]…it took me awhile to actually find out that that’s what was happening.</p>
+            <p>That's the gist of the algorithm. You take an array, and since you’re shifting it in-place you mentally
+              keep track of a couple of sections (you keep track of them via indexes as you loop through the entire
+              array). When you start you have a pivot value (we’ll just choose the rightmost element) and everything
+              else is unsorted. As you iterate through the array everything behind the current element has been sorted
+              into Group A (stuff less than your pivot value) on the left, and Group B (stuff greater than your pivot
+              value). On each iteration of the loop you compare the current element with the pivot, and swap values
+              until it’s in the appropriate group. Once you’ve gone through the array once you have [stuff smaller than
+              pivot….| stuff greater than pivot…..| pivot], you swap the pivot value to the middle of the array and then
+              do the same algorithm for each half. Until you hit one of the base cases mentioned earlier. Note that
+              sometimes duplicates can be troublesome depending on your implementation. At one point my implementation
+              got into an infinite loop of breaking [9,9] into an left half - [ ] - and a right half [9,9]…it took me
+              awhile to actually find out that that’s what was happening.</p>
           </section>
           <section>
             <h3>Implementation</h3>
-            <p>Here’s my implementation of quicksort, it’s definitely not perfect, there’s some arr.slice in there and the pivot point is chosen very naively; which, is entirely on purpose so that you can improve it! Yeah, entirely on purpose…</p>
+            <p>Here’s my implementation of quicksort, it’s definitely not perfect, there’s some arr.slice in there and
+              the pivot point is chosen very naively; which, is entirely on purpose so that you can improve it! Yeah,
+              entirely on purpose…</p>
             <script src="https://gist.github.com/EricGlover/51cddb5421cd50e567ded6def0f5f6cf.js"></script>
           </section>
           <section>
             <h3>Questions:</h3>
-            <p>So why split into halves? If we implement quicksort so we split into thirds why is the runtime complexity still O(n lg2(n) ) ? Why is it not O(n lg3(n) )?
-              My best guess for all these questions is because that’s how we think about numbers. Since we can’t assume our array is filled with duplicates then we assume it’ll take O(n lg2(n) ) time; but when would it take O(n lg3(n) ) time if we split our array into three parts (less than pivot, equal to pivot, and greater than pivot) ? I don’t know but it makes sense that if we knew a priori that our array was set up so that each time we split it we find an equal amount in each part. This magical best case scenario would run faster. Is there a different way to compare numbers such that we can get 4 equally populous groups, and have a O(n lg4(n) ) runtime? Maybe I’m doing the maths here all kinds of wrong…</p>
-              <p>Mayhaps? Things to think about.</p>
-            </section>
-            <section>
-              <h3>Final Thoughts</h3>
-              <p>Quicksort and mergesort are both sorting algorithms that use Divide and Conquer to take a problem that would take O(n^2) time to solve and solve it in O(n lg2(n)) time.</p>
-              <p>The problem of sorting can be done in O(n^2) time with something like Selection Sort, where you just tackle the problem head on. The magic behind quicksort and mergesort is that they identify subproblems that can be solved in linear time and break the more intractable problem into these subproblems.</p>
-              <p>Mergesort transforms the problem of sorting one array into the problem of merging two sorted arrays together and does that linear problem lg2(n) times.</p>
-              <p>Quicksort transforms the problem of sorting an array into the problem partitioning it into two parts, where one part has elements that are all less than all the elements in the other part. Then it solves this subproblem (you guessed it) lg2(n) times.</p>
-            </section>
-          </article>
-        </main>
-        <footer>
-          {{>blogLinks}}
-        </footer>
+            <p>So why split into halves? If we implement quicksort so we split into thirds why is the runtime complexity
+              still O(n lg2(n) ) ? Why is it not O(n lg3(n) )?
+              My best guess for all these questions is because that’s how we think about numbers. Since we can’t assume
+              our array is filled with duplicates then we assume it’ll take O(n lg2(n) ) time; but when would it take
+              O(n lg3(n) ) time if we split our array into three parts (less than pivot, equal to pivot, and greater
+              than pivot) ? I don’t know but it makes sense that if we knew a priori that our array was set up so that
+              each time we split it we find an equal amount in each part. This magical best case scenario would run
+              faster. Is there a different way to compare numbers such that we can get 4 equally populous groups, and
+              have a O(n lg4(n) ) runtime? Maybe I’m doing the maths here all kinds of wrong…</p>
+            <p>Mayhaps? Things to think about.</p>
+          </section>
+          <section>
+            <h3>Final Thoughts</h3>
+            <p>Quicksort and mergesort are both sorting algorithms that use Divide and Conquer to take a problem that
+              would take O(n^2) time to solve and solve it in O(n lg2(n)) time.</p>
+            <p>The problem of sorting can be done in O(n^2) time with something like Selection Sort, where you just
+              tackle the problem head on. The magic behind quicksort and mergesort is that they identify subproblems
+              that can be solved in linear time and break the more intractable problem into these subproblems.</p>
+            <p>Mergesort transforms the problem of sorting one array into the problem of merging two sorted arrays
+              together and does that linear problem lg2(n) times.</p>
+            <p>Quicksort transforms the problem of sorting an array into the problem partitioning it into two parts,
+              where one part has elements that are all less than all the elements in the other part. Then it solves this
+              subproblem (you guessed it) lg2(n) times.</p>
+          </section>
+        </article>
       </main>
-      <!-- <aside class="col-1 col-sm2 col-lg-2">
+      <footer>
+        {{>blogLinks}}
+      </footer>
+    </main>
+    <!-- <aside class="col-1 col-sm2 col-lg-2">
       <p>things over here!!!!!</p>
     </aside> -->
   </div>

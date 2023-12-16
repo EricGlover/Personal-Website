@@ -15,49 +15,82 @@
           <h5 id='detail'>Date : 7/23/17 </h5>
         </header>
         <section>
-          <p>I’ll be honest, I don’t use git. At least not in the way it seems you should. For longer than I care to remember I didn’t use it at all. Let’s take a trip back to those dark times, when it seemed like every hour or so was playing Russian Roulette with your program, it’ll be fun.</p>
+          <p>I’ll be honest, I don’t use git. At least not in the way it seems you should. For longer than I care to
+            remember I didn’t use it at all. Let’s take a trip back to those dark times, when it seemed like every hour
+            or so was playing Russian Roulette with your program, it’ll be fun.</p>
         </section>
         <section>
           <h3></h3>
-          <p>I was writing a program to tackle the <a href='https://en.wikipedia.org/wiki/Knight%27s_tour'>Knight’s Tour</a> problem and I wanted to start by just getting something together that would let a user attempt it themselves. I get it running, and try it out. The first time I did this I didn’t do to great and I thought, ‘I wonder if someone making completely arbitrary moves would’ve done better ( on average )?’ So I quickly comment something out here and there and add a sort of Rando-Calrissian functionality where the program runs itself making random choices for where to move. After watching Rando-Calrissian beat my score a few times I decide to extend it into a fully separate mode that the user can run. My design was terrible so I end up breaking the old mode that allowed users play it themselves. This was before I used any sort of version control so there was no going back and I spent quite some time attempting to untangle my code.
+          <p>I was writing a program to tackle the <a href='https://en.wikipedia.org/wiki/Knight%27s_tour'>Knight’s
+              Tour</a> problem and I wanted to start by just getting something together that would let a user attempt it
+            themselves. I get it running, and try it out. The first time I did this I didn’t do to great and I thought,
+            ‘I wonder if someone making completely arbitrary moves would’ve done better ( on average )?’ So I quickly
+            comment something out here and there and add a sort of Rando-Calrissian functionality where the program runs
+            itself making random choices for where to move. After watching Rando-Calrissian beat my score a few times I
+            decide to extend it into a fully separate mode that the user can run. My design was terrible so I end up
+            breaking the old mode that allowed users play it themselves. This was before I used any sort of version
+            control so there was no going back and I spent quite some time attempting to untangle my code.
           </p>
-          <p>I’d like to think that things would be different now. That I would’ve committed my changes after getting it running but…</p>
+          <p>I’d like to think that things would be different now. That I would’ve committed my changes after getting it
+            running but…</p>
         </section>
         <section>
           <h3>Dealing with commitment issues</h3>
-          <p>I find myself committing changes in the same fashion that I remember to save a video game- if I’m about to go do something else I save my code. Just out of habit. The problem is I don’t commit every time I get a new feature running. Committing after a new feature feels like saving your game everytime finish a quest, or beat a boss. This has lead to more debugging than I care to admit. So if I was making this program now I might’ve made a commit about half-way through implementing the first mode and another probably around the time when I had modified the already working code to make moves randomly. Now I’d at least have the option of reseting back to a previous commit instead of untangling my mess but having to reset to a point where I'm halfway through making something is .. suboptimal..</p>
-          <p>After promising myself for some time now that I’d be better about committing I’ve decided that something must be done to force myself into the habit. I don’t want to spend the money to tattoo ‘What would Octocat do?’ on my hand so instead I’m turning to branches.</p>
+          <p>I find myself committing changes in the same fashion that I remember to save a video game- if I’m about to
+            go do something else I save my code. Just out of habit. The problem is I don’t commit every time I get a new
+            feature running. Committing after a new feature feels like saving your game everytime finish a quest, or
+            beat a boss. This has lead to more debugging than I care to admit. So if I was making this program now I
+            might’ve made a commit about half-way through implementing the first mode and another probably around the
+            time when I had modified the already working code to make moves randomly. Now I’d at least have the option
+            of reseting back to a previous commit instead of untangling my mess but having to reset to a point where I'm
+            halfway through making something is .. suboptimal..</p>
+          <p>After promising myself for some time now that I’d be better about committing I’ve decided that something
+            must be done to force myself into the habit. I don’t want to spend the money to tattoo ‘What would Octocat
+            do?’ on my hand so instead I’m turning to branches.</p>
         </section>
         <section>
           <h3>Branches???</h3>
-          <p>But aren’t branches really only useful for working a team of developers? Mayhaps, but hopefully it'll be easier to remember to start a Rando-Calrissian mode branch than it is to remember to commit when I’ve finished a feature because branches feel like the beginning of a quest.
-            An additional benefit is that small improvements that are related to working code can be done on master so if I have to scrap a branch for some reason I only lose the code for that feature.
-            so if I decide that Rando is getting a little to smug for his on good and thus must be removed, I wouldn’t lose any improvements I had made to something like the way the program prints the output.
-            Further, it’ll mean that I can always have a functioning version of the program laying around for demonstration. Now when someone asks what I’m working on instead of asking them to bear with me as I get my program functioning again I can just hop back onto master and run it.</p>
-          </section>
-          <section>
-            <h3>One Week Later...</h3>
-            <p>After a week of trying this out I've come back with some quick tips to make life easier in case you decide to start branching like crazy.</p>
-            <p>Number 1. Delete your branches after you've merged them with your master branch. It's not a big deal if you don't but soon you'll see an unending list of branches and have no clue which ones you've already merged, save yourself the repetitive 'git checkout branchname' 'git status' 'git checkout master' 'git branch -d branchname' now.</p>
-            <p>Next if you insist on keeping your branches entirely focused on code changes related to some feature then you'll find yourself having to switch back to master to fix something. Before you switch branches though you must do something with your current changes or when you switch they'll move with you onto master. Here I've found the stash command to be quite handy. Links included below</p>
-            <h5>Helpful Commands</h5>
-            <ul>
-              <li>$ git help branch</li>
-              <li>$ git stash</li>
-              <li>$ git stash list</li>
-              <li>$ git stash pop</li>
-            </ul>
-            <h5>Helpful Links</h5>
-            <ul>
-              <li><a href='https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging'>Git Branches</a></li>
-              <li><a href='https://git-scm.com/book/en/v2/Git-Tools-Stashing-and-Cleaning'>Git Stash</a></li>
-            </ul>
-          </section>
-        </article>
-      </main>
-      <footer>
-        {{>blogLinks}}
-      </footer>
+          <p>But aren’t branches really only useful for working a team of developers? Mayhaps, but hopefully it'll be
+            easier to remember to start a Rando-Calrissian mode branch than it is to remember to commit when I’ve
+            finished a feature because branches feel like the beginning of a quest.
+            An additional benefit is that small improvements that are related to working code can be done on master so
+            if I have to scrap a branch for some reason I only lose the code for that feature.
+            so if I decide that Rando is getting a little to smug for his on good and thus must be removed, I wouldn’t
+            lose any improvements I had made to something like the way the program prints the output.
+            Further, it’ll mean that I can always have a functioning version of the program laying around for
+            demonstration. Now when someone asks what I’m working on instead of asking them to bear with me as I get my
+            program functioning again I can just hop back onto master and run it.</p>
+        </section>
+        <section>
+          <h3>One Week Later...</h3>
+          <p>After a week of trying this out I've come back with some quick tips to make life easier in case you decide
+            to start branching like crazy.</p>
+          <p>Number 1. Delete your branches after you've merged them with your master branch. It's not a big deal if you
+            don't but soon you'll see an unending list of branches and have no clue which ones you've already merged,
+            save yourself the repetitive 'git checkout branchname' 'git status' 'git checkout master' 'git branch -d
+            branchname' now.</p>
+          <p>Next if you insist on keeping your branches entirely focused on code changes related to some feature then
+            you'll find yourself having to switch back to master to fix something. Before you switch branches though you
+            must do something with your current changes or when you switch they'll move with you onto master. Here I've
+            found the stash command to be quite handy. Links included below</p>
+          <h5>Helpful Commands</h5>
+          <ul>
+            <li>$ git help branch</li>
+            <li>$ git stash</li>
+            <li>$ git stash list</li>
+            <li>$ git stash pop</li>
+          </ul>
+          <h5>Helpful Links</h5>
+          <ul>
+            <li><a href='https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging'>Git Branches</a></li>
+            <li><a href='https://git-scm.com/book/en/v2/Git-Tools-Stashing-and-Cleaning'>Git Stash</a></li>
+          </ul>
+        </section>
+      </article>
     </main>
+    <footer>
+      {{>blogLinks}}
+    </footer>
+  </main>
 
 </div>

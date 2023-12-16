@@ -1,0 +1,16 @@
+:root {
+    --color1: #ddd8c4;
+    --color2: #a3c9a8;
+    --color3: #84b59f;
+    --color4: #69a297;
+    --color5: #50808e;
+}
+
+#nav {
+    background-color: var(--color1);
+}
+
+#navbar-brand {
+    margin-left: 1rem;
+    margin-right: 1rem
+}

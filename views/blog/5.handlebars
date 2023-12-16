@@ -15,22 +15,32 @@
           <h5 id='detail'>Date : 8/21/17 </h5>
         </header>
         <section>
-          <p>Recursion, is it useful? This week I stumbled upon a definite use case and learned that the squirreler the recursive function the more likely it is that it’s necessary. Before we look at that let’s dive into recursion!</p>
+          <p>Recursion, is it useful? This week I stumbled upon a definite use case and learned that the squirreler the
+            recursive function the more likely it is that it’s necessary. Before we look at that let’s dive into
+            recursion!</p>
         </section>
         <section>
           <h3>Recursion</h3>
-          <p>Programmers seem pretty divided on their opinions and usage of recursion; some find it elegant and pragmatic, while others find them ugly things that are best avoided. When I first stumbled upon recursion I was teaching myself programming so my knowledge of it was based on a few posts I’d seen in forums and what my code bible had said. At the time it had seemed like an alternative to iteration and I wrote it off as trivial. Why would make 18 function calls instead of using a for loop? So I decided that in order to be a respectable programmer I ought to steer clear of recursion and although I had a few brushes with it here and there, I mostly managed to do that -good times.</p>
-          <p>Briefly let’s take a look at some recursion, more details <a href='https://softwareengineering.stackexchange.com/questions/25052/in-plain-english-what-is-recursion'>here</a> and <a href-'https://en.wikipedia.org/wiki/Recursion_(computer_science)'>here</a></p>
+          <p>Programmers seem pretty divided on their opinions and usage of recursion; some find it elegant and
+            pragmatic, while others find them ugly things that are best avoided. When I first stumbled upon recursion I
+            was teaching myself programming so my knowledge of it was based on a few posts I’d seen in forums and what
+            my code bible had said. At the time it had seemed like an alternative to iteration and I wrote it off as
+            trivial. Why would make 18 function calls instead of using a for loop? So I decided that in order to be a
+            respectable programmer I ought to steer clear of recursion and although I had a few brushes with it here and
+            there, I mostly managed to do that -good times.</p>
+          <p>Briefly let’s take a look at some recursion, more details <a
+              href='https://softwareengineering.stackexchange.com/questions/25052/in-plain-english-what-is-recursion'>here</a>
+            and <a href-'https://en.wikipedia.org/wiki/Recursion_(computer_science)'>here</a></p>
         </section>
         <section>
           <h3>Recursion..why???</h3>
           {{>code code="//recursion
           ///factoiral via recursion
           function factorial(n) {
-            if (n === 1) {
-              return 1;
-            }
-            return n * factorial(n - 1);
+          if (n === 1) {
+          return 1;
+          }
+          return n * factorial(n - 1);
           }
           //we establish our base case and run back into it
           console.log(factorial(1)); //=> 1
@@ -41,73 +51,76 @@
             <li>Step 1. Throw console.log on the call stack with factorial(3) as an argument</li>
             <li>Step 2. Throw factorial(3) on the call stack</li>
             <li>Step 3. at the line return 3 * factorial(3-1) we begin a new function call so</li>
-            <li>	Step 3: Throw factorial(2) on the call stack</li>
+            <li> Step 3: Throw factorial(2) on the call stack</li>
             <li>Step 4: Same thing as step 3 but now with factorial(1)</li>
             <li>Step 5: our if evaluates to true so return 1</li>
-            <li>Step 6: resolve factorial(2), the code execution has hopped back to factorial(2), now our return looks like this return 2 * 1, so we return 2</li>
-            <li>Step 7: resolve factorial(3), the code execution has hopped back to factorial(3), now our return looks like this return 3 * 2 so we return 6</li>
+            <li>Step 6: resolve factorial(2), the code execution has hopped back to factorial(2), now our return looks
+              like this return 2 * 1, so we return 2</li>
+            <li>Step 7: resolve factorial(3), the code execution has hopped back to factorial(3), now our return looks
+              like this return 3 * 2 so we return 6</li>
             <li>Step 8: resolve console.log, factorial(3) returned 6 so we output 6</li>
           </ul>
         </section>
         <section>
           <h3>Single and Multiple Recursion</h3>
-          <p>The problems with this are pretty obvious, it unnecessary strains the call stack, and because (as far as I’m aware) invoking a new function for every operation you wish to do is rather costly our factorial function runs slowly. Whether or not the code is aesthetically pleasing is in the eye of the beholder but perhaps that is an advantage. This kind of recursion is called single recursion and can easily be rewritten as an iterative function that runs much better. For example:</p>
+          <p>The problems with this are pretty obvious, it unnecessary strains the call stack, and because (as far as
+            I’m aware) invoking a new function for every operation you wish to do is rather costly our factorial
+            function runs slowly. Whether or not the code is aesthetically pleasing is in the eye of the beholder but
+            perhaps that is an advantage. This kind of recursion is called single recursion and can easily be rewritten
+            as an iterative function that runs much better. For example:</p>
           {{>code code="//factorial via iteration
           function factorialIter(n) {
-            let result = 1;
-            for (let i = 2; i <= n; i++) {
-              result *= i;
-            }
-            return result;
-          }
-          //we establish our base case and run forwards starting from it
-          console.log(factorialIter(1)); //=> 1
-          console.log(factorialIter(2)); //=> 2
-          console.log(factorialIter(3)); //=> 3"}}
+          let result = 1;
+          for (let i = 2; i <= n; i++) { result *=i; } return result; } //we establish our base case and run forwards
+            starting from it console.log(factorialIter(1)); //=> 1
+            console.log(factorialIter(2)); //=> 2
+            console.log(factorialIter(3)); //=> 3"}}
 
-          <p>But what of multiple recursion? Let’s look at a function to find the nth term in the fibonacci sequence. The recursive solution for this is essentially the mathematical definition of the fibonacci sequence itself.</p>
-          <p>Here's another classic example of recursion, this one's a bit squirreler</p>
-          {{>code code="//multiple recursion
-          function fib(n) {
+            <p>But what of multiple recursion? Let’s look at a function to find the nth term in the fibonacci sequence.
+              The recursive solution for this is essentially the mathematical definition of the fibonacci sequence
+              itself.</p>
+            <p>Here's another classic example of recursion, this one's a bit squirreler</p>
+            {{>code code="//multiple recursion
+            function fib(n) {
             if (n === 1 || n === 0) return 1;
             return fib(n - 1) + fib(n - 2);
-          }
-          //try running this code, it’s hilarious
-          for (let i = 0; i < 50; i++) {
-            console.log(`fib(${i}) = ${fib(i)}`);
-          }"}}
-          <p>Here's an iterative approach to that same problem:</p>
-          {{>code code="function fibb(n) {
-            if (n < 2) return 1;
-            let aN_minus2 = 1;
-            let aN_minus1 = 1;
-            let a_n = 0;
-            for (let i = 2; i <= n; i++) {
-              a_n = aN_minus1 + aN_minus2;
-              aN_minus2 = aN_minus1;
-              aN_minus1 = a_n;
             }
-            return a_n;
-          }
-          for (let i = 0; i < 1477; i++) {
-            console.log(`fib(${i}) = ${fibb(i)}`);
-          } //after that I just get infinity"}}
-          <p>In case you didn’t run this, when I run it on my admittedly humble machine, the iterative solution runs in under a second to get all the terms from 0 to 1477 (I didn’t actually time it) and the recursive solution..well I don’t know how long it takes to get the 50th term because I got tired of waiting around the 43rd term. I’m actually quite amazed it didn’t overflow. </p>
+            //try running this code, it’s hilarious
+            for (let i = 0; i < 50; i++) { console.log(`fib(${i})=${fib(i)}`); }"}} <p>Here's an iterative approach to
+              that same problem:</p>
+              {{>code code="function fibb(n) {
+              if (n < 2) return 1; let aN_minus2=1; let aN_minus1=1; let a_n=0; for (let i=2; i <=n; i++) {
+                a_n=aN_minus1 + aN_minus2; aN_minus2=aN_minus1; aN_minus1=a_n; } return a_n; } for (let i=0; i < 1477;
+                i++) { console.log(`fib(${i})=${fibb(i)}`); } //after that I just get infinity"}} <p>In case you didn’t
+                run this, when I run it on my admittedly humble machine, the iterative solution runs in under a second
+                to get all the terms from 0 to 1477 (I didn’t actually time it) and the recursive solution..well I don’t
+                know how long it takes to get the 50th term because I got tired of waiting around the 43rd term. I’m
+                actually quite amazed it didn’t overflow. </p>
         </section>
         <section>
-          <p>Unfortunately it’s not always quite so easy to find an iterative solution to problems, a fine example of this happened to me last week. We were dealing with a tree structure and traversing it to do updates. Thinking about the problem my old prejudices kicked in, recursion BA-HUMBUG! Alas, as it turns out writing tree traversals iteratively is far more difficult than writing them recursively. It was a strange realization but multiple recursion does seem to have it’s use cases. For more on <a href='https://code.tutsplus.com/articles/data-structures-with-javascript-tree--cms-23393'>that</a> check out these links. Also check out tail optimization in JS.</p>
+          <p>Unfortunately it’s not always quite so easy to find an iterative solution to problems, a fine example of
+            this happened to me last week. We were dealing with a tree structure and traversing it to do updates.
+            Thinking about the problem my old prejudices kicked in, recursion BA-HUMBUG! Alas, as it turns out writing
+            tree traversals iteratively is far more difficult than writing them recursively. It was a strange
+            realization but multiple recursion does seem to have it’s use cases. For more on <a
+              href='https://code.tutsplus.com/articles/data-structures-with-javascript-tree--cms-23393'>that</a> check
+            out these links. Also check out tail optimization in JS.</p>
           <ul>
-            <li><a href='https://stackoverflow.com/questions/3021/what-is-recursion-and-when-should-i-use-it'>https://stackoverflow.com/questions/3021/what-is-recursion-and-when-should-i-use-it</a></li>
+            <li><a
+                href='https://stackoverflow.com/questions/3021/what-is-recursion-and-when-should-i-use-it'>https://stackoverflow.com/questions/3021/what-is-recursion-and-when-should-i-use-it</a>
+            </li>
             <li><a href="https://en.wikipedia.org/wiki/Tail_call">Tail Call Optimization</a></li>
-            <li><a href="https://medium.com/@mlaythe/js-es6-recursive-tail-call-optimization-feaf2dada3f6">Short article on Tail Call Optimization in JS</a></li>
-            <li><a href="http://2ality.com/2015/06/tail-call-optimization.html">In depth article on Tail Call Optimization in JS</a></li>
+            <li><a href="https://medium.com/@mlaythe/js-es6-recursive-tail-call-optimization-feaf2dada3f6">Short article
+                on Tail Call Optimization in JS</a></li>
+            <li><a href="http://2ality.com/2015/06/tail-call-optimization.html">In depth article on Tail Call
+                Optimization in JS</a></li>
 
-          </section>
-        </article>
-      </main>
-      <footer>
-        {{>blogLinks}}
-      </footer>
+        </section>
+      </article>
     </main>
+    <footer>
+      {{>blogLinks}}
+    </footer>
+  </main>
 
 </div>
