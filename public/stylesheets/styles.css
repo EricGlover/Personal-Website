@@ -1,8 +1,22 @@
 /*FONTS*/
+@font-face {
+  font-family: "Josefin";
+  src: url('../JosefinSlab-VariableFont_wght.ttf') format('truetype');
+}
+
 * {
   box-sizing: border-box;
-  font-family: sans-serif;
-  font-size: 16px;
+  font-family: "Josefin", monospace, sans-serif;
+  font-size: 17px;
+}
+
+h1 {
+  font-size: 3.5rem;
+  font-weight: 500;
+}
+h5 {
+  font-size: 1.8rem;
+  font-weight: 500;
 }
 
 :root {
@@ -20,7 +34,7 @@ body {
 }
 
 a {
-  color: white;
+  color: rgba(255, 255, 255, 0.841);
 }
 
 .landing-grid {
