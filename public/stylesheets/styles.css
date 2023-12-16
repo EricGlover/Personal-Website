@@ -1,12 +1,19 @@
 /*FONTS*/
 @font-face {
-  font-family: "Josefin";
+  font-family: "JosefinSlab";
   src: url('../JosefinSlab-VariableFont_wght.ttf') format('truetype');
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "JosefinSlab";
+  src: url('../JosefinSlab-Italic-VariableFont_wght.ttf') format('truetype');
+  font-style: italic;
 }
 
 * {
   box-sizing: border-box;
-  font-family: "Josefin", monospace, sans-serif;
+  font-family: "JosefinSlab", monospace, sans-serif;
   font-size: 17px;
 }
 
