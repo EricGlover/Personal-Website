@@ -281,6 +281,7 @@ async function drawMandel(canvas, mandelbrotSet, renderer = "goAPI") {
       // let port = 8080;
       let url = "/api/img";
       let domain = "https://mandelbrot-api.herokuapp.com/";
+      domain = "http://127.0.0.1:8080/";
       const makeParams = obj => {
         return Object.keys(obj)
           .map(key => `${key}=${obj[key]}`)

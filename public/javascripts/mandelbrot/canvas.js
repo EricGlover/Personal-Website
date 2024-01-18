@@ -4,6 +4,7 @@ import LoadBar from "./Utils/LoadBar.js";
 import Stats from "./Utils/Stats.js";
 import Mandelbrot from "./mandelbrot.js";
 import {drawMandel, getRendererOptions} from "./DrawMandel.js";
+import render from './render.js';
 
 const stats = new Stats();
 const loadBar = new LoadBar();
@@ -151,7 +152,8 @@ window.onload = async () => {
     // let fn = () => drawMandel(canvas, m, renderer);
     // timeTaken = benchmark(fn);
     // console.log(`draw took ${timeTaken / 1000} seconds`);
-    await drawMandel(canvas, m, renderer);
+    // await drawMandel(canvas, m, renderer);
+    await render(canvas, iterations)
   };
 
   //first render
